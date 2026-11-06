@@ -98,7 +98,12 @@ class EventResolver
             }
         }
 
-        return new EventResult($this->formatText($event->text, $participants), $notes, $deaths);
+        return new EventResult(
+            text: $this->formatText($event->text, $participants),
+            notes: $notes,
+            deaths: $deaths,
+            participants: array_map(fn (Tribute $t) => $t->name, $participants),
+        );
     }
 
     /** Comprueba que el evento se puede aplicar a estos participantes. */
