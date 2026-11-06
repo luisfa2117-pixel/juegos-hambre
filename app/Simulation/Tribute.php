@@ -211,4 +211,20 @@ class Tribute
 
         $this->allies = [];
     }
+
+    // ---- Para guardar ----
+
+    /** El estado actual en un array, para guardarlo en la base de datos. */
+    public function toArray(): array
+    {
+        return [
+            'name' => $this->name,
+            'hp' => $this->hp,
+            'energy' => $this->energy,
+            'max_energy' => $this->maxEnergy,
+            'alive' => $this->isAlive(),
+            'items' => array_map(fn (Item $item) => $item->name, $this->inventory),
+            'allies' => array_map(fn (Tribute $ally) => $ally->name, $this->allies),
+        ];
+    }
 }

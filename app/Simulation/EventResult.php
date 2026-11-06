@@ -21,4 +21,15 @@ class EventResult
         public readonly array $participants = [],
     ) {
     }
+
+    /** En un array, para guardarlo en la base de datos. */
+    public function toArray(): array
+    {
+        return [
+            'text' => $this->text,
+            'notes' => $this->notes,
+            'deaths' => $this->deaths,
+            'participants' => $this->participants,
+        ];
+    }
 }
