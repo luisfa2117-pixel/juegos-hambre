@@ -17,17 +17,17 @@ use RuntimeException;
 class Simulation
 {
     // Probabilidades en %. Son las de tu GestorEventos, con nombre para poder ajustarlas.
-    public const GROUP_EVENT_CHANCE = 10;   // evento de 3 o 4 tributos
-    public const PAIR_EVENT_CHANCE = 40;    // evento de 2 tributos (el resto, 50 %, es individual)
-    public const FRIENDSHIP_CHANCE = 25;    // dos desconocidos se hacen aliados en vez de pelear
-    public const BETRAYAL_CHANCE = 15;      // un aliado traiciona al otro
-    public const WEAPON_CHANCE = 60;        // quien lleva arma la usa en una pelea
-    public const DISCOVERY_CHANCE = 30;     // un evento individual es un descubrimiento
-    public const ALLY_ATTACK_CHANCE = 30;   // dos aliados atacan juntos a un tercero (si se puede)
+    public const GROUP_EVENT_CHANCE = 15;   // evento de 3 o 4 tributos
+    public const PAIR_EVENT_CHANCE = 50;    // evento de 2 tributos (el resto, 50 %, es individual)
+    public const FRIENDSHIP_CHANCE = 35;    // dos desconocidos se hacen aliados en vez de pelear
+    public const BETRAYAL_CHANCE = 35;      // un aliado traiciona al otro
+    public const WEAPON_CHANCE = 90;        // quien lleva arma la usa en una pelea
+    public const DISCOVERY_CHANCE = 40;     // un evento individual es un descubrimiento
+    public const ALLY_ATTACK_CHANCE = 40;   // dos aliados atacan juntos a un tercero (si se puede)
 
     // En el baño de sangre todos corren hacia la Cornucopia: más grupos y más objetos
-    public const BLOODBATH_GROUP_CHANCE = 20;
-    public const BLOODBATH_DISCOVERY_CHANCE = 50;
+    public const BLOODBATH_GROUP_CHANCE = 30;
+    public const BLOODBATH_DISCOVERY_CHANCE = 60;
 
     /** Máximo de miembros por alianza, para que no acaben todos en el mismo bando */
     public const MAX_ALLIANCE_SIZE = 3;
