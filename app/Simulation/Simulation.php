@@ -36,6 +36,9 @@ class Simulation
 
     private EventPhase $phase = EventPhase::Bloodbath;
 
+    /** @var GameEvent[] Los eventos que ya han salido en esta ronda, para no repetirlos */
+    private array $usedThisRound = [];
+
     /** @var Tribute[] */
     private array $tributes;
 
@@ -98,6 +101,7 @@ class Simulation
 
         $this->round++;
         $this->phase = EventPhase::forRound($this->round);
+        $this->usedThisRound = [];
         $results = [];
 
         $dissolved = $this->dissolveFinalAlliance();
@@ -109,6 +113,7 @@ class Simulation
 
         while ($pending !== []) {
             [$event, $participants] = $this->chooseEvent($pending);
+            $this->usedThisRound[] = $event;
 
             $results[] = $this->resolver->apply($event, $participants);
 
@@ -192,7 +197,7 @@ class Simulation
         }
 
         $category = count($group) === 4 ? EventCategory::Quartet : EventCategory::Trio;
-        $event = $this->events->pick($category, $group[0], $this->random, $this->phase);
+        $event = $this->pick($category, $group[0]);
 
         return $event !== null ? [$event, $group] : null;
     }
@@ -249,7 +254,7 @@ class Simulation
             return null;
         }
 
-        $event = $this->events->pick(EventCategory::AllyAttack, $a, $this->random, $this->phase);
+        $event = $this->pick(EventCategory::AllyAttack, $a);
 
         return $event !== null ? [$event, [$a, $ally, $victim]] : null;
     }
@@ -266,11 +271,11 @@ class Simulation
             $category = EventCategory::Duo;
         }
 
-        $event = $this->events->pick($category, $a, $this->random, $this->phase);
+        $event = $this->pick($category, $a);
 
         // Si lleva un arma que no tiene eventos propios, pelea normal
         if ($event === null && $category === EventCategory::Weapon) {
-            $event = $this->events->pick(EventCategory::Duo, $a, $this->random, $this->phase);
+            $event = $this->pick(EventCategory::Duo, $a);
         }
 
         return $event !== null ? [$event, [$a, $b]] : null;
@@ -281,17 +286,29 @@ class Simulation
         $discoveryChance = $this->phase === EventPhase::Bloodbath ? self::BLOODBATH_DISCOVERY_CHANCE : self::DISCOVERY_CHANCE;
         $category = $this->chance($discoveryChance) ? EventCategory::Discovery : EventCategory::Solo;
 
-        $event = $this->events->pick($category, $a, $this->random, $this->phase)
-            ?? $this->events->pick(EventCategory::Solo, $a, $this->random, $this->phase)
-            ?? $this->events->pick(EventCategory::Discovery, $a, $this->random, $this->phase)
+        $event = $this->pick($category, $a)
+            ?? $this->pick(EventCategory::Solo, $a)
+            ?? $this->pick(EventCategory::Discovery, $a)
             // Por si todos los eventos individuales fueran de otra fase
-            ?? $this->events->pick(EventCategory::Solo, $a, $this->random);
+            ?? $this->pick(EventCategory::Solo, $a, anyPhase: true);
 
         if ($event === null) {
             throw new RuntimeException('No hay eventos individuales: revisa los seeders');
         }
 
         return [$event, [$a]];
+    }
+
+    /** Pide un evento al EventPool con la fase actual, evitando los ya usados en la ronda */
+    private function pick(EventCategory $category, Tribute $actor, bool $anyPhase = false): ?GameEvent
+    {
+        return $this->events->pick(
+            $category,
+            $actor,
+            $this->random,
+            $anyPhase ? null : $this->phase,
+            $this->usedThisRound,
+        );
     }
 
     /** ¿Cabrían los dos (con sus alianzas) en una sola sin pasar del máximo? */

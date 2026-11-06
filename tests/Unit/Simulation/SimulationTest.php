@@ -368,6 +368,32 @@ class SimulationTest extends TestCase
         }
     }
 
+    public function test_an_event_does_not_repeat_in_the_same_round_while_others_remain(): void
+    {
+        $pool = new EventPool([
+            $this->event(EventCategory::Solo, '[uno] {A}'),
+            $this->event(EventCategory::Solo, '[dos] {A}'),
+            $this->event(EventCategory::Solo, '[tres] {A}'),
+        ]);
+
+        foreach (range(1, 30) as $seed) {
+            // Tres tributos y tres eventos: en cada ronda tiene que salir cada uno una vez
+            $simulation = $this->simulation($this->tributes(3), $pool, $seed);
+            $texts = array_map(fn ($result) => strtok($result->text, ' '), $simulation->runRound());
+
+            sort($texts);
+            $this->assertSame(['[dos]', '[tres]', '[uno]'], $texts, "Semilla {$seed}");
+        }
+    }
+
+    public function test_events_can_repeat_when_there_are_no_others(): void
+    {
+        $pool = new EventPool([$this->event(EventCategory::Solo, '[único] {A}')]);
+        $simulation = $this->simulation($this->tributes(4), $pool, 1);
+
+        $this->assertCount(4, $simulation->runRound());
+    }
+
     public function test_last_survivor_is_the_winner_and_no_more_rounds_can_be_played(): void
     {
         [$dean, $avery] = $this->tributes(2);

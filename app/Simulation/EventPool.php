@@ -35,10 +35,20 @@ class EventPool
      * (si requiere un objeto, tiene que llevarlo) y que encaje con la fase:
      * - de día o de noche: los eventos sin fase y los de esa fase;
      * - en el baño de sangre: los de la Cornucopia, o si no hay, los sin fase.
-     * Sin fase ($phase = null) vale cualquiera. Devuelve null si no hay ninguno posible.
+     * Sin fase ($phase = null) vale cualquiera.
+     *
+     * Los eventos de $avoid (los que ya han salido esta ronda) se evitan mientras haya otros;
+     * si no queda ninguno más, se permite repetir. Devuelve null si no hay ninguno posible.
+     *
+     * @param GameEvent[] $avoid
      */
-    public function pick(EventCategory $category, Tribute $actor, Randomizer $random, ?EventPhase $phase = null): ?GameEvent
-    {
+    public function pick(
+        EventCategory $category,
+        Tribute $actor,
+        Randomizer $random,
+        ?EventPhase $phase = null,
+        array $avoid = [],
+    ): ?GameEvent {
         $candidates = array_values(array_filter(
             $this->byCategory[$category->value] ?? [],
             fn (GameEvent $event) => $event->requiresItem === null || $actor->hasItem($event->requiresItem),
@@ -46,6 +56,12 @@ class EventPool
 
         if ($phase !== null) {
             $candidates = $this->forPhase($candidates, $phase);
+        }
+
+        $fresh = array_values(array_filter($candidates, fn (GameEvent $event) => ! in_array($event, $avoid, true)));
+
+        if ($fresh !== []) {
+            $candidates = $fresh;
         }
 
         if ($candidates === []) {
