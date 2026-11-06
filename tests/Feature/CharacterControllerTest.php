@@ -30,11 +30,6 @@ class CharacterControllerTest extends TestCase
         ], $overrides);
     }
 
-    public function test_home_redirects_to_characters(): void
-    {
-        $this->get('/')->assertRedirect('/characters');
-    }
-
     public function test_lists_characters_grouped_by_district(): void
     {
         $this->get(route('characters.index'))

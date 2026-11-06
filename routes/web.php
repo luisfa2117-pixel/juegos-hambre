@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\CharacterController;
+use App\Http\Controllers\GameController;
 use Illuminate\Support\Facades\Route;
 
-// De momento la portada lleva a los personajes; en la 4.2 llevará a las partidas
-Route::redirect('/', '/characters');
+Route::redirect('/', '/games');
 
-// Crea las 7 rutas típicas (index, create, store, show, edit, update, destroy) menos show
+Route::resource('games', GameController::class)->only(['index', 'create', 'store', 'show', 'destroy']);
+
+// Crea las rutas típicas de un CRUD menos show
 Route::resource('characters', CharacterController::class)->except('show');

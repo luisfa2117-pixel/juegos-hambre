@@ -32,7 +32,9 @@ class PlayGame
             throw new InvalidArgumentException('Hacen falta al menos 2 personajes para jugar');
         }
 
-        $characters = $characters->values();
+        // Ordenados por id: así, con los mismos personajes y la misma semilla,
+        // la partida sale igual aunque nos los pasen en otro orden
+        $characters = $characters->sortBy('id')->values();
         $characters->loadMissing('district');
         $seed ??= random_int(1, 999_999);
 

@@ -19,14 +19,16 @@
             <a href="{{ url('/') }}" class="font-display text-2xl text-hazard">Juegos del Hambre</a>
 
             <nav class="flex gap-5">
-                <a href="{{ route('characters.index') }}"
-                   @class([
-                       'border-b-2 pb-0.5 hover:text-hazard',
-                       'border-hazard text-hazard' => request()->routeIs('characters.*'),
-                       'border-transparent' => ! request()->routeIs('characters.*'),
-                   ])>
-                    Personajes
-                </a>
+                @foreach (['games' => 'Partidas', 'characters' => 'Personajes'] as $section => $label)
+                    <a href="{{ route("{$section}.index") }}"
+                       @class([
+                           'border-b-2 pb-0.5 hover:text-hazard',
+                           'border-hazard text-hazard' => request()->routeIs("{$section}.*"),
+                           'border-transparent' => ! request()->routeIs("{$section}.*"),
+                       ])>
+                        {{ $label }}
+                    </a>
+                @endforeach
             </nav>
         </div>
     </header>
