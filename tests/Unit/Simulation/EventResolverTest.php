@@ -185,6 +185,35 @@ class EventResolverTest extends TestCase
         $this->assertTrue($b->hasItem($vest));
     }
 
+    // ---- Aliados atacan juntos ----
+
+    public function test_ally_attack_applies_actor_effects_to_both_allies(): void
+    {
+        [$avery, $avril, $noah] = [$this->tribute('Avery'), $this->tribute('Avril'), $this->tribute('Noah')];
+        $avery->befriend($avril);
+        $event = $this->event(EventCategory::AllyAttack, '{A} y {B} emboscaron a {C}', [
+            'actor_energy' => -3, 'target_hp' => -9,
+        ]);
+
+        $this->resolver->apply($event, [$avery, $avril, $noah]);
+
+        $this->assertSame(17, $avery->energy());
+        $this->assertSame(17, $avril->energy());
+        $this->assertSame(20, $avril->hp());
+        $this->assertSame(11, $noah->hp());
+    }
+
+    public function test_armor_protects_the_victim_of_an_ally_attack(): void
+    {
+        $noah = $this->tribute('Noah');
+        $noah->addItem($this->item('chaleco', ItemType::Armor, 5));
+        $event = $this->event(EventCategory::AllyAttack, '{A} y {B} emboscaron a {C}', ['target_hp' => -9]);
+
+        $this->resolver->apply($event, [$this->tribute('Avery'), $this->tribute('Avril'), $noah]);
+
+        $this->assertSame(16, $noah->hp());   // 20 - (9 - 5)
+    }
+
     // ---- Objetos ----
 
     public function test_discovery_puts_item_in_actor_inventory(): void

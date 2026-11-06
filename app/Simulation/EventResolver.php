@@ -23,7 +23,7 @@ class EventResolver
     public const ENERGY_THRESHOLD = 5;
 
     /** Categorías en las que la defensa del objetivo reduce el daño (combates directos). */
-    private const ARMOR_CATEGORIES = [EventCategory::Duo, EventCategory::Weapon];
+    private const ARMOR_CATEGORIES = [EventCategory::Duo, EventCategory::Weapon, EventCategory::AllyAttack];
 
     /**
      * @param Tribute[] $participants El primero es {A} (el actor); el resto son {B}, {C}, {D}
@@ -32,15 +32,20 @@ class EventResolver
     {
         $this->validate($event, $participants);
 
-        $actor = $participants[0];
-        $targets = array_slice($participants, 1);
+        // Quien actúa: normalmente {A}; si dos aliados atacan juntos, {A} y {B}
+        $actorCount = $event->category->actors();
+        $actors = array_slice($participants, 0, $actorCount);
+        $targets = array_slice($participants, $actorCount);
+        $actor = $actors[0];
         $notes = [];
 
-        // 1. Consecuencias para el actor {A}
-        $actor->changeHp($event->actor_hp);
-        $actor->changeEnergy($event->actor_energy);
+        // 1. Consecuencias para quien actúa
+        foreach ($actors as $attacker) {
+            $attacker->changeHp($event->actor_hp);
+            $attacker->changeEnergy($event->actor_energy);
+        }
 
-        // 2. Consecuencias para los objetivos {B}, {C}, {D}
+        // 2. Consecuencias para los demás
         foreach ($targets as $target) {
             $hpChange = $event->target_hp;
 

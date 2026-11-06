@@ -43,22 +43,31 @@ class EventPreview
     public static function effects(GameEvent $event): string
     {
         $parts = [];
+        $labels = array_slice(['A', 'B', 'C', 'D'], 0, $event->participants);
+        $actorLabels = array_slice($labels, 0, $event->category->actors());
+        $targetLabels = array_slice($labels, $event->category->actors());
+
         $actor = self::changes($event->actor_hp, $event->actor_energy);
 
         if ($actor !== null) {
-            $parts[] = "A: {$actor}.";
+            $parts[] = self::join($actorLabels) . ": {$actor}.";
         }
 
         $targets = self::changes($event->target_hp, $event->target_energy);
 
-        if ($targets !== null && $event->participants > 1) {
-            $labels = array_slice(['B', 'C', 'D'], 0, $event->participants - 1);
-            $last = array_pop($labels);
-            $who = $labels === [] ? $last : implode(', ', $labels) . ' y ' . $last;
-            $parts[] = "{$who}: {$targets}.";
+        if ($targets !== null && $targetLabels !== []) {
+            $parts[] = self::join($targetLabels) . ": {$targets}.";
         }
 
         return $parts === [] ? 'Sin efectos en vida ni energía.' : implode(' ', $parts);
+    }
+
+    /** ['B', 'C', 'D'] → "B, C y D" */
+    private static function join(array $labels): string
+    {
+        $last = array_pop($labels);
+
+        return $labels === [] ? (string) $last : implode(', ', $labels) . ' y ' . $last;
     }
 
     public static function names(): array

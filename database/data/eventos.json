@@ -728,5 +728,71 @@
             "energiaRival": 0,
             "requiere": "PISTOLA"
         }
+    ],
+    "aliadosAtacan": [
+        {
+            "descripcion": "{A} y {B} le tendieron una emboscada a {C} en un aparcamiento subterráneo",
+            "numParticipantes": 3,
+            "danioPropio": 0,
+            "danioRival": -10,
+            "energiaPropia": -2,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} distrajo a {C} mientras {B} l{C:o/a} atacaba por la espalda",
+            "numParticipantes": 3,
+            "danioPropio": 0,
+            "danioRival": -9,
+            "energiaPropia": -2,
+            "energiaRival": -2
+        },
+        {
+            "descripcion": "{A} y {B} acorralaron a {C} en un callejón sin salida",
+            "numParticipantes": 3,
+            "danioPropio": -2,
+            "danioRival": -8,
+            "energiaPropia": -3,
+            "energiaRival": -3
+        },
+        {
+            "descripcion": "{A} y {B} persiguieron a {C} en una moto robada hasta dejarl{C:o/a} sin fuerzas",
+            "numParticipantes": 3,
+            "danioPropio": 0,
+            "danioRival": -4,
+            "energiaPropia": -3,
+            "energiaRival": -10
+        },
+        {
+            "descripcion": "{A} hackeó un dron para localizar a {C}, y {B} l{C:o/a} sorprendió en su escondite",
+            "numParticipantes": 3,
+            "danioPropio": 0,
+            "danioRival": -9,
+            "energiaPropia": -2,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} y {B} lanzaron una lluvia de escombros sobre {C} desde una pasarela",
+            "numParticipantes": 3,
+            "danioPropio": 0,
+            "danioRival": -7,
+            "energiaPropia": -1,
+            "energiaRival": -2
+        },
+        {
+            "descripcion": "{A} y {B} intentaron atrapar a {C}, pero se defendió con uñas y dientes",
+            "numParticipantes": 3,
+            "danioPropio": -4,
+            "danioRival": -5,
+            "energiaPropia": -3,
+            "energiaRival": -3
+        },
+        {
+            "descripcion": "{A} y {B} obligaron a {C} a huir por un río contaminado",
+            "numParticipantes": 3,
+            "danioPropio": 0,
+            "danioRival": -5,
+            "energiaPropia": -2,
+            "energiaRival": -6
+        }
     ]
 }

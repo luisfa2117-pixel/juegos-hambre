@@ -23,6 +23,7 @@ class GameEventSeeder extends Seeder
         'eventosDescubrimiento' => EventCategory::Discovery,
         'eventosArma'           => EventCategory::Weapon,
         'traicionAmigo'         => EventCategory::Betrayal,
+        'aliadosAtacan'         => EventCategory::AllyAttack,
     ];
 
     public function run(): void

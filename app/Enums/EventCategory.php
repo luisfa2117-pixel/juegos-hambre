@@ -13,6 +13,7 @@ enum EventCategory: string
     case Discovery = 'discovery';  // 1 tributo encuentra un objeto
     case Weapon    = 'weapon';     // ataque que requiere un arma concreta
     case Betrayal  = 'betrayal';   // un aliado traiciona al otro
+    case AllyAttack = 'ally_attack'; // dos aliados atacan juntos a un tercero
 
     /** Cómo se muestra en la web */
     public function label(): string
@@ -27,6 +28,7 @@ enum EventCategory: string
             self::Befriend => 'Nueva alianza',
             self::Ally => 'Entre aliados',
             self::Betrayal => 'Traición',
+            self::AllyAttack => 'Aliados atacan juntos',
         };
     }
 
@@ -36,8 +38,17 @@ enum EventCategory: string
         return match ($this) {
             self::Solo, self::Discovery => 1,
             self::Duo, self::Weapon, self::Befriend, self::Ally, self::Betrayal => 2,
-            self::Trio => 3,
+            self::Trio, self::AllyAttack => 3,
             self::Quartet => 4,
         };
+    }
+
+    /**
+     * Cuántos de los participantes son "quien actúa" y reciben los efectos de A.
+     * Normalmente solo {A}; cuando dos aliados atacan juntos, {A} y {B}.
+     */
+    public function actors(): int
+    {
+        return $this === self::AllyAttack ? 2 : 1;
     }
 }

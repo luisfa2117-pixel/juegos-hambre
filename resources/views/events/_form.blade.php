@@ -12,7 +12,7 @@
         <label for="category" class="field-label">Tipo de evento</label>
         <select id="category" name="category" class="field" data-category>
             @foreach (EventCategory::cases() as $case)
-                <option value="{{ $case->value }}" data-participants="{{ $case->participants() }}"
+                <option value="{{ $case->value }}" data-participants="{{ $case->participants() }}" data-actors="{{ $case->actors() }}"
                         @selected($currentCategory === $case->value)>
                     {{ $case->label() }} ({{ trans_choice(':count participante|:count participantes', $case->participants()) }})
                 </option>
@@ -43,7 +43,7 @@
 
     <div class="grid gap-6 sm:grid-cols-2">
         <fieldset>
-            <legend class="field-label">Efectos en A</legend>
+            <legend class="field-label" data-actors-legend>Efectos en A</legend>
             <div class="grid grid-cols-2 gap-3">
                 @foreach (['actor_hp' => 'Vida', 'actor_energy' => 'Energía'] as $field => $label)
                     <div>
@@ -57,7 +57,7 @@
         </fieldset>
 
         <fieldset data-targets>
-            <legend class="field-label">Efectos en los demás</legend>
+            <legend class="field-label" data-targets-legend>Efectos en los demás</legend>
             <div class="grid grid-cols-2 gap-3">
                 @foreach (['target_hp' => 'Vida', 'target_energy' => 'Energía'] as $field => $label)
                     <div>
@@ -106,6 +106,12 @@
 
     function updateFields() {
         const participants = Number(category.selectedOptions[0].dataset.participants);
+        const actors = Number(category.selectedOptions[0].dataset.actors);
+        const labels = ['A', 'B', 'C', 'D'].slice(0, participants);
+        const join = list => list.length > 1 ? list.slice(0, -1).join(', ') + ' y ' + list.at(-1) : list[0];
+
+        document.querySelector('[data-actors-legend]').textContent = 'Efectos en ' + join(labels.slice(0, actors));
+        document.querySelector('[data-targets-legend]').textContent = 'Efectos en ' + (join(labels.slice(actors)) ?? 'los demás');
         targets.hidden = participants === 1;
         gives.hidden = category.value !== 'discovery';
         if (gives.hidden) gives.querySelector('select').value = '';

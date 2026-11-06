@@ -42,7 +42,7 @@ class GameEventControllerTest extends TestCase
     {
         $this->get(route('events.index'))
             ->assertOk()
-            ->assertSee('Todos (92)');
+            ->assertSee('Todos (100)');
 
         $this->get(route('events.index', ['category' => 'weapon']))
             ->assertOk()

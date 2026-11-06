@@ -22,6 +22,7 @@ class Simulation
     public const BETRAYAL_CHANCE = 15;      // un aliado traiciona al otro
     public const WEAPON_CHANCE = 60;        // quien lleva arma la usa en una pelea
     public const DISCOVERY_CHANCE = 30;     // un evento individual es un descubrimiento
+    public const ALLY_ATTACK_CHANCE = 30;   // dos aliados atacan juntos a un tercero (si se puede)
 
     /** Máximo de miembros por alianza, para que no acaben todos en el mismo bando */
     public const MAX_ALLIANCE_SIZE = 3;
@@ -148,7 +149,7 @@ class Simulation
             $size = ($available >= 4 && $this->chance(50)) ? 4 : 3;
             $choice = $this->groupEvent($pending, $size);
         } elseif ($roll <= self::GROUP_EVENT_CHANCE + self::PAIR_EVENT_CHANCE && $available >= 2) {
-            $choice = $this->pairEvent($pending[0], $pending[1]);
+            $choice = $this->allyAttackEvent($pending) ?? $this->pairEvent($pending[0], $pending[1]);
         }
 
         // Si no ha tocado evento de grupo o de pareja (o no había ninguno posible), individual
@@ -205,6 +206,36 @@ class Simulation
         }
 
         return null;
+    }
+
+    /**
+     * Si el primero en espera tiene un aliado y hay alguien de fuera esperando,
+     * puede que ataquen juntos: [atacante, aliado, víctima].
+     *
+     * @param Tribute[] $pending
+     */
+    private function allyAttackEvent(array $pending): ?array
+    {
+        $a = $pending[0];
+        $ally = null;
+        $victim = null;
+
+        foreach (array_slice($pending, 1) as $tribute) {
+            if ($a->isAllyOf($tribute)) {
+                $ally ??= $tribute;
+            } else {
+                $victim ??= $tribute;
+            }
+        }
+
+        // Primero se mira si es posible y solo entonces se tira el dado
+        if ($ally === null || $victim === null || ! $this->chance(self::ALLY_ATTACK_CHANCE)) {
+            return null;
+        }
+
+        $event = $this->events->pick(EventCategory::AllyAttack, $a, $this->random);
+
+        return $event !== null ? [$event, [$a, $ally, $victim]] : null;
     }
 
     private function pairEvent(Tribute $a, Tribute $b): ?array

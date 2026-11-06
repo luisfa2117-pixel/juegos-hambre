@@ -73,6 +73,7 @@ class SimulationTest extends TestCase
             $this->event(EventCategory::Befriend, '[befriend] {A} {B}'),
             $this->event(EventCategory::Betrayal, '[betrayal] {A} {B}'),
             $this->event(EventCategory::Weapon, '[weapon] {A} {B}', requires: $this->knife()),
+            $this->event(EventCategory::AllyAttack, '[ally_attack] {A} {B} {C}'),
         ]);
     }
 
@@ -91,6 +92,7 @@ class SimulationTest extends TestCase
             $this->event(EventCategory::Befriend, '{A} y {B} acordaron una tregua'),
             $this->event(EventCategory::Betrayal, '{A} traicionó a {B}', ['target_hp' => -12]),
             $this->event(EventCategory::Weapon, '{A} apuñaló a {B}', ['target_hp' => -10], requires: $knife),
+            $this->event(EventCategory::AllyAttack, '{A} y {B} emboscaron a {C}', ['actor_energy' => -2, 'target_hp' => -9]),
         ]);
     }
 
@@ -250,6 +252,11 @@ class SimulationTest extends TestCase
             $simulation = $this->simulation($tributes, $this->harmlessPool(), $seed);
 
             foreach ($simulation->runRound() as $result) {
+                // Atacar juntos es justo lo que SÍ pueden hacer los aliados
+                if (str_starts_with($result->text, '[ally_attack]')) {
+                    continue;
+                }
+
                 if (count($result->participants) >= 3) {
                     $allies = array_intersect($result->participants, ['Dean', 'Avery', 'De Santi']);
                     $this->assertLessThanOrEqual(1, count($allies), "Semilla {$seed}: {$result->text}");
@@ -271,6 +278,34 @@ class SimulationTest extends TestCase
                 }
             }
         }
+    }
+
+    public function test_in_ally_attacks_the_first_two_are_allies_and_the_third_is_not(): void
+    {
+        $seen = 0;
+
+        foreach (range(1, 60) as $seed) {
+            $tributes = $this->tributes(6);
+            $tributes[0]->befriend($tributes[1]);
+            $tributes[2]->befriend($tributes[3]);
+            $simulation = $this->simulation($tributes, $this->harmlessPool(), $seed);
+
+            foreach ($simulation->runRound() as $result) {
+                if (! str_starts_with($result->text, '[ally_attack]')) {
+                    continue;
+                }
+
+                $seen++;
+                [$a, $b, $c] = array_map(
+                    fn (string $name) => collect($tributes)->firstWhere('name', $name),
+                    $result->participants,
+                );
+                $this->assertTrue($a->isAllyOf($b), $result->text);
+                $this->assertFalse($a->isAllyOf($c), $result->text);
+            }
+        }
+
+        $this->assertGreaterThan(0, $seen, 'Ningún ataque conjunto en 60 partidas');
     }
 
     public function test_last_survivor_is_the_winner_and_no_more_rounds_can_be_played(): void
