@@ -5,6 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{-- Lo usa el JavaScript que hace peticiones con fetch (por ejemplo, la vista previa de eventos) --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title }} | Juegos del Hambre</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,7 +21,7 @@
             <a href="{{ url('/') }}" class="font-display text-2xl text-hazard">Juegos del Hambre</a>
 
             <nav class="flex gap-5">
-                @foreach (['games' => 'Partidas', 'characters' => 'Personajes'] as $section => $label)
+                @foreach (['games' => 'Partidas', 'characters' => 'Personajes', 'events' => 'Eventos'] as $section => $label)
                     <a href="{{ route("{$section}.index") }}"
                        @class([
                            'border-b-2 pb-0.5 hover:text-hazard',
@@ -37,6 +39,12 @@
         @if (session('status'))
             <p role="status" class="mb-6 rounded-sm border-l-4 border-ally bg-asphalt-raised px-4 py-3">
                 {{ session('status') }}
+            </p>
+        @endif
+
+        @if (session('error'))
+            <p role="alert" class="mb-6 rounded-sm border-l-4 border-blood bg-asphalt-raised px-4 py-3">
+                {{ session('error') }}
             </p>
         @endif
 

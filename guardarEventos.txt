@@ -1,0 +1,3 @@
+php artisan events:export
+git add .
+git commit -m "Eventos nuevos"

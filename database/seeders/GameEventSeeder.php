@@ -12,8 +12,8 @@ use RuntimeException;
 
 class GameEventSeeder extends Seeder
 {
-    /** Clave del JSON de Java => categoría en la base de datos */
-    private const CATEGORY_MAP = [
+    /** Clave del JSON de Java => categoría en la base de datos (también la usa events:export) */
+    public const CATEGORY_MAP = [
         'eventosIndividuales'   => EventCategory::Solo,
         'eventosDuo'            => EventCategory::Duo,
         'eventosTriple'         => EventCategory::Trio,
