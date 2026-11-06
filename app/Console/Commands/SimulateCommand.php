@@ -2,8 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Enums\Gender;
-use App\Models\District;
+use App\Models\Character;
 use App\Simulation\EventPool;
 use App\Simulation\Simulation;
 use App\Simulation\Tribute;
@@ -20,22 +19,34 @@ class SimulateCommand extends Command
 {
     protected $signature = 'simulate {--seed= : Semilla para repetir exactamente una partida}';
 
-    protected $description = 'Simula una partida completa en la terminal';
+    protected $description = 'Simula una partida completa con los personajes de la base de datos';
 
     /** Por si algún día los eventos quedan tan suaves que nadie muere */
     private const MAX_ROUNDS = 100;
 
     public function handle(): int
     {
+        // with('district') carga los distritos de todos en una sola consulta
+        $tributes = Character::with('district')->get()
+            ->map(fn (Character $character) => $character->toTribute())
+            ->all();
+
+        if (count($tributes) < 2) {
+            $this->error('Hacen falta al menos 2 personajes. Ejecuta: php artisan db:seed');
+
+            return self::FAILURE;
+        }
+
         $seed = $this->option('seed') !== null ? (int) $this->option('seed') : random_int(1, 999_999);
 
         $simulation = new Simulation(
-            $this->cast(),
+            $tributes,
             EventPool::fromDatabase(),
             new Randomizer(new Mt19937($seed)),
         );
 
         $this->info("Semilla: {$seed}   (para repetir esta partida: php artisan simulate --seed={$seed})");
+        $this->line('Participan: ' . implode(', ', array_map(fn (Tribute $t) => $t->name, $tributes)));
 
         while (! $simulation->isOver() && $simulation->round() < self::MAX_ROUNDS) {
             $results = $simulation->runRound();
@@ -74,31 +85,5 @@ class SimulateCommand extends Command
         }
 
         return self::SUCCESS;
-    }
-
-    /**
-     * El reparto de tu Main.java. En la fase 3 los tributos saldrán de la base de datos.
-     *
-     * @return Tribute[]
-     */
-    private function cast(): array
-    {
-        $districts = District::all()->keyBy('slug');
-
-        $cast = [
-            ['Dean',     'cinturon_oxidado', Gender::Male],
-            ['Avery',    'costa_este',       Gender::Female],
-            ['De Santi', 'norte_helado',     Gender::Male],
-            ['Hannah',   'sur_quemado',      Gender::Female],
-            ['Desiree',  'cinturon_oxidado', Gender::Female],
-            ['Noah',     'pacifico_tecno',   Gender::Male],
-            ['Avril',    'costa_este',       Gender::Female],
-            ['Horacio',  'norte_helado',     Gender::Male],
-        ];
-
-        return array_map(
-            fn (array $c) => new Tribute($c[0], $c[2], $districts[$c[1]]),
-            $cast,
-        );
     }
 }
