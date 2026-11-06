@@ -6,6 +6,7 @@ use App\Enums\Gender;
 use App\Simulation\Tribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Un personaje del catálogo: lo creas una vez y puede participar en muchas partidas.
@@ -22,6 +23,12 @@ class Character extends Model
     public function district(): BelongsTo
     {
         return $this->belongsTo(District::class);
+    }
+
+    /** Sus participaciones en partidas guardadas */
+    public function gameTributes(): HasMany
+    {
+        return $this->hasMany(GameTribute::class);
     }
 
     /** Crea el tributo que lo representa en una partida, con los stats iniciales. */

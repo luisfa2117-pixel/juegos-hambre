@@ -4,6 +4,56 @@
 @source '../../storage/framework/views/*.php';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Barlow', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Saira Stencil One', 'Barlow Condensed', sans-serif;
+    --font-condensed: 'Barlow Condensed', 'Barlow', sans-serif;
+
+    --color-asphalt: #1d2229;        /* fondo */
+    --color-asphalt-raised: #272e37; /* tarjetas y campos */
+    --color-asphalt-line: #3a4450;   /* bordes */
+    --color-ash: #e6e2d8;            /* texto */
+    --color-ash-muted: #a3acb6;      /* texto secundario */
+    --color-hazard: #f2b134;         /* acciones, ámbar de señal de peligro */
+    --color-blood: #ef5a5f;          /* muertes y borrar */
+    --color-ally: #5cc2b4;           /* alianzas */
+}
+
+/* Rayas de peligro: las usaremos para separar las rondas */
+@utility hazard-stripes {
+    background-image: repeating-linear-gradient(
+        -45deg,
+        var(--color-hazard) 0 10px,
+        var(--color-asphalt) 10px 20px
+    );
+}
+
+/* Piezas que se repiten en muchas vistas */
+@layer components {
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-sm bg-hazard px-4 py-2 font-semibold text-asphalt
+            hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-hazard;
+    }
+
+    .btn-quiet {
+        @apply inline-flex items-center justify-center gap-2 rounded-sm border border-asphalt-line px-3 py-1.5 text-sm text-ash
+            hover:border-ash-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-hazard;
+    }
+
+    .btn-danger {
+        @apply inline-flex items-center justify-center gap-2 rounded-sm px-3 py-1.5 text-sm text-blood
+            hover:bg-blood/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blood;
+    }
+
+    .field {
+        @apply block w-full rounded-sm border border-asphalt-line bg-asphalt-raised px-3 py-2 text-ash
+            focus:border-hazard focus:outline-none;
+    }
+
+    .field-label {
+        @apply mb-1 block font-semibold;
+    }
+
+    .field-error {
+        @apply mt-1 text-sm text-blood;
+    }
 }
