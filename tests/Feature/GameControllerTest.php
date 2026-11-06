@@ -83,10 +83,21 @@ class GameControllerTest extends TestCase
 
         $this->get(route('games.show', [$game, 'round' => 1]))
             ->assertOk()
-            ->assertSee('Ronda 1')
-            ->assertDontSee('Ronda 2')
+            ->assertSee('Baño de sangre')
+            ->assertDontSee('Día 1')
             ->assertSee('Siguiente ronda')
             ->assertDontSee('Clasificación');
+    }
+
+    public function test_rounds_are_titled_by_phase(): void
+    {
+        $game = $this->playGame();
+        $this->assertGreaterThanOrEqual(3, $game->total_rounds);
+
+        $this->get(route('games.show', [$game, 'round' => 3]))
+            ->assertOk()
+            ->assertSeeInOrder(['Baño de sangre', 'Día 1', 'Noche 1'])
+            ->assertSee('Tras la noche 1');
     }
 
     public function test_last_round_shows_the_final_ranking(): void
@@ -104,7 +115,7 @@ class GameControllerTest extends TestCase
         $game = $this->playGame();
 
         $this->get(route('games.show', [$game, 'round' => 999]))->assertOk()->assertSee('Clasificación');
-        $this->get(route('games.show', [$game, 'round' => -5]))->assertOk()->assertSee('Ronda 1');
+        $this->get(route('games.show', [$game, 'round' => -5]))->assertOk()->assertSee('Baño de sangre');
     }
 
     public function test_character_names_are_escaped(): void

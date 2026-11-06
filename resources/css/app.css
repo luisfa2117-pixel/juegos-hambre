@@ -16,6 +16,7 @@
     --color-hazard: #f2b134;         /* acciones, ámbar de señal de peligro */
     --color-blood: #ef5a5f;          /* muertes y borrar */
     --color-ally: #5cc2b4;           /* alianzas */
+    --color-night: #8fa3cc;          /* rondas de noche */
 }
 
 /* Rayas de peligro: las usaremos para separar las rondas */
@@ -23,6 +24,23 @@
     background-image: repeating-linear-gradient(
         -45deg,
         var(--color-hazard) 0 10px,
+        var(--color-asphalt) 10px 20px
+    );
+}
+
+/* Variantes para el baño de sangre y las noches */
+@utility blood-stripes {
+    background-image: repeating-linear-gradient(
+        -45deg,
+        var(--color-blood) 0 10px,
+        var(--color-asphalt) 10px 20px
+    );
+}
+
+@utility night-stripes {
+    background-image: repeating-linear-gradient(
+        -45deg,
+        #3d4a66 0 10px,
         var(--color-asphalt) 10px 20px
     );
 }

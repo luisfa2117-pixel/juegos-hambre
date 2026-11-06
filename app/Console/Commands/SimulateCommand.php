@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Enums\EventPhase;
 use App\Models\Character;
 use App\Simulation\EventPool;
 use App\Simulation\Simulation;
@@ -52,7 +53,8 @@ class SimulateCommand extends Command
             $results = $simulation->runRound();
 
             $this->newLine();
-            $this->line("<options=bold>━━━━━━━━━━ RONDA {$simulation->round()} ━━━━━━━━━━</>");
+            $title = mb_strtoupper(EventPhase::roundTitle($simulation->round()));
+            $this->line("<options=bold>━━━━━━━━━━ {$title} ━━━━━━━━━━</>");
 
             foreach ($results as $result) {
                 $this->line($result->text);

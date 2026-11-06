@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\EventCategory;
+use App\Enums\EventPhase;
 use App\Models\GameEvent;
 use App\Models\Item;
 use Illuminate\Database\Seeder;
@@ -24,6 +25,13 @@ class GameEventSeeder extends Seeder
         'eventosArma'           => EventCategory::Weapon,
         'traicionAmigo'         => EventCategory::Betrayal,
         'aliadosAtacan'         => EventCategory::AllyAttack,
+    ];
+
+    /** Valor de "fase" en el JSON => fase en la base de datos (sin "fase" = de día o de noche) */
+    public const PHASE_MAP = [
+        'cornucopia' => EventPhase::Bloodbath,
+        'dia'        => EventPhase::Day,
+        'noche'      => EventPhase::Night,
     ];
 
     public function run(): void
@@ -52,6 +60,7 @@ class GameEventSeeder extends Seeder
 
         return [
             'participants'     => $raw['numParticipantes'] ?? 2,
+            'phase'            => $this->phase($raw['fase'] ?? null),
             'actor_hp'         => $raw['danioPropio'] ?? 0,
             'target_hp'        => $raw['danioRival'] ?? 0,
             'actor_energy'     => $raw['energiaPropia'] ?? $energy,
@@ -59,6 +68,16 @@ class GameEventSeeder extends Seeder
             'gives_item_id'    => $this->itemId($raw['objeto'] ?? null, $itemIds),
             'requires_item_id' => $this->itemId($raw['requiere'] ?? $raw['arma'] ?? null, $itemIds),
         ];
+    }
+
+    private function phase(?string $value): ?EventPhase
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        return self::PHASE_MAP[$value]
+            ?? throw new RuntimeException("Fase desconocida en eventos.json: {$value} (usa cornucopia, dia o noche)");
     }
 
     /** 'BOTIQUIN' (nombre del enum de Java) => id del objeto 'botiquin' */

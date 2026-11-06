@@ -3,6 +3,7 @@
 namespace App\Simulation;
 
 use App\Enums\EventCategory;
+use App\Enums\EventPhase;
 use App\Enums\ItemType;
 use App\Models\GameEvent;
 use LogicException;
@@ -24,10 +25,16 @@ class Simulation
     public const DISCOVERY_CHANCE = 30;     // un evento individual es un descubrimiento
     public const ALLY_ATTACK_CHANCE = 30;   // dos aliados atacan juntos a un tercero (si se puede)
 
+    // En el baño de sangre todos corren hacia la Cornucopia: más grupos y más objetos
+    public const BLOODBATH_GROUP_CHANCE = 20;
+    public const BLOODBATH_DISCOVERY_CHANCE = 50;
+
     /** Máximo de miembros por alianza, para que no acaben todos en el mismo bando */
     public const MAX_ALLIANCE_SIZE = 3;
 
     private int $round = 0;
+
+    private EventPhase $phase = EventPhase::Bloodbath;
 
     /** @var Tribute[] */
     private array $tributes;
@@ -45,6 +52,12 @@ class Simulation
     public function round(): int
     {
         return $this->round;
+    }
+
+    /** La fase de la última ronda jugada (o de la primera, si aún no ha empezado) */
+    public function phase(): EventPhase
+    {
+        return $this->phase;
     }
 
     /** @return Tribute[] */
@@ -84,6 +97,7 @@ class Simulation
         }
 
         $this->round++;
+        $this->phase = EventPhase::forRound($this->round);
         $results = [];
 
         $dissolved = $this->dissolveFinalAlliance();
@@ -145,10 +159,12 @@ class Simulation
         $roll = $this->random->getInt(1, 100);
         $choice = null;
 
-        if ($roll <= self::GROUP_EVENT_CHANCE && $available >= 3) {
+        $groupChance = $this->phase === EventPhase::Bloodbath ? self::BLOODBATH_GROUP_CHANCE : self::GROUP_EVENT_CHANCE;
+
+        if ($roll <= $groupChance && $available >= 3) {
             $size = ($available >= 4 && $this->chance(50)) ? 4 : 3;
             $choice = $this->groupEvent($pending, $size);
-        } elseif ($roll <= self::GROUP_EVENT_CHANCE + self::PAIR_EVENT_CHANCE && $available >= 2) {
+        } elseif ($roll <= $groupChance + self::PAIR_EVENT_CHANCE && $available >= 2) {
             $choice = $this->allyAttackEvent($pending) ?? $this->pairEvent($pending[0], $pending[1]);
         }
 
@@ -176,7 +192,7 @@ class Simulation
         }
 
         $category = count($group) === 4 ? EventCategory::Quartet : EventCategory::Trio;
-        $event = $this->events->pick($category, $group[0], $this->random);
+        $event = $this->events->pick($category, $group[0], $this->random, $this->phase);
 
         return $event !== null ? [$event, $group] : null;
     }
@@ -233,7 +249,7 @@ class Simulation
             return null;
         }
 
-        $event = $this->events->pick(EventCategory::AllyAttack, $a, $this->random);
+        $event = $this->events->pick(EventCategory::AllyAttack, $a, $this->random, $this->phase);
 
         return $event !== null ? [$event, [$a, $ally, $victim]] : null;
     }
@@ -250,11 +266,11 @@ class Simulation
             $category = EventCategory::Duo;
         }
 
-        $event = $this->events->pick($category, $a, $this->random);
+        $event = $this->events->pick($category, $a, $this->random, $this->phase);
 
         // Si lleva un arma que no tiene eventos propios, pelea normal
         if ($event === null && $category === EventCategory::Weapon) {
-            $event = $this->events->pick(EventCategory::Duo, $a, $this->random);
+            $event = $this->events->pick(EventCategory::Duo, $a, $this->random, $this->phase);
         }
 
         return $event !== null ? [$event, [$a, $b]] : null;
@@ -262,11 +278,14 @@ class Simulation
 
     private function soloEvent(Tribute $a): array
     {
-        $category = $this->chance(self::DISCOVERY_CHANCE) ? EventCategory::Discovery : EventCategory::Solo;
+        $discoveryChance = $this->phase === EventPhase::Bloodbath ? self::BLOODBATH_DISCOVERY_CHANCE : self::DISCOVERY_CHANCE;
+        $category = $this->chance($discoveryChance) ? EventCategory::Discovery : EventCategory::Solo;
 
-        $event = $this->events->pick($category, $a, $this->random)
-            ?? $this->events->pick(EventCategory::Solo, $a, $this->random)
-            ?? $this->events->pick(EventCategory::Discovery, $a, $this->random);
+        $event = $this->events->pick($category, $a, $this->random, $this->phase)
+            ?? $this->events->pick(EventCategory::Solo, $a, $this->random, $this->phase)
+            ?? $this->events->pick(EventCategory::Discovery, $a, $this->random, $this->phase)
+            // Por si todos los eventos individuales fueran de otra fase
+            ?? $this->events->pick(EventCategory::Solo, $a, $this->random);
 
         if ($event === null) {
             throw new RuntimeException('No hay eventos individuales: revisa los seeders');

@@ -38,7 +38,8 @@
             "danioPropio": 2,
             "danioRival": 0,
             "energiaPropia": 10,
-            "energiaRival": 0
+            "energiaRival": 0,
+            "fase": "noche"
         },
         {
             "descripcion": "{A} pasó la noche a la intemperie bajo una lluvia ácida",
@@ -46,7 +47,8 @@
             "danioPropio": -2,
             "danioRival": 0,
             "energiaPropia": -5,
-            "energiaRival": 0
+            "energiaRival": 0,
+            "fase": "noche"
         },
         {
             "descripcion": "{A} fue atacad{A:o/a} por una jauría de perros abandonados",
@@ -78,7 +80,8 @@
             "danioPropio": 2,
             "danioRival": 0,
             "energiaPropia": 8,
-            "energiaRival": 0
+            "energiaRival": 0,
+            "fase": "noche"
         },
         {
             "descripcion": "{A} encontró una máquina expendedora que aún funcionaba",
@@ -111,6 +114,87 @@
             "danioRival": 0,
             "energiaPropia": 0,
             "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} no pudo dormir por los aullidos que llegaban de la ciudad",
+            "numParticipantes": 1,
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": -5,
+            "energiaRival": 0,
+            "fase": "noche"
+        },
+        {
+            "descripcion": "{A} encendió una hoguera dentro de un bidón y entró en calor",
+            "numParticipantes": 1,
+            "danioPropio": 2,
+            "danioRival": 0,
+            "energiaPropia": 6,
+            "energiaRival": 0,
+            "fase": "noche"
+        },
+        {
+            "descripcion": "{A} oyó pasos en la oscuridad y pasó la noche en vela",
+            "numParticipantes": 1,
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": -6,
+            "energiaRival": 0,
+            "fase": "noche"
+        },
+        {
+            "descripcion": "{A} durmió en el techo de un autobús para que no l{A:o/a} alcanzaran los perros",
+            "numParticipantes": 1,
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": 6,
+            "energiaRival": 0,
+            "fase": "noche"
+        },
+        {
+            "descripcion": "{A} miró al cielo mientras proyectaban los rostros de los caídos",
+            "numParticipantes": 1,
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": 0,
+            "energiaRival": 0,
+            "fase": "noche"
+        },
+        {
+            "descripcion": "{A} huyó de la Cornucopia sin mirar atrás",
+            "numParticipantes": 1,
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": -4,
+            "energiaRival": 0,
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} se escondió entre los coches calcinados hasta que pasó el peligro",
+            "numParticipantes": 1,
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": 0,
+            "energiaRival": 0,
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} tropezó en la estampida y se torció un tobillo",
+            "numParticipantes": 1,
+            "danioPropio": -3,
+            "danioRival": 0,
+            "energiaPropia": -3,
+            "energiaRival": 0,
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} corrió hacia los túneles del metro antes de que empezara la matanza",
+            "numParticipantes": 1,
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": -3,
+            "energiaRival": 0,
+            "fase": "cornucopia"
         }
     ],
     "eventosDescubrimiento": [
@@ -168,6 +252,42 @@
             "descripcion": "{A} sacó un generador de escudo personal de un laboratorio en ruinas",
             "numParticipantes": 1,
             "objeto": "ESCUDO"
+        },
+        {
+            "descripcion": "{A} encontró un botiquín en una ambulancia abandonada a la luz de la luna",
+            "numParticipantes": 1,
+            "objeto": "BOTIQUIN",
+            "fase": "noche"
+        },
+        {
+            "descripcion": "{A} agarró un cuchillo de la Cornucopia y salió corriendo",
+            "numParticipantes": 1,
+            "objeto": "CUCHILLO",
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} se hizo con un chaleco antibalas del montón de suministros",
+            "numParticipantes": 1,
+            "objeto": "CHALECO",
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} le arrancó un botiquín de las manos a otro tributo",
+            "numParticipantes": 1,
+            "objeto": "BOTIQUIN",
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} encontró una mochila con bebidas energéticas junto a la Cornucopia",
+            "numParticipantes": 1,
+            "objeto": "BEBIDA_ENERGETICA",
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} consiguió una pistola de clavos de la Cornucopia",
+            "numParticipantes": 1,
+            "objeto": "PISTOLACLAVOS",
+            "fase": "cornucopia"
         }
     ],
     "eventosDuo": [
@@ -225,7 +345,8 @@
             "danioPropio": 0,
             "danioRival": -10,
             "energiaPropia": -1,
-            "energiaRival": 0
+            "energiaRival": 0,
+            "fase": "dia"
         },
         {
             "descripcion": "{A} y {B} quedaron atrapad{AB:os/as} en un tiroteo cruzado con una banda externa",
@@ -266,6 +387,42 @@
             "danioRival": 0,
             "energiaPropia": -8,
             "energiaRival": -8
+        },
+        {
+            "descripcion": "{A} atacó a {B} mientras dormía",
+            "numParticipantes": 2,
+            "danioPropio": 0,
+            "danioRival": -11,
+            "energiaPropia": -1,
+            "energiaRival": 0,
+            "fase": "noche"
+        },
+        {
+            "descripcion": "{A} y {B} forcejearon a ciegas durante un apagón",
+            "numParticipantes": 2,
+            "danioPropio": -4,
+            "danioRival": -4,
+            "energiaPropia": -2,
+            "energiaRival": -2,
+            "fase": "noche"
+        },
+        {
+            "descripcion": "{A} y {B} se pelearon por una mochila en la Cornucopia",
+            "numParticipantes": 2,
+            "danioPropio": -3,
+            "danioRival": -5,
+            "energiaPropia": -2,
+            "energiaRival": -2,
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} empujó a {B} desde lo alto de la Cornucopia",
+            "numParticipantes": 2,
+            "danioPropio": 0,
+            "danioRival": -9,
+            "energiaPropia": -1,
+            "energiaRival": 0,
+            "fase": "cornucopia"
         }
     ],
     "eventosTriple": [
@@ -356,6 +513,15 @@
             "danioRival": -6,
             "energiaPropia": -1,
             "energiaRival": -3
+        },
+        {
+            "descripcion": "{A}, {B} y {C} se lanzaron a la vez a por la misma arma",
+            "numParticipantes": 3,
+            "danioPropio": -4,
+            "danioRival": -4,
+            "energiaPropia": -3,
+            "energiaRival": -3,
+            "fase": "cornucopia"
         }
     ],
     "eventosCuatro": [
@@ -438,6 +604,15 @@
             "danioRival": -6,
             "energiaPropia": -2,
             "energiaRival": -6
+        },
+        {
+            "descripcion": "{A} disparó a ciegas contra {B}, {C} y {D} en plena Cornucopia",
+            "numParticipantes": 4,
+            "danioPropio": 0,
+            "danioRival": -6,
+            "energiaPropia": -2,
+            "energiaRival": 0,
+            "fase": "cornucopia"
         }
     ],
     "eventosAmigo": [
@@ -528,7 +703,26 @@
             "danioPropio": 0,
             "danioRival": 0,
             "energiaPropia": -5,
-            "energiaRival": 8
+            "energiaRival": 8,
+            "fase": "noche"
+        },
+        {
+            "descripcion": "{A} y {B} se turnaron para dormir",
+            "numParticipantes": 2,
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": 6,
+            "energiaRival": 6,
+            "fase": "noche"
+        },
+        {
+            "descripcion": "{A} y {B} compartieron el calor de una manta térmica",
+            "numParticipantes": 2,
+            "danioPropio": 2,
+            "danioRival": 2,
+            "energiaPropia": 3,
+            "energiaRival": 3,
+            "fase": "noche"
         }
     ],
     "traicionAmigo": [
@@ -571,6 +765,15 @@
             "danioRival": -9,
             "energiaPropia": 0,
             "energiaRival": -3
+        },
+        {
+            "descripcion": "{A} abandonó a {B} mientras dormía y se llevó sus provisiones",
+            "numParticipantes": 2,
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": 0,
+            "energiaRival": -4,
+            "fase": "noche"
         }
     ],
     "hacerAmigo": [
@@ -653,6 +856,15 @@
             "danioRival": -2,
             "energiaPropia": -2,
             "energiaRival": -2
+        },
+        {
+            "descripcion": "{A} y {B} se cubrieron mutuamente para escapar de la Cornucopia",
+            "numParticipantes": 2,
+            "danioPropio": -1,
+            "danioRival": -1,
+            "energiaPropia": -2,
+            "energiaRival": -2,
+            "fase": "cornucopia"
         }
     ],
     "eventosArma": [
@@ -793,6 +1005,15 @@
             "danioRival": -5,
             "energiaPropia": -2,
             "energiaRival": -6
+        },
+        {
+            "descripcion": "{A} y {B} asaltaron el campamento de {C} en plena noche",
+            "numParticipantes": 3,
+            "danioPropio": 0,
+            "danioRival": -9,
+            "energiaPropia": -2,
+            "energiaRival": 0,
+            "fase": "noche"
         }
     ]
 }

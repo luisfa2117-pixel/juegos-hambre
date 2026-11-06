@@ -1,5 +1,6 @@
 {{-- Campos compartidos por "crear" y "editar". Recibe $event e $items. --}}
 @use('App\Enums\EventCategory')
+@use('App\Enums\EventPhase')
 @use('App\Support\EventPreview')
 
 @php
@@ -19,6 +20,20 @@
             @endforeach
         </select>
         @error('category') <p class="field-error">{{ $message }}</p> @enderror
+    </div>
+
+    <div>
+        <label for="phase" class="field-label">Cuándo puede pasar</label>
+        <select id="phase" name="phase" class="field">
+            <option value="">De día o de noche</option>
+            @foreach (EventPhase::cases() as $phase)
+                <option value="{{ $phase->value }}" @selected(old('phase', $event->phase?->value) === $phase->value)>{{ $phase->label() }}</option>
+            @endforeach
+        </select>
+        <p class="mt-1 text-sm text-ash-muted">
+            En el baño de sangre (la primera ronda) salen los eventos de la Cornucopia; si un tipo no tiene ninguno, se usan los de día o de noche.
+        </p>
+        @error('phase') <p class="field-error">{{ $message }}</p> @enderror
     </div>
 
     <div>

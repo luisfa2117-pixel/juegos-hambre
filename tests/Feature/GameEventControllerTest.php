@@ -42,7 +42,7 @@ class GameEventControllerTest extends TestCase
     {
         $this->get(route('events.index'))
             ->assertOk()
-            ->assertSee('Todos (100)');
+            ->assertSee('Todos (126)');
 
         $this->get(route('events.index', ['category' => 'weapon']))
             ->assertOk()
@@ -80,6 +80,15 @@ class GameEventControllerTest extends TestCase
         $this->post(route('events.store'), $this->data(['target_hp' => -10]));
 
         $this->assertSame(0, GameEvent::where('text', 'like', '%cable de alta%')->value('target_hp'));
+    }
+
+    public function test_saves_when_the_event_can_happen(): void
+    {
+        $this->post(route('events.store'), $this->data(['phase' => 'night']))->assertSessionHasNoErrors();
+        $this->assertDatabaseHas('game_events', ['text' => '{A} tropezó con un cable de alta tensión', 'phase' => 'night']);
+
+        $this->post(route('events.store'), $this->data(['text' => '{A} se perdió', 'phase' => 'mediodia']))
+            ->assertSessionHasErrors('phase');
     }
 
     // ---- Validación del texto ----
@@ -202,6 +211,7 @@ class GameEventControllerTest extends TestCase
         $json = json_decode(File::get($path), true);
         $this->assertSame(GameEvent::count(), collect($json)->flatten(1)->count());
         $this->assertContains('{A} tropezó con un cable de alta tensión', array_column($json['eventosIndividuales'], 'descripcion'));
+        $this->assertSame('noche', collect($json['eventosIndividuales'])->firstWhere('descripcion', '{A} pasó la noche a la intemperie bajo una lluvia ácida')['fase']);
         $this->assertSame('PISTOLA', collect($json['eventosArma'])->firstWhere('descripcion', '{A} encañonó a {B} y le disparó a quemarropa')['requiere']);
 
         File::delete($path);

@@ -40,6 +40,7 @@
                         <p>{{ TextHighlighter::names(EventPreview::mixed($event->text), ['Avery', 'Dean', 'Hannah', 'Noah']) }}</p>
                         <p class="mt-0.5 text-sm text-ash-muted">
                             @unless ($category) {{ $event->category->label() }}. @endunless
+                            @if ($event->phase) {{ $event->phase->label() }}. @endif
                             {{ EventPreview::effects($event) }}
                             @if ($event->requiresItem) Necesita: {{ $event->requiresItem->name }}. @endif
                             @if ($event->givesItem) Da: {{ $event->givesItem->name }}. @endif

@@ -3,6 +3,7 @@
 namespace Tests\Unit\Simulation;
 
 use App\Enums\EventCategory;
+use App\Enums\EventPhase;
 use App\Enums\Gender;
 use App\Enums\ItemType;
 use App\Models\District;
@@ -306,6 +307,65 @@ class SimulationTest extends TestCase
         }
 
         $this->assertGreaterThan(0, $seen, 'Ningún ataque conjunto en 60 partidas');
+    }
+
+    public function test_first_round_is_the_bloodbath_and_then_day_and_night_alternate(): void
+    {
+        $simulation = $this->simulation($this->tributes(), $this->harmlessPool(), 1);
+        $phases = [];
+
+        for ($i = 0; $i < 5; $i++) {
+            $simulation->runRound();
+            $phases[] = $simulation->phase();
+        }
+
+        $this->assertSame(
+            [EventPhase::Bloodbath, EventPhase::Day, EventPhase::Night, EventPhase::Day, EventPhase::Night],
+            $phases,
+        );
+    }
+
+    public function test_events_only_happen_in_their_phase(): void
+    {
+        $pool = new EventPool([
+            $this->event(EventCategory::Solo, '[cualquiera] {A}'),
+            $this->event(EventCategory::Solo, '[noche] {A}', ['phase' => EventPhase::Night]),
+            $this->event(EventCategory::Solo, '[cornucopia] {A}', ['phase' => EventPhase::Bloodbath]),
+        ]);
+
+        foreach (range(1, 20) as $seed) {
+            $simulation = $this->simulation($this->tributes(), $pool, $seed);
+
+            for ($i = 0; $i < 5; $i++) {
+                foreach ($simulation->runRound() as $result) {
+                    $phase = $simulation->phase();
+
+                    if ($phase === EventPhase::Bloodbath) {
+                        // Hay evento de la Cornucopia, así que en el baño de sangre solo sale ese
+                        $this->assertStringStartsWith('[cornucopia]', $result->text);
+                    } else {
+                        $this->assertStringStartsNotWith('[cornucopia]', $result->text);
+                    }
+
+                    if ($phase === EventPhase::Day) {
+                        $this->assertStringStartsNotWith('[noche]', $result->text);
+                    }
+                }
+            }
+        }
+    }
+
+    public function test_bloodbath_falls_back_to_any_time_events(): void
+    {
+        $pool = new EventPool([
+            $this->event(EventCategory::Solo, '[cualquiera] {A}'),
+            $this->event(EventCategory::Solo, '[noche] {A}', ['phase' => EventPhase::Night]),
+        ]);
+        $simulation = $this->simulation($this->tributes(2), $pool, 3);
+
+        foreach ($simulation->runRound() as $result) {
+            $this->assertStringStartsWith('[cualquiera]', $result->text);
+        }
     }
 
     public function test_last_survivor_is_the_winner_and_no_more_rounds_can_be_played(): void

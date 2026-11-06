@@ -1,3 +1,4 @@
+@use('App\Enums\EventPhase')
 @use('App\Simulation\Tribute')
 @use('App\Support\TextHighlighter')
 
@@ -24,11 +25,24 @@
         {{-- El relato, ronda a ronda --}}
         <div>
             @foreach ($visibleRounds as $gameRound)
-                @php $deaths = collect($gameRound->events)->pluck('deaths')->flatten(); @endphp
+                @php
+                    $deaths = collect($gameRound->events)->pluck('deaths')->flatten();
+                    $phase = EventPhase::forRound($gameRound->number);
+                @endphp
 
                 <section aria-labelledby="ronda-{{ $gameRound->number }}" class="mt-10 first:mt-0">
-                    <h2 id="ronda-{{ $gameRound->number }}" class="hazard-stripes mb-2 scroll-mt-6 rounded-sm p-2">
-                        <span class="rounded-sm bg-asphalt px-3 py-1 font-display text-2xl text-hazard">Ronda {{ $gameRound->number }}</span>
+                    <h2 id="ronda-{{ $gameRound->number }}" @class([
+                        'mb-2 scroll-mt-6 rounded-sm p-2',
+                        'blood-stripes' => $phase === EventPhase::Bloodbath,
+                        'hazard-stripes' => $phase === EventPhase::Day,
+                        'night-stripes' => $phase === EventPhase::Night,
+                    ])>
+                        <span @class([
+                            'rounded-sm bg-asphalt px-3 py-1 font-display text-2xl',
+                            'text-blood' => $phase === EventPhase::Bloodbath,
+                            'text-hazard' => $phase === EventPhase::Day,
+                            'text-night' => $phase === EventPhase::Night,
+                        ])>{{ EventPhase::roundTitle($gameRound->number) }}</span>
                     </h2>
 
                     <ul class="divide-y divide-asphalt-line/60">
@@ -96,7 +110,7 @@
                                     <span class="text-sm text-ash-muted">{{ $tribute->district->name }}</span>
                                 </span>
                                 <span class="text-sm text-ash-muted">
-                                    {{ $tribute->died_in_round ? "Murió en la ronda {$tribute->died_in_round}" : 'Sobrevivió' }}
+                                    {{ $tribute->died_in_round ? 'Murió en: ' . mb_strtolower(EventPhase::roundTitle($tribute->died_in_round)) : 'Sobrevivió' }}
                                 </span>
                             </li>
                         @endforeach
@@ -122,7 +136,7 @@
 
         {{-- Estado de los tributos tras la última ronda vista --}}
         <aside class="lg:sticky lg:top-6 lg:self-start">
-            <h2 class="mb-3 font-condensed text-xl font-semibold">Tras la ronda {{ $round }}</h2>
+            <h2 class="mb-3 font-condensed text-xl font-semibold">{{ EventPhase::afterRound($round) }}</h2>
 
             <ul class="space-y-3">
                 @foreach ($snapshot as $state)
@@ -161,7 +175,7 @@
                                 <p class="mt-1 text-xs text-ally">Alianza con {{ collect($state['allies'])->join(', ', ' y ') }}</p>
                             @endif
                         @else
-                            <p class="mt-2 text-xs text-blood">Murió en la ronda {{ $tribute->died_in_round }}</p>
+                            <p class="mt-2 text-xs text-blood">Murió en: {{ mb_strtolower(EventPhase::roundTitle($tribute->died_in_round)) }}</p>
                         @endif
                     </li>
                 @endforeach

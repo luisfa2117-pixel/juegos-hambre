@@ -53,6 +53,10 @@ class ExportEventsCommand extends Command
             'energiaRival' => $event->target_energy,
         ];
 
+        if ($event->phase) {
+            $json['fase'] = array_search($event->phase, GameEventSeeder::PHASE_MAP, true);
+        }
+
         if ($event->givesItem) {
             $json['objeto'] = strtoupper($event->givesItem->slug);
         }
