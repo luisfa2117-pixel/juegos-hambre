@@ -1,0 +1,522 @@
+{
+    "eventosIndividuales": [
+        {
+            "descripcion": "{A} bebió agua estancada de una fuente pública y contrajo una infección",
+            "danioPropio": -4,
+            "danioRival": 0,
+            "modEnergia": 0,
+            "numParticipantes": 1
+        },
+        {
+            "descripcion": "{A} encontró una ración militar MRE en un Humvee abandonado",
+            "danioPropio": 5,
+            "danioRival": 0,
+            "modEnergia": 0,
+            "numParticipantes": 1
+        },
+        {
+            "descripcion": "{A} fue herido por la metralla de una tubería de gas que explotó",
+            "danioPropio": -6,
+            "danioRival": 0,
+            "modEnergia": 0,
+            "numParticipantes": 1
+        },
+        {
+            "descripcion": "{A} saqueó una farmacia y encontró suministros médicos",
+            "danioPropio": 4,
+            "danioRival": 0,
+            "modEnergia": 0,
+            "numParticipantes": 1
+        },
+        {
+            "descripcion": "{A} se cortó profundamente al romper el escaparate de una tienda",
+            "danioPropio": -3,
+            "danioRival": 0,
+            "modEnergia": 0,
+            "numParticipantes": 1
+        },
+        {
+            "descripcion": "{A} hackeó un terminal de seguridad y obtuvo una ventaja táctica",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "modEnergia": 10,
+            "numParticipantes": 1
+        },
+        {
+            "descripcion": "{A} pasó la noche a la intemperie bajo una lluvia ácida",
+            "danioPropio": -2,
+            "danioRival": 0,
+            "modEnergia": -5,
+            "numParticipantes": 1
+        },
+        {
+            "descripcion": "{A} encontró una pistola con el número de serie borrado",
+            "danioPropio": 2,
+            "danioRival": 0,
+            "modEnergia": 0,
+            "numParticipantes": 1
+        },
+        {
+            "descripcion": "{A} fue atacado por una jauría de perros abandonados",
+            "danioPropio": -5,
+            "danioRival": 0,
+            "modEnergia": 0,
+            "numParticipantes": 1
+        },
+        {
+            "descripcion": "{A} encontró cafeína en una gasolinera y recuperó energías",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "modEnergia": 15,
+            "numParticipantes": 1
+        }
+    ],
+    "eventosDescubrimiento": [
+        {
+            "descripcion": "{A} encontró una caja de suministros intacta",
+            "objeto": "BOTIQUIN",
+            "numParticipantes": 1
+        },
+        {
+            "descripcion": "{A} rebuscó en la basura y tuvo suerte",
+            "objeto": "CUCHILLO",
+            "numParticipantes": 1
+        },
+        {
+            "descripcion": "{A} forzó la taquilla de un refugio abandonado",
+            "objeto": "CHALECO",
+            "numParticipantes": 1
+        },
+        {
+            "descripcion": "{A} encontró un cargamento patrocinado caído del cielo",
+            "objeto": "PISTOLACLAVOS",
+            "numParticipantes": 1
+        }
+    ],
+    "eventosDuo": [
+        {
+            "descripcion": "{A} le tendió una emboscada a {B} en un restaurante de comida rápida",
+            "danioPropio": 0,
+            "danioRival": -8,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} y {B} se dispararon a través de los pasillos de un hospital",
+            "danioPropio": -4,
+            "danioRival": -4,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} cegó a {B} con un puntero láser y lo apuñaló",
+            "danioPropio": 0,
+            "danioRival": -9,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} y {B} pelearon cuerpo a cuerpo en el fango bajo un puente",
+            "danioPropio": -5,
+            "danioRival": -5,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} arrojó un cóctel molotov hacia la posición de {B}",
+            "danioPropio": -1,
+            "danioRival": -7,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} atropelló accidentalmente a {B} con un carrito de golf",
+            "danioPropio": 0,
+            "danioRival": -5,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} disparó a {B} con un rifle de caza desde un tejado",
+            "danioPropio": 0,
+            "danioRival": -10,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} y {B} quedaron atrapados en un tiroteo cruzado con una banda externa",
+            "danioPropio": -6,
+            "danioRival": -6,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} asfixió a {B} en la oscuridad de un túnel de metro",
+            "danioPropio": 0,
+            "danioRival": -12,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} robó la mochila de {B} tras golpearlo con un bate",
+            "danioPropio": 2,
+            "danioRival": -6,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        }
+    ],
+    "eventosTriple": [
+        {
+            "descripcion": "{A}, {B} y {C} se enfrentaron en un tiroteo caótico",
+            "danioPropio": -4,
+            "danioRival": -4,
+            "modEnergia": -4,
+            "numParticipantes": 3
+        },
+        {
+            "descripcion": "{A} traicionó a {B} y {C} durante una alianza temporal",
+            "danioPropio": -2,
+            "danioRival": -6,
+            "modEnergia": -6,
+            "numParticipantes": 3
+        },
+        {
+            "descripcion": "{A}, {B} y {C} lucharon por una caja de suministros",
+            "danioPropio": -3,
+            "danioRival": -3,
+            "modEnergia": -3,
+            "numParticipantes": 3
+        },
+        {
+            "descripcion": "{A} lanzó una bomba casera hacia {B} y {C}",
+            "danioPropio": -2,
+            "danioRival": -7,
+            "modEnergia": -7,
+            "numParticipantes": 3
+        },
+        {
+            "descripcion": "{A}, {B} y {C} quedaron atrapados en un edificio en llamas",
+            "danioPropio": -5,
+            "danioRival": -5,
+            "modEnergia": -5,
+            "numParticipantes": 3
+        },
+        {
+            "descripcion": "{A} logró herir a {B}, pero {C} lo atacó por la espalda",
+            "danioPropio": -6,
+            "danioRival": -4,
+            "modEnergia": -2,
+            "numParticipantes": 3
+        },
+        {
+            "descripcion": "{A}, {B} y {C} se dispararon desde diferentes pisos",
+            "danioPropio": -3,
+            "danioRival": -3,
+            "modEnergia": -3,
+            "numParticipantes": 3
+        },
+        {
+            "descripcion": "{A} empujó a {B} hacia {C} para escapar",
+            "danioPropio": -1,
+            "danioRival": -5,
+            "modEnergia": -5,
+            "numParticipantes": 3
+        },
+        {
+            "descripcion": "{A}, {B} y {C} activaron una trampa automática",
+            "danioPropio": -6,
+            "danioRival": -6,
+            "modEnergia": -6,
+            "numParticipantes": 3
+        },
+        {
+            "descripcion": "{A} eliminó a {B} mientras {C} escapaba herido",
+            "danioPropio": -2,
+            "danioRival": -10,
+            "modEnergia": -4,
+            "numParticipantes": 3
+        }
+    ],
+    "eventosCuatro": [
+        {
+            "descripcion": "{A}, {B}, {C} y {D} se enfrentaron en medio de una autopista abandonada",
+            "danioPropio": -4,
+            "danioRival": -4,
+            "modEnergia": -4,
+            "numParticipantes": 4
+        },
+        {
+            "descripcion": "{A} lanzó un cóctel molotov hacia {B}, {C} y {D}",
+            "danioPropio": -3,
+            "danioRival": -6,
+            "modEnergia": -6,
+            "numParticipantes": 4
+        },
+        {
+            "descripcion": "{A}, {B}, {C} y {D} fueron atacados por torretas automáticas",
+            "danioPropio": -5,
+            "danioRival": -5,
+            "modEnergia": -5,
+            "numParticipantes": 4
+        },
+        {
+            "descripcion": "{A} traicionó al grupo y disparó contra {B}, {C} y {D}",
+            "danioPropio": -2,
+            "danioRival": -7,
+            "modEnergia": -7,
+            "numParticipantes": 4
+        },
+        {
+            "descripcion": "{A}, {B}, {C} y {D} pelearon por el control de una armería",
+            "danioPropio": -6,
+            "danioRival": -6,
+            "modEnergia": -6,
+            "numParticipantes": 4
+        },
+        {
+            "descripcion": "{A}, {B}, {C} y {D} quedaron atrapados en gas lacrimógeno",
+            "danioPropio": -3,
+            "danioRival": -3,
+            "modEnergia": -3,
+            "numParticipantes": 4
+        },
+        {
+            "descripcion": "{A} atacó mientras {B}, {C} y {D} discutían entre ellos",
+            "danioPropio": -1,
+            "danioRival": -5,
+            "modEnergia": -5,
+            "numParticipantes": 4
+        },
+        {
+            "descripcion": "{A}, {B}, {C} y {D} cayeron en una emboscada cruzada",
+            "danioPropio": -7,
+            "danioRival": -7,
+            "modEnergia": -7,
+            "numParticipantes": 4
+        },
+        {
+            "descripcion": "{A}, {B}, {C} y {D} sobrevivieron a una explosión cercana",
+            "danioPropio": -4,
+            "danioRival": -4,
+            "modEnergia": -4,
+            "numParticipantes": 4
+        },
+        {
+            "descripcion": "{A} eliminó a {B} mientras {C} y {D} resultaron heridos",
+            "danioPropio": -2,
+            "danioRival": -10,
+            "modEnergia": -5,
+            "numParticipantes": 4
+        }
+    ],
+    "eventosAmigo": [
+        {
+            "descripcion": "{A} compartió munición con {B}",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} cubrió a {B} durante un tiroteo",
+            "danioPropio": -3,
+            "danioRival": 0,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} salvó a {B} de una emboscada",
+            "danioPropio": -4,
+            "danioRival": 0,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} y {B} encontraron refugio juntos",
+            "danioPropio": 2,
+            "danioRival": 2,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} cargó con {B} herido hasta un lugar seguro",
+            "danioPropio": -5,
+            "danioRival": 3,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} dio su botiquín a {B}",
+            "danioPropio": -2,
+            "danioRival": 5,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} y {B} coordinaron un ataque exitoso",
+            "danioPropio": 0,
+            "danioRival": -6,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} animó a {B} cuando estaba a punto de rendirse",
+            "danioPropio": 1,
+            "danioRival": 1,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} defendió a {B} de un disparo lejano",
+            "danioPropio": -4,
+            "danioRival": 0,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} y {B} planearon su siguiente movimiento con éxito",
+            "danioPropio": 2,
+            "danioRival": 2,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} traicionó a {B} y le disparó por la espalda",
+            "danioPropio": 0,
+            "danioRival": -12,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} envenenó la comida que compartía con {B}",
+            "danioPropio": 0,
+            "danioRival": -8,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} empujó a {B} desde una azotea para quedarse con los suministros",
+            "danioPropio": -2,
+            "danioRival": -10,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} fingió cubrir a {B}, pero lo dejó expuesto al enemigo",
+            "danioPropio": -1,
+            "danioRival": -9,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        }
+    ],
+    "hacerAmigo": [
+        {
+            "descripcion": "{A} decidió no disparar a {B} y bajar su arma",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} ofreció comida a {B} en señal de paz",
+            "danioPropio": 1,
+            "danioRival": 1,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} ayudó a {B} a levantarse tras una caída",
+            "danioPropio": 0,
+            "danioRival": 2,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} compartió información sobre una zona peligrosa con {B}",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} protegió a {B} de un dron cercano",
+            "danioPropio": -3,
+            "danioRival": 0,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} permitió que {B} tomara un arma encontrada",
+            "danioPropio": 0,
+            "danioRival": 2,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} y {B} acordaron una tregua temporal",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} confió en {B} y le dio parte de sus suministros",
+            "danioPropio": -1,
+            "danioRival": 3,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} ayudó a {B} a esconderse de otros tributos",
+            "danioPropio": 0,
+            "danioRival": 2,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} y {B} sobrevivieron juntos a una amenaza cercana",
+            "danioPropio": 2,
+            "danioRival": 2,
+            "modEnergia": 0,
+            "numParticipantes": 2
+        }
+    ],
+    "eventosArma": [
+        {
+            "descripcion": "{A} se abalanzó sobre {B} y le hizo un corte profundo con su cuchillo",
+            "arma": "CUCHILLO",
+            "danioPropio": 0,
+            "danioRival": -10,
+            "energiaPropia": -2,
+            "energiaRival": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} lanzó su cuchillo de combate, clavándolo en el hombro de {B}",
+            "arma": "CUCHILLO",
+            "danioPropio": 0,
+            "danioRival": -8,
+            "energiaPropia": -1,
+            "energiaRival": 0,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} electrocutó a {B} con su taser, dejándolo paralizado",
+            "arma": "TASER",
+            "danioPropio": 0,
+            "danioRival": -5,
+            "energiaPropia": -3,
+            "energiaRival": -10,
+            "numParticipantes": 2
+        },
+        {
+            "descripcion": "{A} acribilló a {B} con la pistola de clavos desde una cobertura",
+            "arma": "PISTOLACLAVOS",
+            "danioPropio": 0,
+            "danioRival": -12,
+            "energiaPropia": 0,
+            "energiaRival": 0,
+            "numParticipantes": 2
+        }
+    ]
+}

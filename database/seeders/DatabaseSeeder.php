@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
         DistrictSeeder::class,
         ItemSeeder::class,
-        ]);
+        GameEventSeeder::class,
+    ]);
     }
 }
