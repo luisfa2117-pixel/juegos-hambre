@@ -17,6 +17,8 @@ class ItemSeeder extends Seeder
             ['slug' => 'chaleco',           'name' => 'Chaleco antibalas',  'type' => ItemType::Armor,  'power' => 5],
             ['slug' => 'botiquin',          'name' => 'Botiquín médico',    'type' => ItemType::Heal,   'power' => 10],
             ['slug' => 'bebida_energetica', 'name' => 'Bebida energética',  'type' => ItemType::Energy, 'power' => 5],
+            ['slug' => 'pistola',           'name' => 'Pistola sin número de serie',     'type' => ItemType::Weapon, 'power' => 10],
+            ['slug' => 'escudo',            'name' => 'Generador de escudo personal',    'type' => ItemType::Armor,  'power' => 8],
         ];
 
         foreach ($items as $data) {

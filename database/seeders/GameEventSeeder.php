@@ -22,6 +22,7 @@ class GameEventSeeder extends Seeder
         'hacerAmigo'            => EventCategory::Befriend,
         'eventosDescubrimiento' => EventCategory::Discovery,
         'eventosArma'           => EventCategory::Weapon,
+        'traicionAmigo'         => EventCategory::Betrayal,
     ];
 
     public function run(): void
@@ -55,7 +56,7 @@ class GameEventSeeder extends Seeder
             'actor_energy'     => $raw['energiaPropia'] ?? $energy,
             'target_energy'    => $raw['energiaRival'] ?? $energy,
             'gives_item_id'    => $this->itemId($raw['objeto'] ?? null, $itemIds),
-            'requires_item_id' => $this->itemId($raw['arma'] ?? null, $itemIds),
+            'requires_item_id' => $this->itemId($raw['requiere'] ?? $raw['arma'] ?? null, $itemIds),
         ];
     }
 

@@ -12,4 +12,5 @@ enum EventCategory: string
     case Befriend  = 'befriend';   // 2 desconocidos que se hacen aliados
     case Discovery = 'discovery';  // 1 tributo encuentra un objeto
     case Weapon    = 'weapon';     // ataque que requiere un arma concreta
+    case Betrayal  = 'betrayal';   // un aliado traiciona al otro
 }
