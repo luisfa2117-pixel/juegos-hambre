@@ -207,6 +207,19 @@ class SimulationTest extends TestCase
         $this->assertTrue($used);
     }
 
+    public function test_alliance_dissolves_when_only_its_members_remain(): void
+    {
+        [$dean, $avery, $deSanti, $hannah] = $this->tributes(4);
+        $dean->befriend($avery);
+        $dean->befriend($deSanti);
+        $hannah->changeHp(-20);
+        $simulation = $this->simulation([$dean, $avery, $deSanti, $hannah], $this->harmlessPool(), 1);
+
+        $results = $simulation->runRound();
+
+        $this->assertSame('Solo quedan Dean, Avery y De Santi. Solo puede haber un ganador.', $results[0]->text);
+    }
+
     public function test_alliance_breaks_when_only_two_allies_remain(): void
     {
         [$dean, $avery, $hannah] = $this->tributes(3);
@@ -224,6 +237,39 @@ class SimulationTest extends TestCase
         foreach (array_slice($results, 1) as $result) {
             $this->assertStringStartsNotWith('[ally]', $result->text);
             $this->assertStringStartsNotWith('[betrayal]', $result->text);
+        }
+    }
+
+    public function test_allies_are_never_in_the_same_group_event(): void
+    {
+        foreach (range(1, 50) as $seed) {
+            $tributes = $this->tributes();
+            [$dean, $avery, $deSanti] = $tributes;
+            $dean->befriend($avery);
+            $dean->befriend($deSanti);
+            $simulation = $this->simulation($tributes, $this->harmlessPool(), $seed);
+
+            foreach ($simulation->runRound() as $result) {
+                if (count($result->participants) >= 3) {
+                    $allies = array_intersect($result->participants, ['Dean', 'Avery', 'De Santi']);
+                    $this->assertLessThanOrEqual(1, count($allies), "Semilla {$seed}: {$result->text}");
+                }
+            }
+        }
+    }
+
+    public function test_alliances_never_grow_beyond_the_maximum(): void
+    {
+        foreach (range(1, 20) as $seed) {
+            $simulation = $this->simulation($this->tributes(), $this->harmlessPool(), $seed);
+
+            for ($round = 0; $round < 15; $round++) {
+                $simulation->runRound();
+
+                foreach ($simulation->tributes() as $tribute) {
+                    $this->assertLessThanOrEqual(Simulation::MAX_ALLIANCE_SIZE, count($tribute->alliance()));
+                }
+            }
         }
     }
 

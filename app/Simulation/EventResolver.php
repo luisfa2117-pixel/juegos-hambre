@@ -75,12 +75,12 @@ class EventResolver
         // 4. Alianzas
         if ($event->category === EventCategory::Befriend) {
             $actor->befriend($targets[0]);
-            $notes[] = "🤝 {$actor->name} y {$targets[0]->name} ahora son aliados.";
+            $notes[] = $this->allianceNote($actor);
         }
 
         if ($event->category === EventCategory::Betrayal) {
-            $actor->breakAllianceWith($targets[0]);
-            $notes[] = "💔 La alianza entre {$actor->name} y {$targets[0]->name} se ha roto.";
+            $actor->leaveAlliance();
+            $notes[] = "💔 {$actor->name} rompe con su alianza y va por su cuenta.";
         }
 
         // 5. Muertes
@@ -99,7 +99,7 @@ class EventResolver
         }
 
         return new EventResult(
-            text: $this->formatText($event->text, $participants),
+            text: TextFormatter::format($event->text, $participants),
             notes: $notes,
             deaths: $deaths,
             participants: array_map(fn (Tribute $t) => $t->name, $participants),
@@ -189,12 +189,17 @@ class EventResolver
         return $notes;
     }
 
-    /** "{A} disparó a {B}" => "Dean disparó a Avery" */
-    private function formatText(string $text, array $participants): string
+    /** "Dean y Avery ahora son aliados" o, si ya eran más, quién forma la alianza */
+    private function allianceNote(Tribute $actor): string
     {
-        $labels = ['{A}', '{B}', '{C}', '{D}'];
-        $names = array_map(fn (Tribute $t) => $t->name, $participants);
+        $alliance = $actor->alliance();
 
-        return str_replace(array_slice($labels, 0, count($names)), $names, $text);
+        if (count($alliance) === 2) {
+            $allies = TextFormatter::gendered($alliance, 'aliados', 'aliadas');
+
+            return '🤝 ' . TextFormatter::names($alliance) . " ahora son {$allies}.";
+        }
+
+        return '🤝 La alianza ahora la forman ' . TextFormatter::names($alliance) . '.';
     }
 }

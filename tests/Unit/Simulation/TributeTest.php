@@ -142,18 +142,15 @@ class TributeTest extends TestCase
 
     // ---- Alianzas ----
 
-    public function test_alliance_is_mutual_and_can_be_broken(): void
+    public function test_alliance_is_mutual(): void
     {
         $dean = $this->tribute(name: 'Dean');
         $avery = $this->tribute(name: 'Avery');
 
         $dean->befriend($avery);
+
         $this->assertTrue($dean->isAllyOf($avery));
         $this->assertTrue($avery->isAllyOf($dean));
-
-        $avery->breakAllianceWith($dean);
-        $this->assertFalse($dean->isAllyOf($avery));
-        $this->assertFalse($avery->isAllyOf($dean));
     }
 
     public function test_befriending_twice_does_not_duplicate(): void
@@ -166,5 +163,44 @@ class TributeTest extends TestCase
 
         $this->assertCount(1, $dean->allies());
         $this->assertCount(1, $avery->allies());
+    }
+
+    public function test_joining_someone_joins_their_whole_alliance(): void
+    {
+        $dean = $this->tribute(name: 'Dean');
+        $avery = $this->tribute(name: 'Avery');
+        $noah = $this->tribute(name: 'Noah');
+        $dean->befriend($avery);
+
+        $noah->befriend($dean);
+
+        $this->assertTrue($noah->isAllyOf($avery));   // Noah y Avery también son aliados
+        $this->assertCount(3, $avery->alliance());
+    }
+
+    public function test_leaving_the_alliance_breaks_it_with_everyone(): void
+    {
+        $dean = $this->tribute(name: 'Dean');
+        $avery = $this->tribute(name: 'Avery');
+        $noah = $this->tribute(name: 'Noah');
+        $dean->befriend($avery);
+        $dean->befriend($noah);
+
+        $dean->leaveAlliance();
+
+        $this->assertFalse($dean->isAllyOf($avery));
+        $this->assertFalse($noah->isAllyOf($dean));
+        $this->assertTrue($avery->isAllyOf($noah));   // los demás siguen juntos
+    }
+
+    public function test_dead_tribute_leaves_the_alliance(): void
+    {
+        $dean = $this->tribute(name: 'Dean');
+        $avery = $this->tribute(name: 'Avery');
+        $dean->befriend($avery);
+
+        $avery->changeHp(-20);
+
+        $this->assertSame([], $dean->allies());
     }
 }

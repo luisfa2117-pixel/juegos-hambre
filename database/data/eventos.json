@@ -17,7 +17,7 @@
             "energiaRival": 0
         },
         {
-            "descripcion": "{A} fue herido por la metralla de una tubería de gas que explotó",
+            "descripcion": "{A} fue herid{A:o/a} por la metralla de una tubería de gas que explotó",
             "numParticipantes": 1,
             "danioPropio": -6,
             "danioRival": 0,
@@ -49,7 +49,7 @@
             "energiaRival": 0
         },
         {
-            "descripcion": "{A} fue atacado por una jauría de perros abandonados",
+            "descripcion": "{A} fue atacad{A:o/a} por una jauría de perros abandonados",
             "numParticipantes": 1,
             "danioPropio": -5,
             "danioRival": 0,
@@ -97,7 +97,7 @@
             "energiaRival": 0
         },
         {
-            "descripcion": "{A} quedó atrapado en un ascensor durante horas y salió agotado",
+            "descripcion": "{A} quedó atrapad{A:o/a} en un ascensor durante horas y salió agotad{A:o/a}",
             "numParticipantes": 1,
             "danioPropio": 0,
             "danioRival": 0,
@@ -188,7 +188,7 @@
             "energiaRival": -2
         },
         {
-            "descripcion": "{A} cegó a {B} con un puntero láser y lo apuñaló",
+            "descripcion": "{A} cegó a {B} con un puntero láser y l{B:o/a} apuñaló",
             "numParticipantes": 2,
             "danioPropio": 0,
             "danioRival": -9,
@@ -228,7 +228,7 @@
             "energiaRival": 0
         },
         {
-            "descripcion": "{A} y {B} quedaron atrapados en un tiroteo cruzado con una banda externa",
+            "descripcion": "{A} y {B} quedaron atrapad{AB:os/as} en un tiroteo cruzado con una banda externa",
             "numParticipantes": 2,
             "danioPropio": -6,
             "danioRival": -6,
@@ -260,7 +260,7 @@
             "energiaRival": 0
         },
         {
-            "descripcion": "{A} y {B} se persiguieron por una autopista hasta caer rendidos",
+            "descripcion": "{A} y {B} se persiguieron por una autopista hasta caer rendid{AB:os/as}",
             "numParticipantes": 2,
             "danioPropio": 0,
             "danioRival": 0,
@@ -302,7 +302,7 @@
             "energiaRival": -3
         },
         {
-            "descripcion": "{A}, {B} y {C} quedaron atrapados en un edificio en llamas",
+            "descripcion": "{A}, {B} y {C} quedaron atrapad{ABC:os/as} en un edificio en llamas",
             "numParticipantes": 3,
             "danioPropio": -5,
             "danioRival": -5,
@@ -310,7 +310,7 @@
             "energiaRival": -5
         },
         {
-            "descripcion": "{A} hirió a {B} y a {C} antes de que lo rodearan",
+            "descripcion": "{A} hirió a {B} y a {C} antes de que l{A:o/a} rodearan",
             "numParticipantes": 3,
             "danioPropio": -6,
             "danioRival": -4,
@@ -376,7 +376,7 @@
             "energiaRival": -4
         },
         {
-            "descripcion": "{A}, {B}, {C} y {D} fueron atacados por torretas automáticas",
+            "descripcion": "{A}, {B}, {C} y {D} fueron atacad{ABCD:os/as} por torretas automáticas",
             "numParticipantes": 4,
             "danioPropio": -5,
             "danioRival": -5,
@@ -400,7 +400,7 @@
             "energiaRival": -4
         },
         {
-            "descripcion": "{A}, {B}, {C} y {D} quedaron atrapados en gas lacrimógeno",
+            "descripcion": "{A}, {B}, {C} y {D} quedaron atrapad{ABCD:os/as} en gas lacrimógeno",
             "numParticipantes": 4,
             "danioPropio": -3,
             "danioRival": -3,
@@ -466,7 +466,7 @@
             "energiaRival": 0
         },
         {
-            "descripcion": "{A} y {B} encontraron refugio juntos",
+            "descripcion": "{A} y {B} encontraron refugio junt{AB:os/as}",
             "numParticipantes": 2,
             "danioPropio": 2,
             "danioRival": 2,
@@ -474,7 +474,7 @@
             "energiaRival": 5
         },
         {
-            "descripcion": "{A} cargó con {B} herido hasta un lugar seguro",
+            "descripcion": "{A} cargó con {B} herid{B:o/a} hasta un lugar seguro",
             "numParticipantes": 2,
             "danioPropio": 0,
             "danioRival": 3,
@@ -491,7 +491,7 @@
             "requiere": "BOTIQUIN"
         },
         {
-            "descripcion": "{A} y {B} asaltaron juntos un puesto de suministros",
+            "descripcion": "{A} y {B} asaltaron junt{AB:os/as} un puesto de suministros",
             "numParticipantes": 2,
             "danioPropio": 3,
             "danioRival": 3,
@@ -557,7 +557,7 @@
             "energiaRival": 0
         },
         {
-            "descripcion": "{A} fingió cubrir a {B}, pero lo dejó expuesto al enemigo",
+            "descripcion": "{A} fingió cubrir a {B}, pero l{B:o/a} dejó expuest{B:o/a} al enemigo",
             "numParticipantes": 2,
             "danioPropio": -1,
             "danioRival": -9,
@@ -647,7 +647,7 @@
             "energiaRival": 2
         },
         {
-            "descripcion": "{A} y {B} sobrevivieron juntos a un ataque de drones",
+            "descripcion": "{A} y {B} sobrevivieron junt{AB:os/as} a un ataque de drones",
             "numParticipantes": 2,
             "danioPropio": -2,
             "danioRival": -2,
@@ -675,7 +675,7 @@
             "requiere": "CUCHILLO"
         },
         {
-            "descripcion": "{A} electrocutó a {B} con su taser, dejándolo paralizado",
+            "descripcion": "{A} electrocutó a {B} con su taser, dejándol{B:o/a} paralizad{B:o/a}",
             "numParticipantes": 2,
             "danioPropio": 0,
             "danioRival": -5,

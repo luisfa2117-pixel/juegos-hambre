@@ -25,14 +25,14 @@ class EventResolverTest extends TestCase
 
     // ---- Ayudantes para crear datos de prueba sin base de datos ----
 
-    private function tribute(string $name, int $strengthBonus = 0): Tribute
+    private function tribute(string $name, int $strengthBonus = 0, Gender $gender = Gender::Male): Tribute
     {
         $district = new District([
             'slug' => 'test', 'name' => 'Distrito de prueba',
             'strength_bonus' => $strengthBonus, 'energy_bonus' => 0,
         ]);
 
-        return new Tribute($name, Gender::Male, $district);
+        return new Tribute($name, $gender, $district);
     }
 
     private function item(string $slug, ItemType $type, int $power): Item
@@ -74,6 +74,17 @@ class EventResolverTest extends TestCase
         $result = $this->resolver->apply($event, [$this->tribute('Dean'), $this->tribute('Avery')]);
 
         $this->assertSame('Dean disparó a Avery desde un tejado', $result->text);
+    }
+
+    public function test_uses_gender_markers(): void
+    {
+        $event = $this->event(EventCategory::Ally, '{A} y {B} asaltaron junt{AB:os/as} un puesto', ['participants' => 2]);
+        $avery = $this->tribute('Avery', gender: Gender::Female);
+        $avril = $this->tribute('Avril', gender: Gender::Female);
+
+        $result = $this->resolver->apply($event, [$avery, $avril]);
+
+        $this->assertSame('Avery y Avril asaltaron juntas un puesto', $result->text);
     }
 
     // ---- Vida y energía ----
@@ -269,11 +280,26 @@ class EventResolverTest extends TestCase
         $dean = $this->tribute('Dean');
         $avery = $this->tribute('Avery');
 
-        $this->resolver->apply($this->event(EventCategory::Befriend, '{A} y {B} acordaron una tregua'), [$dean, $avery]);
+        $result = $this->resolver->apply($this->event(EventCategory::Befriend, '{A} y {B} acordaron una tregua'), [$dean, $avery]);
         $this->assertTrue($dean->isAllyOf($avery));
+        $this->assertSame('🤝 Dean y Avery ahora son aliados.', $result->notes[0]);
 
-        $this->resolver->apply($this->event(EventCategory::Betrayal, '{A} traicionó a {B}', ['target_hp' => -12]), [$dean, $avery]);
+        $this->resolver->apply($this->event(EventCategory::Betrayal, '{A} traicionó a {B}', ['target_hp' => -5]), [$dean, $avery]);
         $this->assertFalse($dean->isAllyOf($avery));
+    }
+
+    public function test_traitor_leaves_the_whole_alliance(): void
+    {
+        $dean = $this->tribute('Dean');
+        $avery = $this->tribute('Avery');
+        $noah = $this->tribute('Noah');
+        $dean->befriend($avery);
+        $dean->befriend($noah);
+
+        $this->resolver->apply($this->event(EventCategory::Betrayal, '{A} traicionó a {B}', ['target_hp' => -5]), [$dean, $avery]);
+
+        $this->assertFalse($dean->isAllyOf($noah));
+        $this->assertTrue($avery->isAllyOf($noah));
     }
 
     // ---- Errores ----

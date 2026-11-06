@@ -90,6 +90,11 @@ class Tribute
         $before = $this->hp;
         $this->hp = max(0, min(self::MAX_HP, $this->hp + $amount));
 
+        // Los muertos dejan de contar en su alianza
+        if (! $this->isAlive()) {
+            $this->leaveAlliance();
+        }
+
         return $this->hp - $before;
     }
 
@@ -161,11 +166,18 @@ class Tribute
     }
 
     // ---- Alianzas ----
+    // Una alianza es un grupo: todos sus miembros son aliados entre sí.
 
-    /** @return Tribute[] */
+    /** @return Tribute[] Los aliados (sin contarse a sí mismo) */
     public function allies(): array
     {
         return $this->allies;
+    }
+
+    /** @return Tribute[] Toda la alianza, incluido él mismo */
+    public function alliance(): array
+    {
+        return [$this, ...$this->allies];
     }
 
     public function isAllyOf(Tribute $other): bool
@@ -173,21 +185,30 @@ class Tribute
         return in_array($other, $this->allies, true);
     }
 
-    /** Alianza mutua: los dos quedan como aliados del otro. */
+    /**
+     * Une las alianzas de los dos: si Dean ya iba con Avery y se alía con Noah,
+     * quedan Dean, Avery y Noah, todos aliados entre sí.
+     */
     public function befriend(Tribute $other): void
     {
         if ($other === $this || $this->isAllyOf($other)) {
             return;
         }
 
-        $this->allies[] = $other;
-        $other->allies[] = $this;
+        $members = [...$this->alliance(), ...$other->alliance()];
+
+        foreach ($members as $member) {
+            $member->allies = array_values(array_filter($members, fn (Tribute $t) => $t !== $member));
+        }
     }
 
-    /** Rompe la alianza por los dos lados. */
-    public function breakAllianceWith(Tribute $other): void
+    /** Sale de su alianza: deja de ser aliado de todos y todos dejan de serlo de él. */
+    public function leaveAlliance(): void
     {
-        $this->allies = array_values(array_filter($this->allies, fn (Tribute $t) => $t !== $other));
-        $other->allies = array_values(array_filter($other->allies, fn (Tribute $t) => $t !== $this));
+        foreach ($this->allies as $ally) {
+            $ally->allies = array_values(array_filter($ally->allies, fn (Tribute $t) => $t !== $this));
+        }
+
+        $this->allies = [];
     }
 }

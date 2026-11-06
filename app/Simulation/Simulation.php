@@ -23,6 +23,9 @@ class Simulation
     public const WEAPON_CHANCE = 60;        // quien lleva arma la usa en una pelea
     public const DISCOVERY_CHANCE = 30;     // un evento individual es un descubrimiento
 
+    /** Máximo de miembros por alianza, para que no acaben todos en el mismo bando */
+    public const MAX_ALLIANCE_SIZE = 3;
+
     private int $round = 0;
 
     /** @var Tribute[] */
@@ -82,9 +85,9 @@ class Simulation
         $this->round++;
         $results = [];
 
-        $finalDuel = $this->breakFinalAlliance();
-        if ($finalDuel !== null) {
-            $results[] = $finalDuel;
+        $dissolved = $this->dissolveFinalAlliance();
+        if ($dissolved !== null) {
+            $results[] = $dissolved;
         }
 
         $pending = $this->random->shuffleArray($this->alive());
@@ -105,24 +108,27 @@ class Simulation
     }
 
     /**
-     * Si los dos últimos supervivientes son aliados, la alianza se rompe:
-     * solo puede haber un ganador. Sin esto, dos aliados podían pasarse
-     * decenas de rondas cuidándose el uno al otro.
+     * Si todos los supervivientes son de la misma alianza, se disuelve:
+     * solo puede haber un ganador. Sin esto, los últimos aliados podían pasarse
+     * decenas de rondas cuidándose unos a otros.
      */
-    private function breakFinalAlliance(): ?EventResult
+    private function dissolveFinalAlliance(): ?EventResult
     {
         $alive = $this->alive();
 
-        if (count($alive) !== 2 || ! $alive[0]->isAllyOf($alive[1])) {
+        if (count($alive) < 2 || count($alive[0]->alliance()) !== count($alive)) {
             return null;
         }
 
-        [$a, $b] = $alive;
-        $a->breakAllianceWith($b);
+        foreach ($alive as $tribute) {
+            $tribute->leaveAlliance();
+        }
+
+        $names = TextFormatter::names($alive);
 
         return new EventResult(
-            text: "Solo quedan {$a->name} y {$b->name}. Solo puede haber un ganador.",
-            notes: ["💔 La alianza entre {$a->name} y {$b->name} se ha roto."],
+            text: "Solo quedan {$names}. Solo puede haber un ganador.",
+            notes: ['💔 La alianza se ha roto.'],
         );
     }
 
@@ -140,7 +146,7 @@ class Simulation
 
         if ($roll <= self::GROUP_EVENT_CHANCE && $available >= 3) {
             $size = ($available >= 4 && $this->chance(50)) ? 4 : 3;
-            $choice = $this->groupEvent(array_slice($pending, 0, $size));
+            $choice = $this->groupEvent($pending, $size);
         } elseif ($roll <= self::GROUP_EVENT_CHANCE + self::PAIR_EVENT_CHANCE && $available >= 2) {
             $choice = $this->pairEvent($pending[0], $pending[1]);
         }
@@ -149,20 +155,63 @@ class Simulation
         return $choice ?? $this->soloEvent($pending[0]);
     }
 
-    /** @param Tribute[] $group */
-    private function groupEvent(array $group): ?array
+    /**
+     * Evento de 3 o 4 tributos. Nunca junta a aliados: en estos eventos todos
+     * se hacen daño entre sí, y los aliados no se atacan.
+     *
+     * @param Tribute[] $pending
+     */
+    private function groupEvent(array $pending, int $size): ?array
     {
+        $group = $this->groupWithoutAllies($pending, $size);
+
+        // Si no hay 4 sin aliados entre ellos, quizá haya 3
+        if ($group === null && $size === 4) {
+            $group = $this->groupWithoutAllies($pending, 3);
+        }
+
+        if ($group === null) {
+            return null;
+        }
+
         $category = count($group) === 4 ? EventCategory::Quartet : EventCategory::Trio;
         $event = $this->events->pick($category, $group[0], $this->random);
 
         return $event !== null ? [$event, $group] : null;
     }
 
+    /**
+     * Va cogiendo tributos en orden, saltándose a los aliados de los que ya están.
+     *
+     * @param Tribute[] $candidates
+     * @return Tribute[]|null null si no consigue reunir $size
+     */
+    private function groupWithoutAllies(array $candidates, int $size): ?array
+    {
+        $group = [];
+
+        foreach ($candidates as $candidate) {
+            foreach ($group as $member) {
+                if ($member->isAllyOf($candidate)) {
+                    continue 2;   // salta al siguiente candidato
+                }
+            }
+
+            $group[] = $candidate;
+
+            if (count($group) === $size) {
+                return $group;
+            }
+        }
+
+        return null;
+    }
+
     private function pairEvent(Tribute $a, Tribute $b): ?array
     {
         if ($a->isAllyOf($b)) {
             $category = $this->chance(self::BETRAYAL_CHANCE) ? EventCategory::Betrayal : EventCategory::Ally;
-        } elseif ($this->chance(self::FRIENDSHIP_CHANCE)) {
+        } elseif ($this->canAlly($a, $b) && $this->chance(self::FRIENDSHIP_CHANCE)) {
             $category = EventCategory::Befriend;
         } elseif ($a->bestItemOfType(ItemType::Weapon) !== null && $this->chance(self::WEAPON_CHANCE)) {
             $category = EventCategory::Weapon;
@@ -193,6 +242,12 @@ class Simulation
         }
 
         return [$event, [$a]];
+    }
+
+    /** ¿Cabrían los dos (con sus alianzas) en una sola sin pasar del máximo? */
+    private function canAlly(Tribute $a, Tribute $b): bool
+    {
+        return count($a->alliance()) + count($b->alliance()) <= self::MAX_ALLIANCE_SIZE;
     }
 
     /** true con un $percent % de probabilidad */
