@@ -3,7 +3,7 @@
         <a href="{{ route('characters.index') }}" class="text-sm text-ash-muted hover:text-hazard">Volver a personajes</a>
         <h1 class="mt-2 mb-8 font-display text-4xl">Crear personaje</h1>
 
-        <form method="POST" action="{{ route('characters.store') }}">
+        <form method="POST" action="{{ route('characters.store') }}" enctype="multipart/form-data">
             @csrf
             @include('characters._form')
 

@@ -30,7 +30,7 @@
                                 <label class="flex cursor-pointer items-center gap-3 rounded-sm px-2 py-1.5 hover:bg-asphalt-raised">
                                     <input type="checkbox" name="characters[]" value="{{ $character->id }}" class="size-4 accent-hazard"
                                            @checked(in_array($character->id, old('characters', $allIds)))>
-                                    <x-tribute-avatar :name="$character->name" :district="$district->slug" size="sm" />
+                                    <x-tribute-avatar :name="$character->name" :district="$district->slug" :image="$character->image_url" size="sm" />
                                     {{ $character->name }}
                                 </label>
                             @endforeach

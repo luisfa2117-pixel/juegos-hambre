@@ -21,7 +21,7 @@
                     <a href="{{ route('games.show', $game) }}"
                        class="flex items-center gap-4 px-2 py-4 hover:bg-asphalt-raised focus-visible:outline-2 focus-visible:outline-hazard">
                         @if ($winner)
-                            <x-tribute-avatar :name="$winner->name" :district="$winner->district->slug" />
+                            <x-tribute-avatar :name="$winner->name" :district="$winner->district->slug" :image="$winner->character?->image_url" />
                         @else
                             <span class="inline-flex size-10 shrink-0 items-center justify-center rounded-full border border-dashed border-asphalt-line text-ash-muted" aria-hidden="true">?</span>
                         @endif

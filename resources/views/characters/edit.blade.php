@@ -3,7 +3,7 @@
         <a href="{{ route('characters.index') }}" class="text-sm text-ash-muted hover:text-hazard">Volver a personajes</a>
         <h1 class="mt-2 mb-8 font-display text-4xl">Editar a {{ $character->name }}</h1>
 
-        <form method="POST" action="{{ route('characters.update', $character) }}">
+        <form method="POST" action="{{ route('characters.update', $character) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             @include('characters._form')

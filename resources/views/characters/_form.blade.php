@@ -9,6 +9,27 @@
         @error('name') <p class="field-error">{{ $message }}</p> @enderror
     </div>
 
+    <div>
+        <label for="image" class="field-label">Foto</label>
+        <div class="flex items-center gap-4">
+            <x-tribute-avatar :name="$character->name ?? '?'" :district="$character->district?->slug"
+                              :image="$character->image_url" size="lg" />
+            <div class="space-y-2">
+                <input id="image" name="image" type="file" accept="image/jpeg,image/png,image/webp"
+                       class="block text-sm text-ash-muted file:mr-3 file:rounded-sm file:border-0 file:bg-asphalt-raised file:px-3 file:py-1.5 file:text-ash hover:file:bg-asphalt-line">
+                <p class="text-sm text-ash-muted">Opcional. JPG, PNG o WebP de hasta 2 MB. Se verá recortada en un círculo.</p>
+
+                @if ($character->image_path)
+                    <label class="flex items-center gap-2 text-sm">
+                        <input type="checkbox" name="remove_image" value="1" class="accent-blood" @checked(old('remove_image'))>
+                        Quitar la foto actual
+                    </label>
+                @endif
+            </div>
+        </div>
+        @error('image') <p class="field-error">{{ $message }}</p> @enderror
+    </div>
+
     <fieldset>
         <legend class="field-label">Género</legend>
         <p class="mb-2 text-sm text-ash-muted">Sirve para que los textos concuerden: «fue herido» o «fue herida».</p>

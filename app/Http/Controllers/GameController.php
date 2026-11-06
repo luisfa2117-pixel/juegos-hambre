@@ -17,7 +17,7 @@ class GameController extends Controller
     public function index(): View
     {
         return view('games.index', [
-            'games' => Game::with('tributes.district')->latest()->paginate(15),
+            'games' => Game::with(['tributes.district', 'tributes.character'])->latest()->paginate(15),
         ]);
     }
 
@@ -49,7 +49,7 @@ class GameController extends Controller
     /** Muestra las rondas de la 1 a la que diga ?round=N */
     public function show(Request $request, Game $game): View
     {
-        $game->load(['tributes.district', 'rounds']);
+        $game->load(['tributes.district', 'tributes.character', 'rounds']);
 
         // Si alguien pone ?round=999 o ?round=-3 en la URL, lo dejamos dentro de los límites
         $round = min(max((int) $request->query('round', 1), 1), $game->total_rounds);

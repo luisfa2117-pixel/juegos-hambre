@@ -1,10 +1,9 @@
 {{--
-    Hueco de la imagen de un tributo. De momento: iniciales sobre el color de su distrito.
-    Cuando los personajes tengan foto, solo habrá que cambiar este fichero.
+    La imagen de un tributo: su foto si tiene, o sus iniciales sobre el color de su distrito.
 
-    Uso: <x-tribute-avatar name="Avery" district="costa_este" size="sm" :dead="true" />
+    Uso: <x-tribute-avatar name="Avery" district="costa_este" :image="$url" size="sm" :dead="true" />
 --}}
-@props(['name', 'district' => null, 'size' => 'md', 'dead' => false])
+@props(['name', 'district' => null, 'image' => null, 'size' => 'md', 'dead' => false])
 
 @php
     $colors = [
@@ -27,6 +26,15 @@
         ->implode('');
 @endphp
 
+@if ($image)
+    {{-- alt vacío: el nombre ya aparece escrito al lado, el lector de pantalla no necesita repetirlo --}}
+    <img src="{{ $image }}" alt=""
+         {{ $attributes->class([
+             'shrink-0 rounded-full bg-asphalt-line object-cover',
+             $sizes[$size] ?? $sizes['md'],
+             'opacity-40 grayscale' => $dead,
+         ]) }}>
+@else
 <span {{ $attributes->class([
         'inline-flex shrink-0 items-center justify-center rounded-full font-semibold text-asphalt',
         $sizes[$size] ?? $sizes['md'],
@@ -34,3 +42,4 @@
     ]) }}
     style="background-color: {{ $colors[$district] ?? '#a3acb6' }}"
     aria-hidden="true">{{ $initials }}</span>
+@endif

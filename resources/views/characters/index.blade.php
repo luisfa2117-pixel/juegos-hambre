@@ -33,7 +33,8 @@
                     <ul class="grid gap-3 sm:grid-cols-2">
                         @foreach ($district->characters as $character)
                             <li class="flex items-center justify-between gap-4 rounded-sm bg-asphalt-raised px-4 py-3">
-                                <div>
+                                <x-tribute-avatar :name="$character->name" :district="$district->slug" :image="$character->image_url" />
+                                <div class="min-w-0 flex-1">
                                     <p class="text-lg font-semibold">{{ $character->name }}</p>
                                     <p class="text-sm text-ash-muted">
                                         {{ $character->gender->label() }}.

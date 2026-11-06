@@ -28,6 +28,9 @@ class CharacterRequest extends FormRequest
             ],
             'gender' => ['required', Rule::enum(Gender::class)],
             'district_id' => ['required', 'integer', 'exists:districts,id'],
+            // max se mide en kilobytes: 2048 = 2 MB
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'remove_image' => ['nullable', 'boolean'],
         ];
     }
 
@@ -42,6 +45,10 @@ class CharacterRequest extends FormRequest
             'district_id.required' => 'Elige un distrito.',
             'district_id.integer' => 'Elige un distrito de la lista.',
             'district_id.exists' => 'Elige un distrito de la lista.',
+            'image.image' => 'El fichero tiene que ser una imagen.',
+            'image.mimes' => 'La foto tiene que ser JPG, PNG o WebP.',
+            'image.max' => 'La foto puede pesar como mucho 2 MB.',
+            'image.uploaded' => 'No se ha podido subir la foto. Prueba con una más pequeña.',
         ];
     }
 }

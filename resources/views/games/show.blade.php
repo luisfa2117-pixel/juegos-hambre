@@ -70,7 +70,7 @@
                 <section id="resultado" class="mt-12 scroll-mt-6">
                     @if ($winner)
                         <div class="flex items-center gap-5 rounded-sm bg-asphalt-raised p-6">
-                            <x-tribute-avatar :name="$winner->name" :district="$winner->district->slug" size="lg" />
+                            <x-tribute-avatar :name="$winner->name" :district="$winner->district->slug" :image="$winner->character?->image_url" size="lg" />
                             <div>
                                 <p class="font-display text-3xl text-hazard sm:text-4xl">{{ $winner->name }} gana los Juegos</p>
                                 <p class="mt-1 text-ash-muted">
@@ -90,7 +90,7 @@
                         @foreach ($game->tributes as $tribute)
                             <li class="flex items-center gap-3 py-2">
                                 <span class="w-8 text-right font-condensed text-xl text-ash-muted">{{ $tribute->placement }}.</span>
-                                <x-tribute-avatar :name="$tribute->name" :district="$tribute->district->slug" size="sm" />
+                                <x-tribute-avatar :name="$tribute->name" :district="$tribute->district->slug" :image="$tribute->character?->image_url" size="sm" />
                                 <span class="flex-1">
                                     <span class="font-semibold">{{ $tribute->name }}</span>
                                     <span class="text-sm text-ash-muted">{{ $tribute->district->name }}</span>
@@ -130,7 +130,7 @@
 
                     <li @class(['rounded-sm bg-asphalt-raised p-3', 'opacity-60' => ! $state['alive']])>
                         <div class="flex items-center gap-3">
-                            <x-tribute-avatar :name="$state['name']" :district="$tribute->district->slug" size="sm" :dead="! $state['alive']" />
+                            <x-tribute-avatar :name="$state['name']" :district="$tribute->district->slug" :image="$tribute->character?->image_url" size="sm" :dead="! $state['alive']" />
                             <div class="min-w-0">
                                 <p @class(['font-semibold', 'line-through decoration-blood' => ! $state['alive']])>{{ $state['name'] }}</p>
                                 <p class="truncate text-xs text-ash-muted">{{ $tribute->district->name }}</p>
