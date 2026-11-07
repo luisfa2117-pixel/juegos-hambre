@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Enums\EventCategory;
 use App\Enums\EventPhase;
+use App\Enums\Personality;
 use App\Enums\ItemType;
 use App\Rules\EventText;
 use Illuminate\Foundation\Http\FormRequest;
@@ -39,6 +40,7 @@ class GameEventRequest extends FormRequest
             ]),
 
             'phase' => ['nullable', Rule::enum(EventPhase::class)],
+            'personality' => ['nullable', Rule::enum(Personality::class)],
 
             'actor_hp' => $stat,
             'actor_energy' => $stat,
@@ -72,6 +74,7 @@ class GameEventRequest extends FormRequest
             'text.max' => 'El texto puede tener como mucho 255 caracteres.',
             'text.unique' => 'Ya hay un evento de este tipo con ese mismo texto.',
             'phase.enum' => 'Elige cuándo puede pasar de la lista.',
+            'personality.enum' => 'Elige una personalidad de la lista.',
             '*.required' => 'Este campo es obligatorio.',
             'actor_hp.between' => $between,
             'actor_energy.between' => $between,
@@ -93,6 +96,7 @@ class GameEventRequest extends FormRequest
 
         $data['requires_item_id'] ??= null;
         $data['phase'] ??= null;
+        $data['personality'] ??= null;
         $data['gives_item_id'] = $category === EventCategory::Discovery ? ($data['gives_item_id'] ?? null) : null;
 
         // En los eventos de una persona no hay "los demás"

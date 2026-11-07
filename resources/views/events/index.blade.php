@@ -41,6 +41,7 @@
                         <p class="mt-0.5 text-sm text-ash-muted">
                             @unless ($category) {{ $event->category->label() }}. @endunless
                             @if ($event->phase) {{ $event->phase->label() }}. @endif
+                            @if ($event->personality) Solo para: {{ $event->personality->label() }}. @endif
                             {{ EventPreview::effects($event) }}
                             @if ($event->requiresItem) Necesita: {{ $event->requiresItem->name }}. @endif
                             @if ($event->givesItem) Da: {{ $event->givesItem->name }}. @endif

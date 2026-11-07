@@ -1,6 +1,7 @@
 {{-- Campos compartidos por "crear" y "editar". Recibe $event e $items. --}}
 @use('App\Enums\EventCategory')
 @use('App\Enums\EventPhase')
+@use('App\Enums\Personality')
 @use('App\Support\EventPreview')
 
 @php
@@ -34,6 +35,22 @@
             En el baño de sangre (la primera ronda) salen los eventos de la Cornucopia; si un tipo no tiene ninguno, se usan los de día o de noche.
         </p>
         @error('phase') <p class="field-error">{{ $message }}</p> @enderror
+    </div>
+
+    <div>
+        <label for="personality" class="field-label">Solo para la personalidad</label>
+        <select id="personality" name="personality" class="field">
+            <option value="">Cualquier tributo</option>
+            @foreach (Personality::cases() as $personality)
+                <option value="{{ $personality->value }}" @selected(old('personality', $event->personality?->value) === $personality->value)>
+                    {{ $personality->label() }}
+                </option>
+            @endforeach
+        </select>
+        <p class="mt-1 text-sm text-ash-muted">
+            Si eliges una personalidad, solo puede protagonizarlo (A) un tributo que la tenga, y le saldrá más a menudo.
+        </p>
+        @error('personality') <p class="field-error">{{ $message }}</p> @enderror
     </div>
 
     <div>

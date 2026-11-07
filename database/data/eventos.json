@@ -624,6 +624,114 @@
             "energiaPropia": -4,
             "energiaRival": 0,
             "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} golpeó una pared hasta hacerse sangre para descargar la rabia",
+            "numParticipantes": 1,
+            "personalidad": "agresivo",
+            "danioPropio": -1,
+            "danioRival": 0,
+            "energiaPropia": -2,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} gritó desafiando a los demás tributos a que vinieran a por {A:él/ella}",
+            "numParticipantes": 1,
+            "personalidad": "agresivo",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": -1,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} afiló todo lo que encontró, deseando cruzarse con alguien",
+            "numParticipantes": 1,
+            "personalidad": "agresivo",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": -3,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} se escondió temblando mientras los demás peleaban",
+            "numParticipantes": 1,
+            "personalidad": "cobarde",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": -2,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} no se atrevió a salir de su escondite en todo el día",
+            "numParticipantes": 1,
+            "personalidad": "cobarde",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": 3,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} huyó al oír un ruido... que resultó ser una rata",
+            "numParticipantes": 1,
+            "personalidad": "cobarde",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": -5,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} lloró en silencio dentro de un armario",
+            "numParticipantes": 1,
+            "personalidad": "cobarde",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": -2,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} pensó en su familia y se prometió volver a casa",
+            "numParticipantes": 1,
+            "personalidad": "leal",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": 3,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} ensayó en voz baja las mentiras que contaría a sus próximos aliados",
+            "numParticipantes": 1,
+            "personalidad": "traicionero",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": 0,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} construyó un filtro de agua con arena y carbón",
+            "numParticipantes": 1,
+            "personalidad": "ingenioso",
+            "danioPropio": 3,
+            "danioRival": 0,
+            "energiaPropia": 2,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} rodeó su refugio de latas para que sonaran si alguien se acercaba",
+            "numParticipantes": 1,
+            "personalidad": "ingenioso",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": 4,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} habló a las cámaras y se ganó al público",
+            "numParticipantes": 1,
+            "personalidad": "sociable",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": 3,
+            "energiaRival": 0
         }
     ],
     "eventosDescubrimiento": [
@@ -901,6 +1009,42 @@
             "numParticipantes": 1,
             "objeto": "ESCUDO_POLICIAL",
             "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} fabricó unas vendas con trozos de sábana y alcohol",
+            "numParticipantes": 1,
+            "personalidad": "ingenioso",
+            "objeto": "VENDAS"
+        },
+        {
+            "descripcion": "{A} construyó un taser con una batería de coche y unos cables",
+            "numParticipantes": 1,
+            "personalidad": "ingenioso",
+            "objeto": "TASER"
+        },
+        {
+            "descripcion": "{A} preparó una bebida energética con café, azúcar y pastillas de cafeína",
+            "numParticipantes": 1,
+            "personalidad": "ingenioso",
+            "objeto": "BEBIDA_ENERGETICA"
+        },
+        {
+            "descripcion": "{A} reforzó una chaqueta con placas de metal y se hizo un chaleco",
+            "numParticipantes": 1,
+            "personalidad": "ingenioso",
+            "objeto": "CHALECO"
+        },
+        {
+            "descripcion": "{A} convirtió una pistola de clavos de una obra en un arma de verdad",
+            "numParticipantes": 1,
+            "personalidad": "ingenioso",
+            "objeto": "PISTOLACLAVOS"
+        },
+        {
+            "descripcion": "{A} conquistó a los patrocinadores con un discurso y le enviaron un botiquín",
+            "numParticipantes": 1,
+            "personalidad": "sociable",
+            "objeto": "BOTIQUIN"
         }
     ],
     "eventosDuo": [
@@ -1443,6 +1587,69 @@
             "energiaPropia": -2,
             "energiaRival": 0,
             "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} se lanzó contra {B} sin pensarlo dos veces",
+            "numParticipantes": 2,
+            "personalidad": "agresivo",
+            "danioPropio": 0,
+            "danioRival": -9,
+            "energiaPropia": -3,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} provocó a {B} hasta que no le quedó más remedio que pelear",
+            "numParticipantes": 2,
+            "personalidad": "agresivo",
+            "danioPropio": -2,
+            "danioRival": -7,
+            "energiaPropia": -2,
+            "energiaRival": -2
+        },
+        {
+            "descripcion": "{A} persiguió a {B} durante horas por el placer de cazarl{B:o/a}",
+            "numParticipantes": 2,
+            "personalidad": "agresivo",
+            "danioPropio": 0,
+            "danioRival": -6,
+            "energiaPropia": -6,
+            "energiaRival": -6
+        },
+        {
+            "descripcion": "{A} se cruzó con {B} y salió corriendo sin mirar atrás",
+            "numParticipantes": 2,
+            "personalidad": "cobarde",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": -6,
+            "energiaRival": -2
+        },
+        {
+            "descripcion": "{A} le suplicó a {B} que no l{A:o/a} matara, y {B} se marchó",
+            "numParticipantes": 2,
+            "personalidad": "cobarde",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": 0,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} tendió una trampa con un cable de acero y {B} cayó de lleno",
+            "numParticipantes": 2,
+            "personalidad": "ingenioso",
+            "danioPropio": 0,
+            "danioRival": -9,
+            "energiaPropia": -1,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} intentó convencer a {B} de que no pelearan y se llevó un puñetazo",
+            "numParticipantes": 2,
+            "personalidad": "sociable",
+            "danioPropio": -4,
+            "danioRival": 0,
+            "energiaPropia": 0,
+            "energiaRival": -1
         }
     ],
     "eventosTriple": [
@@ -2147,6 +2354,106 @@
             "energiaPropia": -3,
             "energiaRival": -3,
             "fase": "dia"
+        },
+        {
+            "descripcion": "{A} convenció a {B} de que tenían que salir a cazar tributos",
+            "numParticipantes": 2,
+            "personalidad": "agresivo",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": -2,
+            "energiaRival": -2
+        },
+        {
+            "descripcion": "{A} se escondió detrás de {B} en cuanto oyó pasos",
+            "numParticipantes": 2,
+            "personalidad": "cobarde",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": 0,
+            "energiaRival": -2
+        },
+        {
+            "descripcion": "{A} se interpuso entre {B} y una bala",
+            "numParticipantes": 2,
+            "personalidad": "leal",
+            "danioPropio": -9,
+            "danioRival": 0,
+            "energiaPropia": 0,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} juró que protegería a {B} hasta el final",
+            "numParticipantes": 2,
+            "personalidad": "leal",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": 2,
+            "energiaRival": 3
+        },
+        {
+            "descripcion": "{A} volvió a por {B}, que se había quedado atrás",
+            "numParticipantes": 2,
+            "personalidad": "leal",
+            "danioPropio": 0,
+            "danioRival": 2,
+            "energiaPropia": -4,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} sonrió a {B} mientras pensaba cómo deshacerse de {B:él/ella}",
+            "numParticipantes": 2,
+            "personalidad": "traicionero",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": 0,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} le quitó a {B} unas provisiones sin que se diera cuenta",
+            "numParticipantes": 2,
+            "personalidad": "traicionero",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": 3,
+            "energiaRival": -3
+        },
+        {
+            "descripcion": "{A} animó a {B} a ir delante por si había trampas",
+            "numParticipantes": 2,
+            "personalidad": "traicionero",
+            "danioPropio": 0,
+            "danioRival": -4,
+            "energiaPropia": 0,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} le enseñó a {B} a fabricar trampas con lo que encontraban",
+            "numParticipantes": 2,
+            "personalidad": "ingenioso",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": -1,
+            "energiaRival": 2
+        },
+        {
+            "descripcion": "{A} hizo reír a {B} contando anécdotas de su distrito",
+            "numParticipantes": 2,
+            "personalidad": "sociable",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": 3,
+            "energiaRival": 3
+        },
+        {
+            "descripcion": "{A} organizó los turnos de guardia para que {B} pudiera descansar",
+            "numParticipantes": 2,
+            "personalidad": "sociable",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": 2,
+            "energiaRival": 4,
+            "fase": "noche"
         }
     ],
     "traicionAmigo": [
@@ -2263,6 +2570,43 @@
             "energiaPropia": 0,
             "energiaRival": 0,
             "fase": "noche"
+        },
+        {
+            "descripcion": "{A} se cansó de esperar y atacó a {B}, su propi{B:o/a} aliad{B:o/a}",
+            "numParticipantes": 2,
+            "personalidad": "agresivo",
+            "danioPropio": 0,
+            "danioRival": -12,
+            "energiaPropia": -2,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} abandonó a {B} en cuanto vio aparecer a los mutos",
+            "numParticipantes": 2,
+            "personalidad": "cobarde",
+            "danioPropio": 0,
+            "danioRival": -6,
+            "energiaPropia": -4,
+            "energiaRival": -4
+        },
+        {
+            "descripcion": "{A} esperó a que {B} se durmiera para clavarle un cuchillo",
+            "numParticipantes": 2,
+            "personalidad": "traicionero",
+            "danioPropio": 0,
+            "danioRival": -14,
+            "energiaPropia": 0,
+            "energiaRival": 0,
+            "fase": "noche"
+        },
+        {
+            "descripcion": "{A} le dio a {B} agua envenenada con una sonrisa",
+            "numParticipantes": 2,
+            "personalidad": "traicionero",
+            "danioPropio": 0,
+            "danioRival": -10,
+            "energiaPropia": 0,
+            "energiaRival": -4
         }
     ],
     "hacerAmigo": [
@@ -2461,6 +2805,69 @@
             "energiaPropia": -2,
             "energiaRival": -2,
             "fase": "dia"
+        },
+        {
+            "descripcion": "{A} le rogó a {B} que l{A:o/a} dejara ir con {B:él/ella}",
+            "numParticipantes": 2,
+            "personalidad": "cobarde",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": 0,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} ofreció su ayuda a {B} sin pedir nada a cambio",
+            "numParticipantes": 2,
+            "personalidad": "leal",
+            "danioPropio": 0,
+            "danioRival": 2,
+            "energiaPropia": 0,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} cargó con {B}, que estaba herid{B:o/a}, hasta un lugar seguro",
+            "numParticipantes": 2,
+            "personalidad": "leal",
+            "danioPropio": 0,
+            "danioRival": 2,
+            "energiaPropia": -6,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} se ganó la confianza de {B} con una sonrisa falsa",
+            "numParticipantes": 2,
+            "personalidad": "traicionero",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": 0,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} le prometió a {B} que lucharían junt{AB:os/as} hasta el final",
+            "numParticipantes": 2,
+            "personalidad": "traicionero",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": 0,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} se puso a charlar con {B} como si estuvieran en un bar, y acabaron aliándose",
+            "numParticipantes": 2,
+            "personalidad": "sociable",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": 0,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} convenció a {B} de que junt{AB:os/as} tendrían más posibilidades",
+            "numParticipantes": 2,
+            "personalidad": "sociable",
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": 0,
+            "energiaRival": 0
         }
     ],
     "eventosArma": [
@@ -2896,6 +3303,33 @@
             "energiaPropia": -4,
             "energiaRival": -10,
             "fase": "dia"
+        },
+        {
+            "descripcion": "{A} se lanzó al ataque y {B} tuvo que seguirl{A:o/a} contra {C}",
+            "numParticipantes": 3,
+            "personalidad": "agresivo",
+            "danioPropio": -1,
+            "danioRival": -10,
+            "energiaPropia": -2,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} y {B} defendieron su alianza cuando {C} intentó atacarl{AB:os/as}",
+            "numParticipantes": 3,
+            "personalidad": "leal",
+            "danioPropio": -2,
+            "danioRival": -8,
+            "energiaPropia": -2,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} entretuvo a {C} con una conversación mientras {B} se acercaba por detrás",
+            "numParticipantes": 3,
+            "personalidad": "sociable",
+            "danioPropio": 0,
+            "danioRival": -10,
+            "energiaPropia": -1,
+            "energiaRival": 0
         }
     ],
     "catastrofes": [

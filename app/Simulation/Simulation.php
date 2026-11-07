@@ -35,6 +35,12 @@ class Simulation
     public const BLOODBATH_GROUP_CHANCE = 30;
     public const BLOODBATH_DISCOVERY_CHANCE = 60;
 
+    /** Probabilidad de que, si hay eventos propios de la personalidad del actor, salga uno de ellos */
+    public const PERSONALITY_EVENT_CHANCE = 35;
+
+    /** Los compañeros de distrito se alían más fácilmente */
+    public const DISTRICT_FRIENDSHIP_BONUS = 25;
+
     /** Máximo de miembros por alianza, para que no acaben todos en el mismo bando */
     public const MAX_ALLIANCE_SIZE = 3;
 
@@ -347,22 +353,34 @@ class Simulation
         return [$event, [$a]];
     }
 
-    /** Pide un evento al EventPool con la fase actual, evitando los ya usados en la ronda */
+    /**
+     * Pide un evento al EventPool con la fase actual, evitando los ya usados en la ronda.
+     * Si el actor tiene eventos propios de su personalidad, hay un PERSONALITY_EVENT_CHANCE % de que salga uno.
+     */
     private function pick(EventCategory $category, Tribute $actor, bool $anyPhase = false): ?GameEvent
     {
+        $ownPersonality = $this->events->hasPersonalityEvents($category, $actor)
+            && $this->chance(self::PERSONALITY_EVENT_CHANCE);
+
         return $this->events->pick(
             $category,
             $actor,
             $this->random,
             $anyPhase ? null : $this->phase,
             $this->usedThisRound,
+            $ownPersonality,
         );
     }
 
-    /** ¿Cabrían los dos (con sus alianzas) en una sola sin pasar del máximo? */
+    /**
+     * ¿Pueden aliarse? Solo si la alianza que formarían no pasa del máximo
+     * y no deja a TODOS los supervivientes en el mismo bando (se rompería en la ronda siguiente).
+     */
     private function canAlly(Tribute $a, Tribute $b): bool
     {
-        return count($a->alliance()) + count($b->alliance()) <= self::MAX_ALLIANCE_SIZE;
+        $size = count($a->alliance()) + count($b->alliance());
+
+        return $size <= self::MAX_ALLIANCE_SIZE && $size < count($this->alive());
     }
 
     /** Lo que la personalidad del tributo suma o resta a una decisión (0 si es equilibrado) */
@@ -377,10 +395,17 @@ class Simulation
         return $this->chance(max(0, min(100, $percent + $this->modifier($tribute, $decision))));
     }
 
-    /** Hacerse aliados es cosa de dos: cuenta la media de las personalidades de ambos */
+    /**
+     * Hacerse aliados es cosa de dos: cuenta la media de las personalidades de ambos,
+     * y si son del mismo distrito, más fácil todavía.
+     */
     private function friendshipChance(Tribute $a, Tribute $b): bool
     {
         $modifier = intdiv($this->modifier($a, Personality::FRIENDSHIP) + $this->modifier($b, Personality::FRIENDSHIP), 2);
+
+        if ($a->district->slug === $b->district->slug) {
+            $modifier += self::DISTRICT_FRIENDSHIP_BONUS;
+        }
 
         return $this->chance(max(0, min(100, self::FRIENDSHIP_CHANCE + $modifier)));
     }

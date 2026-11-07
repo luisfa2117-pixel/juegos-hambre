@@ -82,6 +82,9 @@ class EventPool
      * Los eventos de $avoid (los que ya han salido esta ronda) se evitan mientras haya otros;
      * si no queda ninguno más, se permite repetir. Devuelve null si no hay ninguno posible.
      *
+     * Con $ownPersonality, se queda solo con los eventos propios de la personalidad del actor
+     * (si no hay ninguno, vale cualquiera).
+     *
      * @param GameEvent[] $avoid
      */
     public function pick(
@@ -90,6 +93,7 @@ class EventPool
         Randomizer $random,
         ?EventPhase $phase = null,
         array $avoid = [],
+        bool $ownPersonality = false,
     ): ?GameEvent {
         $candidates = $this->usableBy($this->byCategory[$category->value] ?? [], $actor);
 
@@ -97,11 +101,36 @@ class EventPool
             $candidates = $this->forPhase($candidates, $phase);
         }
 
+        if ($ownPersonality) {
+            $own = array_values(array_filter($candidates, fn (GameEvent $event) => $event->personality !== null));
+
+            if ($own !== []) {
+                $candidates = $own;
+            }
+        }
+
         return $this->chooseFrom($candidates, $random, $avoid);
     }
 
+    /** ¿Hay algún evento de esta categoría propio de la personalidad de este tributo? */
+    public function hasPersonalityEvents(EventCategory $category, Tribute $actor): bool
+    {
+        if ($actor->personality === null) {
+            return false;
+        }
+
+        foreach ($this->byCategory[$category->value] ?? [] as $event) {
+            if ($event->personality === $actor->personality) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
-     * Los eventos que $actor puede protagonizar: si requieren un objeto, tiene que llevarlo.
+     * Los eventos que $actor puede protagonizar: si requieren un objeto, tiene que llevarlo,
+     * y si son de una personalidad, tiene que ser la suya.
      *
      * @param GameEvent[] $events
      * @return GameEvent[]
@@ -110,7 +139,8 @@ class EventPool
     {
         return array_values(array_filter(
             $events,
-            fn (GameEvent $event) => $event->requiresItem === null || $actor->hasItem($event->requiresItem),
+            fn (GameEvent $event) => ($event->requiresItem === null || $actor->hasItem($event->requiresItem))
+                && ($event->personality === null || $event->personality === $actor->personality),
         ));
     }
 

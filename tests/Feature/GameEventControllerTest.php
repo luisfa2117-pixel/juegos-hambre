@@ -50,7 +50,7 @@ class GameEventControllerTest extends TestCase
     {
         $this->get(route('events.index'))
             ->assertOk()
-            ->assertSee('Todos (361)');
+            ->assertSee('Todos (411)');
 
         $this->get(route('events.index', ['category' => 'weapon']))
             ->assertOk()
@@ -88,6 +88,15 @@ class GameEventControllerTest extends TestCase
         $this->post(route('events.store'), $this->data(['target_hp' => -10]));
 
         $this->assertSame(0, GameEvent::where('text', 'like', '%cable de alta%')->value('target_hp'));
+    }
+
+    public function test_saves_which_personality_the_event_is_for(): void
+    {
+        $this->post(route('events.store'), $this->data(['personality' => 'coward']))->assertSessionHasNoErrors();
+        $this->assertDatabaseHas('game_events', ['text' => '{A} tropezó con un cable de alta tensión', 'personality' => 'coward']);
+
+        $this->post(route('events.store'), $this->data(['text' => '{A} se rió', 'personality' => 'psicopata']))
+            ->assertSessionHasErrors('personality');
     }
 
     public function test_saves_when_the_event_can_happen(): void
@@ -238,6 +247,7 @@ class GameEventControllerTest extends TestCase
             collect($json['catastrofes'])->sum(fn (array $arena) => count($arena['eventos'])),
         );
         $this->assertContains('{A} tropezó con un cable de alta tensión', array_column($json['eventosIndividuales'], 'descripcion'));
+        $this->assertSame('cobarde', collect($json['eventosIndividuales'])->firstWhere('descripcion', '{A} lloró en silencio dentro de un armario')['personalidad']);
         $this->assertSame('noche', collect($json['eventosIndividuales'])->firstWhere('descripcion', '{A} pasó la noche a la intemperie bajo una lluvia ácida')['fase']);
         $this->assertSame('PISTOLA', collect($json['eventosArma'])->firstWhere('descripcion', '{A} encañonó a {B} y le disparó a quemarropa')['requiere']);
 

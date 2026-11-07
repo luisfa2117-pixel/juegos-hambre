@@ -545,6 +545,85 @@ class SimulationTest extends TestCase
         $this->assertLessThan($pairs(null), $pairs(Personality::Coward));
     }
 
+    public function test_personality_events_only_happen_to_that_personality(): void
+    {
+        $pool = new EventPool([
+            $this->event(EventCategory::Solo, '[normal] {A}'),
+            $this->event(EventCategory::Solo, '[otro normal] {A}'),
+            $this->event(EventCategory::Solo, '[cobarde] {A}', ['personality' => Personality::Coward]),
+        ]);
+        $count = function (?Personality $personality) use ($pool) {
+            $own = 0;
+            $total = 0;
+
+            foreach (range(1, 100) as $seed) {
+                $tributes = [$this->tribute('Dean', $personality), $this->tribute('Avery', $personality)];
+
+                foreach ($this->simulation($tributes, $pool, $seed)->runRound() as $result) {
+                    $total++;
+                    $own += str_starts_with($result->text, '[cobarde]') ? 1 : 0;
+                }
+            }
+
+            return [$own, $total];
+        };
+
+        [$own] = $count(null);
+        $this->assertSame(0, $own, 'Un tributo equilibrado ha protagonizado un evento de cobarde');
+
+        // Para los cobardes sale bastante más que 1 de cada 3 (lo que tocaría si fuera un evento más)
+        [$own, $total] = $count(Personality::Coward);
+        $this->assertGreaterThan($total / 3, $own);
+    }
+
+    public function test_nobody_allies_when_only_two_remain(): void
+    {
+        foreach (range(1, 100) as $seed) {
+            $simulation = $this->simulation($this->tributes(2), $this->harmlessPool(), $seed);
+
+            foreach ($simulation->runRound() as $result) {
+                $this->assertStringStartsNotWith('[befriend]', $result->text);
+            }
+        }
+    }
+
+    public function test_nobody_joins_an_alliance_that_would_include_every_survivor(): void
+    {
+        foreach (range(1, 100) as $seed) {
+            [$dean, $avery, $noah] = $this->tributes(3);
+            $dean->befriend($avery);
+            $simulation = $this->simulation([$dean, $avery, $noah], $this->harmlessPool(), $seed);
+
+            foreach ($simulation->runRound() as $result) {
+                $this->assertStringStartsNotWith('[befriend]', $result->text);
+            }
+        }
+    }
+
+    public function test_district_partners_ally_more_often(): void
+    {
+        $count = function (bool $sameDistrict) {
+            $alliances = 0;
+
+            foreach (range(1, 300) as $seed) {
+                $tributes = array_map(function (string $name, int $i) use ($sameDistrict) {
+                    $slug = $sameDistrict ? 'mismo' : "distrito-{$i}";
+                    $district = new District(['slug' => $slug, 'name' => $slug, 'strength_bonus' => 0, 'energy_bonus' => 0]);
+
+                    return new Tribute($name, Gender::Male, $district);
+                }, ['Dean', 'Avery', 'Noah'], [0, 1, 2]);
+
+                foreach ($this->simulation($tributes, $this->harmlessPool(), $seed)->runRound() as $result) {
+                    $alliances += str_starts_with($result->text, '[befriend]') ? 1 : 0;
+                }
+            }
+
+            return $alliances;
+        };
+
+        $this->assertGreaterThan($count(false), $count(true));
+    }
+
     public function test_last_survivor_is_the_winner_and_no_more_rounds_can_be_played(): void
     {
         [$dean, $avery] = $this->tributes(2);

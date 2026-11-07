@@ -67,6 +67,10 @@ class ExportEventsCommand extends Command
             $json['fase'] = array_search($event->phase, GameEventSeeder::PHASE_MAP, true);
         }
 
+        if ($event->personality) {
+            $json['personalidad'] = array_search($event->personality, GameEventSeeder::PERSONALITY_MAP, true);
+        }
+
         if ($event->givesItem) {
             $json['objeto'] = strtoupper($event->givesItem->slug);
         }
