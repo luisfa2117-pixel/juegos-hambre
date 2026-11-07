@@ -67,7 +67,7 @@ class EventPool
      * Lo que le pasa a $actor durante la catástrofe: uno de sus eventos que pueda protagonizar,
      * evitando los ya usados en la ronda mientras haya otros.
      *
-     * @param GameEvent[] $avoid
+     * @param  GameEvent[]  $avoid
      */
     public function pickArenaEvent(ArenaEvent $arena, Tribute $actor, Randomizer $random, array $avoid = []): ?GameEvent
     {
@@ -87,7 +87,7 @@ class EventPool
      * Con $ownPersonality, se queda solo con los eventos propios de la personalidad del actor
      * (si no hay ninguno, vale cualquiera).
      *
-     * @param GameEvent[] $avoid
+     * @param  GameEvent[]  $avoid
      */
     public function pick(
         EventCategory $category,
@@ -134,7 +134,7 @@ class EventPool
      * Los eventos que $actor puede protagonizar: si requieren un objeto, tiene que llevarlo,
      * y si son de una personalidad, tiene que ser la suya.
      *
-     * @param GameEvent[] $events
+     * @param  GameEvent[]  $events
      * @return GameEvent[]
      */
     private function usableBy(array $events, Tribute $actor): array
@@ -149,8 +149,8 @@ class EventPool
     /**
      * Elige uno al azar, evitando los de $avoid mientras haya otros.
      *
-     * @param GameEvent[] $candidates
-     * @param GameEvent[] $avoid
+     * @param  GameEvent[]  $candidates
+     * @param  GameEvent[]  $avoid
      */
     private function chooseFrom(array $candidates, Randomizer $random, array $avoid): ?GameEvent
     {
@@ -168,7 +168,7 @@ class EventPool
     }
 
     /**
-     * @param GameEvent[] $events
+     * @param  GameEvent[]  $events
      * @return GameEvent[]
      */
     private function forPhase(array $events, EventPhase $phase): array

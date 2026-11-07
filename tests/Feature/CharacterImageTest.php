@@ -5,11 +5,11 @@ namespace Tests\Feature;
 use App\Actions\PlayGame;
 use App\Models\Character;
 use App\Models\District;
+use App\Models\User;
+use Database\Seeders\CharacterSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use App\Models\User;
-use Database\Seeders\CharacterSeeder;
 use Tests\TestCase;
 
 class CharacterImageTest extends TestCase

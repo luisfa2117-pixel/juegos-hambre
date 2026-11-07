@@ -16,18 +16,23 @@ use App\Models\Item;
 class Tribute
 {
     public const MAX_HP = 20;
+
     public const BASE_ENERGY = 20;
+
     public const BASE_STRENGTH = 5;
 
     private int $hp;
+
     private int $energy;
+
     private int $maxEnergy;
+
     private int $strength;
 
     /** @var Item[] */
     private array $inventory = [];
 
-    /** @var int[] Usos que le quedan a cada objeto de la mochila (mismo índice que $inventory) */
+    /** @var int[] Usos que le quedan a cada objeto de la mochila (mismo índice que) */
     private array $usesLeft = [];
 
     /** @var Tribute[] */
@@ -282,7 +287,7 @@ class Tribute
      * Reconstruye un tributo a partir de toState(). Las alianzas se enlazan después,
      * cuando ya existen todos (ver Simulation::fromState y restoreAllies).
      *
-     * @param array<string, Item> $items Los objetos por slug
+     * @param  array<string, Item>  $items  Los objetos por slug
      */
     public static function fromState(array $state, District $district, array $items): self
     {
@@ -310,7 +315,7 @@ class Tribute
     /**
      * Solo para reconstruir una partida guardada: fija sus aliados tal cual estaban, en el mismo orden.
      *
-     * @param Tribute[] $allies
+     * @param  Tribute[]  $allies
      */
     public function restoreAllies(array $allies): void
     {

@@ -9,15 +9,15 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-   public function up(): void
-{
-    Schema::create('games', function (Blueprint $table) {
-        $table->id();
-        $table->unsignedInteger('seed');
-        $table->unsignedSmallInteger('total_rounds');
-        $table->timestamps();
-    });
-}
+    public function up(): void
+    {
+        Schema::create('games', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedInteger('seed');
+            $table->unsignedSmallInteger('total_rounds');
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.

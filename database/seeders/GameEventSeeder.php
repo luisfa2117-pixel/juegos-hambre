@@ -17,33 +17,33 @@ class GameEventSeeder extends Seeder
 {
     /** Clave del JSON de Java => categoría en la base de datos (también la usa events:export) */
     public const CATEGORY_MAP = [
-        'eventosIndividuales'   => EventCategory::Solo,
-        'eventosDuo'            => EventCategory::Duo,
-        'eventosTriple'         => EventCategory::Trio,
-        'eventosCuatro'         => EventCategory::Quartet,
-        'eventosAmigo'          => EventCategory::Ally,
-        'hacerAmigo'            => EventCategory::Befriend,
+        'eventosIndividuales' => EventCategory::Solo,
+        'eventosDuo' => EventCategory::Duo,
+        'eventosTriple' => EventCategory::Trio,
+        'eventosCuatro' => EventCategory::Quartet,
+        'eventosAmigo' => EventCategory::Ally,
+        'hacerAmigo' => EventCategory::Befriend,
         'eventosDescubrimiento' => EventCategory::Discovery,
-        'eventosArma'           => EventCategory::Weapon,
-        'traicionAmigo'         => EventCategory::Betrayal,
-        'aliadosAtacan'         => EventCategory::AllyAttack,
+        'eventosArma' => EventCategory::Weapon,
+        'traicionAmigo' => EventCategory::Betrayal,
+        'aliadosAtacan' => EventCategory::AllyAttack,
     ];
 
     /** Valor de "fase" en el JSON => fase en la base de datos (sin "fase" = de día o de noche) */
     public const PHASE_MAP = [
         'cornucopia' => EventPhase::Bloodbath,
-        'dia'        => EventPhase::Day,
-        'noche'      => EventPhase::Night,
+        'dia' => EventPhase::Day,
+        'noche' => EventPhase::Night,
     ];
 
     /** Valor de "personalidad" en el JSON => personalidad en la base de datos (sin ella = para cualquiera) */
     public const PERSONALITY_MAP = [
-        'agresivo'    => Personality::Aggressive,
-        'cobarde'     => Personality::Coward,
-        'leal'        => Personality::Loyal,
+        'agresivo' => Personality::Aggressive,
+        'cobarde' => Personality::Coward,
+        'leal' => Personality::Loyal,
         'traicionero' => Personality::Treacherous,
-        'ingenioso'   => Personality::Resourceful,
-        'sociable'    => Personality::Sociable,
+        'ingenioso' => Personality::Resourceful,
+        'sociable' => Personality::Sociable,
     ];
 
     public function run(): void
@@ -89,14 +89,14 @@ class GameEventSeeder extends Seeder
         $energy = $raw['modEnergia'] ?? 0;
 
         return [
-            'participants'     => $raw['numParticipantes'] ?? 2,
-            'phase'            => $this->phase($raw['fase'] ?? null),
-            'personality'      => $this->personality($raw['personalidad'] ?? null),
-            'actor_hp'         => $raw['danioPropio'] ?? 0,
-            'target_hp'        => $raw['danioRival'] ?? 0,
-            'actor_energy'     => $raw['energiaPropia'] ?? $energy,
-            'target_energy'    => $raw['energiaRival'] ?? $energy,
-            'gives_item_id'    => $this->itemId($raw['objeto'] ?? null, $itemIds),
+            'participants' => $raw['numParticipantes'] ?? 2,
+            'phase' => $this->phase($raw['fase'] ?? null),
+            'personality' => $this->personality($raw['personalidad'] ?? null),
+            'actor_hp' => $raw['danioPropio'] ?? 0,
+            'target_hp' => $raw['danioRival'] ?? 0,
+            'actor_energy' => $raw['energiaPropia'] ?? $energy,
+            'target_energy' => $raw['energiaRival'] ?? $energy,
+            'gives_item_id' => $this->itemId($raw['objeto'] ?? null, $itemIds),
             'requires_item_id' => $this->itemId($raw['requiere'] ?? $raw['arma'] ?? null, $itemIds),
         ];
     }

@@ -21,9 +21,7 @@ use InvalidArgumentException;
  */
 class ResumeGame
 {
-    public function __construct(private readonly GameRecorder $recorder)
-    {
-    }
+    public function __construct(private readonly GameRecorder $recorder) {}
 
     /** @param (Closure(Simulation): void)|null $change */
     public function handle(Game $game, int $afterRound, ?Closure $change = null): Game

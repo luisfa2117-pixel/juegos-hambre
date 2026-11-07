@@ -83,7 +83,7 @@ class GameRecorder
      * Puesto final: 1 + cuántos aguantaron más que él.
      * Los que mueren en la misma ronda empatan en el puesto.
      *
-     * @param array<string, int> $diedInRound
+     * @param  array<string, int>  $diedInRound
      */
     private function placement(?int $died, array $diedInRound, int $total): int
     {

@@ -40,7 +40,7 @@ class TextFormatter
 
         // 2. Los nombres: {A}, {B}...
         foreach ($byLabel as $label => $tribute) {
-            $text = str_replace('{' . $label . '}', $tribute->name, $text);
+            $text = str_replace('{'.$label.'}', $tribute->name, $text);
         }
 
         return $text;
@@ -49,7 +49,7 @@ class TextFormatter
     /**
      * Elige la forma femenina solo si todos los tributos son mujeres.
      *
-     * @param Tribute[] $tributes
+     * @param  Tribute[]  $tributes
      */
     public static function gendered(array $tributes, string $masculine, string $feminine): string
     {
@@ -65,13 +65,13 @@ class TextFormatter
     /**
      * ["Dean"] → "Dean" · ["Dean", "Avery"] → "Dean y Avery" · [...3] → "Dean, Avery y Noah"
      *
-     * @param Tribute[] $tributes
+     * @param  Tribute[]  $tributes
      */
     public static function names(array $tributes): string
     {
         $names = array_map(fn (Tribute $t) => $t->name, $tributes);
         $last = array_pop($names);
 
-        return $names === [] ? (string) $last : implode(', ', $names) . ' y ' . $last;
+        return $names === [] ? (string) $last : implode(', ', $names).' y '.$last;
     }
 }

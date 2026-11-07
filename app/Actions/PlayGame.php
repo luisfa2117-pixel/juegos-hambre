@@ -19,9 +19,7 @@ use InvalidArgumentException;
 class PlayGame
 {
     // Laravel crea el GameRecorder y nos lo pasa (inyección de dependencias)
-    public function __construct(private readonly GameRecorder $recorder)
-    {
-    }
+    public function __construct(private readonly GameRecorder $recorder) {}
 
     /** @param Collection<int, Character> $characters Tienen que ser del propio usuario */
     public function handle(User $user, Collection $characters, ?int $seed = null): Game

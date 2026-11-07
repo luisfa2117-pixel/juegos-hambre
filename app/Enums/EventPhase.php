@@ -26,8 +26,8 @@ enum EventPhase: string
     {
         return match (self::forRound($round)) {
             self::Bloodbath => 'Baño de sangre',
-            self::Day => 'Día ' . intdiv($round, 2),
-            self::Night => 'Noche ' . intdiv($round, 2),
+            self::Day => 'Día '.intdiv($round, 2),
+            self::Night => 'Noche '.intdiv($round, 2),
         };
     }
 
@@ -36,8 +36,8 @@ enum EventPhase: string
     {
         return match (self::forRound($round)) {
             self::Bloodbath => 'Tras el baño de sangre',
-            self::Day => 'Tras el día ' . intdiv($round, 2),
-            self::Night => 'Tras la noche ' . intdiv($round, 2),
+            self::Day => 'Tras el día '.intdiv($round, 2),
+            self::Night => 'Tras la noche '.intdiv($round, 2),
         };
     }
 

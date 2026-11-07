@@ -10,16 +10,16 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-{
-    Schema::create('items', function (Blueprint $table) {
-        $table->id();
-        $table->string('slug')->unique();      // 'botiquin'
-        $table->string('name');                // 'Botiquín médico'
-        $table->string('type');                // weapon / armor / heal / energy
-        $table->unsignedInteger('power');
-        $table->timestamps();
-    });
-}
+    {
+        Schema::create('items', function (Blueprint $table) {
+            $table->id();
+            $table->string('slug')->unique();      // 'botiquin'
+            $table->string('name');                // 'Botiquín médico'
+            $table->string('type');                // weapon / armor / heal / energy
+            $table->unsignedInteger('power');
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.

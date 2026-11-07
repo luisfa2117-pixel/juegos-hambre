@@ -15,9 +15,7 @@ class EventText implements ValidationRule
 {
     private const LABELS = ['A', 'B', 'C', 'D'];
 
-    public function __construct(private readonly int $participants)
-    {
-    }
+    public function __construct(private readonly int $participants) {}
 
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
@@ -47,7 +45,7 @@ class EventText implements ValidationRule
 
             foreach ($used as $label) {
                 if (! in_array($label, $allowed, true)) {
-                    $fail("El texto usa {{$label}}, pero en este tipo de evento solo participan " . $this->listLabels($allowed) . '.');
+                    $fail("El texto usa {{$label}}, pero en este tipo de evento solo participan ".$this->listLabels($allowed).'.');
 
                     return;
                 }
@@ -55,9 +53,9 @@ class EventText implements ValidationRule
         }
 
         foreach ($allowed as $label) {
-            if (! str_contains($value, '{' . $label . '}')) {
-                $fail('En este tipo de evento participan ' . $this->listLabels($allowed)
-                    . ': el texto tiene que incluir el nombre de cada uno.');
+            if (! str_contains($value, '{'.$label.'}')) {
+                $fail('En este tipo de evento participan '.$this->listLabels($allowed)
+                    .': el texto tiene que incluir el nombre de cada uno.');
 
                 return;
             }
@@ -67,9 +65,9 @@ class EventText implements ValidationRule
     /** ['A', 'B', 'C'] → "{A}, {B} y {C}" */
     private function listLabels(array $labels): string
     {
-        $labels = array_map(fn (string $label) => '{' . $label . '}', $labels);
+        $labels = array_map(fn (string $label) => '{'.$label.'}', $labels);
         $last = array_pop($labels);
 
-        return $labels === [] ? $last : implode(', ', $labels) . ' y ' . $last;
+        return $labels === [] ? $last : implode(', ', $labels).' y '.$last;
     }
 }

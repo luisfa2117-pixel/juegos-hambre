@@ -15,6 +15,7 @@ use App\Simulation\Tribute;
 class EventPreview
 {
     private const MEN = ['Dean', 'Noah', 'Horacio', 'De Santi'];
+
     private const WOMEN = ['Avery', 'Hannah', 'Avril', 'Desiree'];
 
     /** @return array{men: string, women: string} */
@@ -50,13 +51,13 @@ class EventPreview
         $actor = self::changes($event->actor_hp, $event->actor_energy);
 
         if ($actor !== null) {
-            $parts[] = self::join($actorLabels) . ": {$actor}.";
+            $parts[] = self::join($actorLabels).": {$actor}.";
         }
 
         $targets = self::changes($event->target_hp, $event->target_energy);
 
         if ($targets !== null && $targetLabels !== []) {
-            $parts[] = self::join($targetLabels) . ": {$targets}.";
+            $parts[] = self::join($targetLabels).": {$targets}.";
         }
 
         return $parts === [] ? 'Sin efectos en vida ni energía.' : implode(' ', $parts);
@@ -67,7 +68,7 @@ class EventPreview
     {
         $last = array_pop($labels);
 
-        return $labels === [] ? (string) $last : implode(', ', $labels) . ' y ' . $last;
+        return $labels === [] ? (string) $last : implode(', ', $labels).' y '.$last;
     }
 
     public static function names(): array

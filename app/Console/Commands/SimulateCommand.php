@@ -53,7 +53,7 @@ class SimulateCommand extends Command
         );
 
         $this->info("Semilla: {$seed}   (para repetir esta partida: php artisan simulate --seed={$seed})");
-        $this->line('Participan: ' . implode(', ', array_map(fn (Tribute $t) => $t->name, $tributes)));
+        $this->line('Participan: '.implode(', ', array_map(fn (Tribute $t) => $t->name, $tributes)));
 
         while (! $simulation->isOver() && $simulation->round() < self::MAX_ROUNDS) {
             $results = $simulation->runRound();
@@ -84,7 +84,7 @@ class SimulateCommand extends Command
                 fn (Tribute $t) => "{$t->name} ({$t->hp()} vida, {$t->energy()} energía)",
                 $simulation->alive(),
             );
-            $this->line('<fg=gray>Siguen vivos: ' . implode(' · ', $status) . '</>');
+            $this->line('<fg=gray>Siguen vivos: '.implode(' · ', $status).'</>');
         }
 
         $this->newLine();
@@ -95,7 +95,7 @@ class SimulateCommand extends Command
         } elseif ($simulation->isOver()) {
             $this->warn('No queda nadie vivo. Todos han muerto.');
         } else {
-            $this->warn('Se ha alcanzado el límite de ' . self::MAX_ROUNDS . ' rondas sin ganador.');
+            $this->warn('Se ha alcanzado el límite de '.self::MAX_ROUNDS.' rondas sin ganador.');
         }
 
         return self::SUCCESS;

@@ -5,9 +5,9 @@ namespace Tests\Feature;
 use App\Actions\PlayGame;
 use App\Models\Character;
 use App\Models\Game;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\User;
 use Database\Seeders\CharacterSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class GameControllerTest extends TestCase
@@ -125,7 +125,7 @@ class GameControllerTest extends TestCase
 
         $this->get(route('games.show', [$game, 'round' => $game->total_rounds]))
             ->assertOk()
-            ->assertSee("{$kill['victim']} ha muerto a manos de " . collect($kill['killers'])->join(', ', ' y '));
+            ->assertSee("{$kill['victim']} ha muerto a manos de ".collect($kill['killers'])->join(', ', ' y '));
     }
 
     public function test_nights_show_the_fallen(): void

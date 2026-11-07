@@ -4,8 +4,8 @@ namespace App\Http\Requests;
 
 use App\Enums\EventCategory;
 use App\Enums\EventPhase;
-use App\Enums\Personality;
 use App\Enums\ItemType;
+use App\Enums\Personality;
 use App\Rules\EventText;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;

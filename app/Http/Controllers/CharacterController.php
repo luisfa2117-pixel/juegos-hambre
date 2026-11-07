@@ -30,7 +30,7 @@ class CharacterController extends Controller
     public function create(): View
     {
         return view('characters.create', [
-            'character' => new Character(),
+            'character' => new Character,
             'districts' => District::orderBy('name')->get(),
         ]);
     }

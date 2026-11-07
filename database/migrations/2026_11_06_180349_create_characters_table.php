@@ -10,15 +10,15 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-{
-    Schema::create('characters', function (Blueprint $table) {
-        $table->id();
-        $table->string('name')->unique();
-        $table->string('gender');   // male / female
-        $table->foreignId('district_id')->constrained()->restrictOnDelete();
-        $table->timestamps();
-    });
-}
+    {
+        Schema::create('characters', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->unique();
+            $table->string('gender');   // male / female
+            $table->foreignId('district_id')->constrained()->restrictOnDelete();
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.

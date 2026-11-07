@@ -5,10 +5,10 @@ namespace Tests\Feature;
 use App\Enums\EventCategory;
 use App\Models\GameEvent;
 use App\Models\Item;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\File;
 use App\Models\User;
 use Database\Seeders\CharacterSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\File;
 use Tests\TestCase;
 
 class GameEventControllerTest extends TestCase

@@ -2,11 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Actions\PlayGame;
 use App\Models\Character;
 use App\Models\District;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\User;
 use Database\Seeders\CharacterSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class CharacterControllerTest extends TestCase
@@ -123,7 +124,7 @@ class CharacterControllerTest extends TestCase
             ->assertOk()
             ->assertSee('Todavía no ha jugado ninguna partida.');
 
-        $game = app(\App\Actions\PlayGame::class)->handle($this->user, Character::all(), 42);
+        $game = app(PlayGame::class)->handle($this->user, Character::all(), 42);
 
         $this->get(route('characters.show', $dean))
             ->assertOk()

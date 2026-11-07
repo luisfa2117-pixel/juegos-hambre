@@ -20,7 +20,7 @@ class EventResolverTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->resolver = new EventResolver();
+        $this->resolver = new EventResolver;
     }
 
     // ---- Ayudantes para crear datos de prueba sin base de datos ----

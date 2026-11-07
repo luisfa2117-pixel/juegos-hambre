@@ -5,9 +5,9 @@ namespace Tests\Feature;
 use App\Actions\PlayGame;
 use App\Models\Character;
 use App\Models\GameTribute;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\User;
 use Database\Seeders\CharacterSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class StatsControllerTest extends TestCase

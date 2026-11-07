@@ -58,10 +58,10 @@ class SponsorGiftTest extends TestCase
         $this->see(3);
 
         $this->gift($this->aliveAfter(3), 'botiquin')
-            ->assertRedirect(route('games.show', [$this->game, 'round' => 3]) . '#patrocinar');
+            ->assertRedirect(route('games.show', [$this->game, 'round' => 3]).'#patrocinar');
 
         $this->gift('Nadie', 'botiquin')   // también si hay un error
-            ->assertRedirect(route('games.show', [$this->game, 'round' => 3]) . '#patrocinar');
+            ->assertRedirect(route('games.show', [$this->game, 'round' => 3]).'#patrocinar');
 
         $this->get(route('games.show', [$this->game, 'round' => 3]))->assertSee('id="patrocinar"', escape: false);
     }

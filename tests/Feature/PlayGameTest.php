@@ -5,10 +5,10 @@ namespace Tests\Feature;
 use App\Actions\PlayGame;
 use App\Models\Character;
 use App\Models\Game;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use InvalidArgumentException;
 use App\Models\User;
 use Database\Seeders\CharacterSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use InvalidArgumentException;
 use Tests\TestCase;
 
 class PlayGameTest extends TestCase

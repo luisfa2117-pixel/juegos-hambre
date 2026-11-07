@@ -24,7 +24,7 @@ class TextHighlighter
             return new HtmlString($escaped);
         }
 
-        $pattern = '/(' . $names->implode('|') . ')/u';
+        $pattern = '/('.$names->implode('|').')/u';
 
         return new HtmlString(preg_replace($pattern, '<strong class="font-semibold text-ash">$1</strong>', $escaped));
     }

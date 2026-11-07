@@ -17,10 +17,15 @@ enum Personality: string
 
     // Las decisiones del motor que una personalidad puede cambiar
     public const PAIR = 'pair';                // que le toque un evento de pareja
+
     public const FRIENDSHIP = 'friendship';    // hacerse aliado de un desconocido
+
     public const BETRAYAL = 'betrayal';        // traicionar a un aliado
+
     public const WEAPON = 'weapon';            // usar su arma en una pelea
+
     public const DISCOVERY = 'discovery';      // encontrar un objeto
+
     public const ALLY_ATTACK = 'ally_attack';  // atacar junto a un aliado
 
     /**
@@ -56,7 +61,7 @@ enum Personality: string
         return match (true) {
             $gender === Gender::Male || $masculine === $feminine => $masculine,
             $gender === Gender::Female => $feminine,
-            default => "{$masculine}/" . mb_substr($feminine, -1),
+            default => "{$masculine}/".mb_substr($feminine, -1),
         };
     }
 

@@ -19,7 +19,7 @@ class SponsorGiftController extends Controller
 
         // Volvemos a la misma ronda, y #patrocinar hace que el navegador baje hasta el recuadro
         // (sin el ancla, la página se abriría desde arriba y tendrías que volver a bajar)
-        $back = route('games.show', [$game, 'round' => $game->revealed_round]) . '#patrocinar';
+        $back = route('games.show', [$game, 'round' => $game->revealed_round]).'#patrocinar';
 
         $validator = Validator::make($request->all(), [
             'tribute' => ['required', 'string'],

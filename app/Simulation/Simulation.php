@@ -4,10 +4,10 @@ namespace App\Simulation;
 
 use App\Enums\EventCategory;
 use App\Enums\EventPhase;
-use App\Enums\Personality;
 use App\Enums\ItemType;
-use App\Models\GameEvent;
+use App\Enums\Personality;
 use App\Models\District;
+use App\Models\GameEvent;
 use App\Models\Item;
 use LogicException;
 use Random\Engine\Xoshiro256StarStar;
@@ -22,20 +22,29 @@ class Simulation
 {
     // Probabilidades en %. Son las de tu GestorEventos, con nombre para poder ajustarlas.
     public const GROUP_EVENT_CHANCE = 15;   // evento de 3 o 4 tributos
+
     public const PAIR_EVENT_CHANCE = 50;    // evento de 2 tributos (el resto, 35 %, es individual)
+
     public const FRIENDSHIP_CHANCE = 35;    // dos desconocidos se hacen aliados en vez de pelear
+
     public const BETRAYAL_CHANCE = 35;      // un aliado traiciona al otro
+
     public const WEAPON_CHANCE = 90;        // quien lleva arma la usa en una pelea
+
     public const DISCOVERY_CHANCE = 40;     // un evento individual es un descubrimiento
+
     public const ALLY_ATTACK_CHANCE = 40;   // dos aliados atacan juntos a un tercero (si se puede)
 
     // Catástrofes de los Vigilantes: a partir de la ronda 4 (Día 2), y como mucho una cada 4 rondas
     public const ARENA_EVENT_CHANCE = 12;
+
     public const ARENA_FIRST_ROUND = 4;
+
     public const ARENA_COOLDOWN = 4;
 
     // En el baño de sangre todos corren hacia la Cornucopia: más grupos y más objetos
     public const BLOODBATH_GROUP_CHANCE = 30;
+
     public const BLOODBATH_DISCOVERY_CHANCE = 60;
 
     /** Probabilidad de que, si hay eventos propios de la personalidad del actor, salga uno de ellos */
@@ -71,7 +80,7 @@ class Simulation
         array $tributes,
         private readonly EventPool $events,
         private readonly int $seed,
-        private readonly EventResolver $resolver = new EventResolver(),
+        private readonly EventResolver $resolver = new EventResolver,
     ) {
         $this->tributes = array_values($tributes);
         $this->random = $this->randomForRound(0);
@@ -114,8 +123,8 @@ class Simulation
     /**
      * Reconstruye una partida a partir de toState(), para seguir jugándola desde ahí.
      *
-     * @param array<string, District> $districts Por slug
-     * @param array<string, Item> $items Por slug
+     * @param  array<string, District>  $districts  Por slug
+     * @param  array<string, Item>  $items  Por slug
      */
     public static function fromState(
         array $state,
@@ -123,7 +132,7 @@ class Simulation
         int $seed,
         array $districts,
         array $items,
-        EventResolver $resolver = new EventResolver(),
+        EventResolver $resolver = new EventResolver,
     ): self {
         $tributes = array_map(
             fn (array $tribute) => Tribute::fromState(
@@ -297,7 +306,7 @@ class Simulation
     /**
      * Tira el "dado" y decide el próximo evento con los primeros tributos en espera.
      *
-     * @param Tribute[] $pending
+     * @param  Tribute[]  $pending
      * @return array{0: GameEvent, 1: Tribute[]}
      */
     private function chooseEvent(array $pending): array
@@ -323,7 +332,7 @@ class Simulation
      * Evento de 3 o 4 tributos. Nunca junta a aliados: en estos eventos todos
      * se hacen daño entre sí, y los aliados no se atacan.
      *
-     * @param Tribute[] $pending
+     * @param  Tribute[]  $pending
      */
     private function groupEvent(array $pending, int $size): ?array
     {
@@ -347,7 +356,7 @@ class Simulation
     /**
      * Va cogiendo tributos en orden, saltándose a los aliados de los que ya están.
      *
-     * @param Tribute[] $candidates
+     * @param  Tribute[]  $candidates
      * @return Tribute[]|null null si no consigue reunir $size
      */
     private function groupWithoutAllies(array $candidates, int $size): ?array
@@ -375,7 +384,7 @@ class Simulation
      * Si el primero en espera tiene un aliado y hay alguien de fuera esperando,
      * puede que ataquen juntos: [atacante, aliado, víctima].
      *
-     * @param Tribute[] $pending
+     * @param  Tribute[]  $pending
      */
     private function allyAttackEvent(array $pending): ?array
     {

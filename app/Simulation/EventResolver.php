@@ -29,7 +29,7 @@ class EventResolver
     private const ARMOR_CATEGORIES = [EventCategory::Duo, EventCategory::Weapon, EventCategory::AllyAttack];
 
     /**
-     * @param Tribute[] $participants El primero es {A} (el actor); el resto son {B}, {C}, {D}
+     * @param  Tribute[]  $participants  El primero es {A} (el actor); el resto son {B}, {C}, {D}
      */
     public function apply(GameEvent $event, array $participants): EventResult
     {
@@ -131,8 +131,8 @@ class EventResolver
      * - Grupos de 3 o 4: {A}, pero solo si sale mejor parado que los demás (lanza la bomba).
      *   Si todos reciben lo mismo (un incendio, una trampa), es un accidente.
      *
-     * @param Tribute[] $actors
-     * @param Tribute[] $targets
+     * @param  Tribute[]  $actors
+     * @param  Tribute[]  $targets
      * @return Tribute[]
      */
     private function killersOf(Tribute $victim, GameEvent $event, array $actors, array $targets): array
@@ -159,7 +159,7 @@ class EventResolver
     {
         if (count($participants) !== $event->participants) {
             throw new InvalidArgumentException(
-                "El evento necesita {$event->participants} participantes y ha recibido " . count($participants)
+                "El evento necesita {$event->participants} participantes y ha recibido ".count($participants)
             );
         }
 
@@ -200,7 +200,7 @@ class EventResolver
         $broken = $target->useItem($armor);
 
         $note = "🛡️ {$target->name} absorbió {$absorbed} de daño con [{$armor->name}]"
-            . ($broken ? ', que quedó inservible.' : '.');
+            .($broken ? ', que quedó inservible.' : '.');
 
         return [$hpChange + $absorbed, $note];
     }
@@ -246,9 +246,9 @@ class EventResolver
         if (count($alliance) === 2) {
             $allies = TextFormatter::gendered($alliance, 'aliados', 'aliadas');
 
-            return '🤝 ' . TextFormatter::names($alliance) . " ahora son {$allies}.";
+            return '🤝 '.TextFormatter::names($alliance)." ahora son {$allies}.";
         }
 
-        return '🤝 La alianza ahora la forman ' . TextFormatter::names($alliance) . '.';
+        return '🤝 La alianza ahora la forman '.TextFormatter::names($alliance).'.';
     }
 }

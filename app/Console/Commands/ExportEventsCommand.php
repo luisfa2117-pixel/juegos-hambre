@@ -44,7 +44,7 @@ class ExportEventsCommand extends Command
             ])
             ->all();
 
-        File::put($path, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n");
+        File::put($path, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)."\n");
 
         $this->info("{$events->count()} eventos guardados en {$path}");
 

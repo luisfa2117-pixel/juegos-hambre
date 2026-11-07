@@ -4,17 +4,17 @@ namespace App\Enums;
 
 enum EventCategory: string
 {
-    case Solo      = 'solo';       // 1 tributo
-    case Duo       = 'duo';        // 2 desconocidos que se pelean
-    case Trio      = 'trio';       // 3 tributos
-    case Quartet   = 'quartet';    // 4 tributos
-    case Ally      = 'ally';       // 2 tributos que ya son aliados
-    case Befriend  = 'befriend';   // 2 desconocidos que se hacen aliados
+    case Solo = 'solo';       // 1 tributo
+    case Duo = 'duo';        // 2 desconocidos que se pelean
+    case Trio = 'trio';       // 3 tributos
+    case Quartet = 'quartet';    // 4 tributos
+    case Ally = 'ally';       // 2 tributos que ya son aliados
+    case Befriend = 'befriend';   // 2 desconocidos que se hacen aliados
     case Discovery = 'discovery';  // 1 tributo encuentra un objeto
-    case Weapon    = 'weapon';     // ataque que requiere un arma concreta
-    case Betrayal  = 'betrayal';   // un aliado traiciona al otro
+    case Weapon = 'weapon';     // ataque que requiere un arma concreta
+    case Betrayal = 'betrayal';   // un aliado traiciona al otro
     case AllyAttack = 'ally_attack'; // dos aliados atacan juntos a un tercero
-    case Arena     = 'arena';      // lo que le pasa a un tributo durante una catástrofe
+    case Arena = 'arena';      // lo que le pasa a un tributo durante una catástrofe
 
     /** Cómo se muestra en la web */
     public function label(): string

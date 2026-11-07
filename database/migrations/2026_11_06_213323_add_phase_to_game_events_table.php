@@ -10,17 +10,17 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-{
-    Schema::table('game_events', function (Blueprint $table) {
-        // null = puede pasar de día o de noche
-        $table->string('phase')->nullable()->index();
-    });
-}
+    {
+        Schema::table('game_events', function (Blueprint $table) {
+            // null = puede pasar de día o de noche
+            $table->string('phase')->nullable()->index();
+        });
+    }
 
-public function down(): void
-{
-    Schema::table('game_events', function (Blueprint $table) {
-        $table->dropColumn('phase');
-    });
-}
+    public function down(): void
+    {
+        Schema::table('game_events', function (Blueprint $table) {
+            $table->dropColumn('phase');
+        });
+    }
 };

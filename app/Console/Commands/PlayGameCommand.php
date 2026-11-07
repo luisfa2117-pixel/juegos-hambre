@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Actions\PlayGame;
-use App\Models\User;
 use App\Models\GameTribute;
+use App\Models\User;
 use Illuminate\Console\Command;
 
 /**
