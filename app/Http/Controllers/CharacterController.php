@@ -6,16 +6,19 @@ use App\Http\Requests\CharacterRequest;
 use App\Models\Character;
 use App\Models\District;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class CharacterController extends Controller
 {
     /** Lista de personajes, agrupados por distrito */
-    public function index(): View
+    public function index(Request $request): View
     {
+        // whereBelongsTo: solo los personajes de quien ha iniciado sesión
         $districts = District::orderBy('name')
-            ->with(['characters' => fn ($query) => $query->orderBy('name')->withStats()])
+            ->with(['characters' => fn ($query) => $query->whereBelongsTo($request->user())->orderBy('name')->withStats()])
             ->get();
 
         return view('characters.index', [
@@ -34,7 +37,8 @@ class CharacterController extends Controller
 
     public function store(CharacterRequest $request): RedirectResponse
     {
-        $character = new Character($request->safe()->only(['name', 'gender', 'district_id']));
+        // make() crea el personaje ya asignado al usuario (user_id), sin guardarlo todavía
+        $character = $request->user()->characters()->make($request->safe()->only(['name', 'gender', 'district_id']));
 
         if ($request->hasFile('image')) {
             // Guarda el fichero en storage/app/public/characters con un nombre único
@@ -50,6 +54,9 @@ class CharacterController extends Controller
     /** La ficha del personaje: estadísticas y sus partidas */
     public function show(Character $character): View
     {
+        // Si no es suyo, Laravel corta aquí con un error 403 (ver CharacterPolicy)
+        Gate::authorize('view', $character);
+
         return view('characters.show', [
             // Volvemos a pedirlo con withStats() para tener sus estadísticas
             'character' => Character::withStats()->with('district')->findOrFail($character->id),
@@ -60,6 +67,8 @@ class CharacterController extends Controller
     // Laravel busca el personaje por el id de la URL (route model binding)
     public function edit(Character $character): View
     {
+        Gate::authorize('update', $character);
+
         return view('characters.edit', [
             'character' => $character,
             'districts' => District::orderBy('name')->get(),
@@ -68,6 +77,8 @@ class CharacterController extends Controller
 
     public function update(CharacterRequest $request, Character $character): RedirectResponse
     {
+        Gate::authorize('update', $character);
+
         $oldImage = $character->image_path;
         $character->fill($request->safe()->only(['name', 'gender', 'district_id']));
 
@@ -90,6 +101,8 @@ class CharacterController extends Controller
 
     public function destroy(Character $character): RedirectResponse
     {
+        Gate::authorize('delete', $character);
+
         $character->delete();
 
         return redirect()->route('characters.index')

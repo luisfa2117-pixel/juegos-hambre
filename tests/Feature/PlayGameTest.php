@@ -7,6 +7,8 @@ use App\Models\Character;
 use App\Models\Game;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use InvalidArgumentException;
+use App\Models\User;
+use Database\Seeders\CharacterSeeder;
 use Tests\TestCase;
 
 class PlayGameTest extends TestCase
@@ -17,9 +19,20 @@ class PlayGameTest extends TestCase
     // Ejecuta el DatabaseSeeder antes de cada test: distritos, objetos, eventos y personajes
     protected $seed = true;
 
+    private User $user;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Todas las páginas exigen sesión: entramos como el usuario de pruebas del seeder
+        $this->user = User::where('email', CharacterSeeder::DEMO_EMAIL)->firstOrFail();
+        $this->actingAs($this->user);
+    }
+
     private function play(?int $seed = 42): Game
     {
-        return app(PlayGame::class)->handle(Character::all(), $seed);
+        return app(PlayGame::class)->handle($this->user, Character::all(), $seed);
     }
 
     public function test_saves_the_game_with_its_tributes_and_rounds(): void
@@ -111,7 +124,7 @@ class PlayGameTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        app(PlayGame::class)->handle(Character::limit(1)->get());
+        app(PlayGame::class)->handle($this->user, Character::limit(1)->get());
     }
 
     public function test_deleting_a_character_keeps_the_game_history(): void

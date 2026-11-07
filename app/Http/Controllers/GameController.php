@@ -4,28 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Actions\PlayGame;
 use App\Http\Requests\GameRequest;
-use App\Models\Character;
 use App\Models\District;
 use App\Models\Game;
 use App\Models\GameTribute;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class GameController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         return view('games.index', [
-            'games' => Game::with(['tributes.district', 'tributes.character'])->latest()->paginate(15),
+            'games' => $request->user()->games()->with(['tributes.district', 'tributes.character'])->latest()->paginate(15),
         ]);
     }
 
-    public function create(): View
+    public function create(Request $request): View
     {
+        $mine = fn ($query) => $query->whereBelongsTo($request->user());
+
         $districts = District::orderBy('name')
-            ->whereHas('characters')   // solo distritos con algún personaje
-            ->with(['characters' => fn ($query) => $query->orderBy('name')])
+            ->whereHas('characters', $mine)   // solo distritos donde tienes algún personaje
+            ->with(['characters' => fn ($query) => $mine($query)->orderBy('name')])
             ->get();
 
         $allIds = $districts->flatMap->characters->pluck('id')->all();
@@ -40,8 +42,8 @@ class GameController extends Controller
     // PlayGame llega por inyección de dependencias, igual que en el comando game:play
     public function store(GameRequest $request, PlayGame $playGame): RedirectResponse
     {
-        $characters = Character::whereIn('id', $request->validated('characters'))->get();
-        $game = $playGame->handle($characters, $request->validated('seed'));
+        $characters = $request->user()->characters()->whereIn('id', $request->validated('characters'))->get();
+        $game = $playGame->handle($request->user(), $characters, $request->validated('seed'));
 
         return redirect()->route('games.show', [$game, 'round' => 1]);
     }
@@ -49,6 +51,8 @@ class GameController extends Controller
     /** Muestra las rondas de la 1 a la que diga ?round=N */
     public function show(Request $request, Game $game): View
     {
+        Gate::authorize('view', $game);
+
         $game->load(['tributes.district', 'tributes.character', 'rounds']);
 
         // Si alguien pone ?round=999 o ?round=-3 en la URL, lo dejamos dentro de los límites
@@ -70,6 +74,8 @@ class GameController extends Controller
 
     public function destroy(Game $game): RedirectResponse
     {
+        Gate::authorize('delete', $game);
+
         $game->delete();
 
         return redirect()->route('games.index')->with('status', "Partida #{$game->id} eliminada.");

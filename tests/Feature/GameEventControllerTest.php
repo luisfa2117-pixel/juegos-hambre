@@ -7,6 +7,8 @@ use App\Models\GameEvent;
 use App\Models\Item;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
+use App\Models\User;
+use Database\Seeders\CharacterSeeder;
 use Tests\TestCase;
 
 class GameEventControllerTest extends TestCase
@@ -15,9 +17,15 @@ class GameEventControllerTest extends TestCase
 
     protected $seed = true;
 
+    private User $user;
+
     protected function setUp(): void
     {
         parent::setUp();
+
+        // Todas las páginas exigen sesión: entramos como el usuario de pruebas del seeder
+        $this->user = User::where('email', CharacterSeeder::DEMO_EMAIL)->firstOrFail();
+        $this->actingAs($this->user);
         $this->withoutVite();
     }
 

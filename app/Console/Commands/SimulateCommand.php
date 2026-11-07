@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Enums\EventPhase;
-use App\Models\Character;
+use App\Models\User;
 use App\Simulation\EventPool;
 use App\Simulation\Simulation;
 use App\Simulation\Tribute;
@@ -18,7 +18,7 @@ use Random\Randomizer;
  */
 class SimulateCommand extends Command
 {
-    protected $signature = 'simulate {--seed= : Semilla para repetir exactamente una partida}';
+    protected $signature = 'simulate {--seed= : Semilla para repetir exactamente una partida} {--email=demo@juegos.test : De quién son los personajes}';
 
     protected $description = 'Simula una partida completa con los personajes de la base de datos';
 
@@ -27,9 +27,17 @@ class SimulateCommand extends Command
 
     public function handle(): int
     {
+        $user = User::where('email', $this->option('email'))->first();
+
+        if ($user === null) {
+            $this->error("No hay ninguna cuenta con el correo {$this->option('email')}.");
+
+            return self::FAILURE;
+        }
+
         // with('district') carga los distritos de todos en una sola consulta
-        $tributes = Character::with('district')->get()
-            ->map(fn (Character $character) => $character->toTribute())
+        $tributes = $user->characters()->with('district')->get()
+            ->map(fn ($character) => $character->toTribute())
             ->all();
 
         if (count($tributes) < 2) {

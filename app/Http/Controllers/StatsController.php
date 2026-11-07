@@ -6,15 +6,20 @@ use App\Models\Character;
 use App\Models\District;
 use App\Models\Game;
 use App\Models\GameTribute;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class StatsController extends Controller
 {
     /** El salón de la fama: rankings con todas las partidas jugadas */
-    public function index(): View
+    public function index(Request $request): View
     {
-        // Una sola consulta trae a todos los personajes con sus estadísticas (ver Character::scopeWithStats)
-        $characters = Character::withStats()->with('district')->get()
+        $user = $request->user();
+
+        // Una sola consulta trae a tus personajes con sus estadísticas (ver Character::scopeWithStats)
+        $characters = Character::withStats()->whereBelongsTo($user)->with('district')->get()
             ->filter(fn (Character $character) => $character->games_count > 0);
 
         $top = fn (string $stat) => $characters
@@ -23,7 +28,7 @@ class StatsController extends Controller
             ->take(5);
 
         return view('stats.index', [
-            'totalGames' => Game::count(),
+            'totalGames' => Game::whereBelongsTo($user)->count(),
             'mostWins' => $top('wins_count'),
             'mostKills' => $top('kills_total'),
             'bloodbath' => $top('bloodbath_deaths_count'),
@@ -35,23 +40,24 @@ class StatsController extends Controller
                 ->take(5),
 
             // Las 5 actuaciones más sangrientas en una sola partida
-            'bloodiestGames' => GameTribute::with(['district', 'character'])
+            'bloodiestGames' => $this->tributesOf($user)
+                ->with(['district', 'character'])
                 ->where('kills', '>', 0)
                 ->orderByDesc('kills')
                 ->orderBy('id')
                 ->limit(5)
                 ->get(),
 
-            'districts' => $this->districtStats(),
+            'districts' => $this->districtStats($user),
         ]);
     }
 
     /** Por distrito: cuántas veces ha participado alguien de allí y cuántas ha ganado */
-    private function districtStats()
+    private function districtStats(User $user)
     {
         // selectRaw + groupBy: Postgres cuenta y nos devuelve [district_id => total]
-        $played = GameTribute::selectRaw('district_id, count(*) as total')->groupBy('district_id')->pluck('total', 'district_id');
-        $won = GameTribute::where('placement', 1)->whereNull('died_in_round')
+        $played = $this->tributesOf($user)->selectRaw('district_id, count(*) as total')->groupBy('district_id')->pluck('total', 'district_id');
+        $won = $this->tributesOf($user)->where('placement', 1)->whereNull('died_in_round')
             ->selectRaw('district_id, count(*) as total')->groupBy('district_id')->pluck('total', 'district_id');
 
         return District::orderBy('name')->get()
@@ -62,5 +68,11 @@ class StatsController extends Controller
             ])
             ->filter(fn (object $row) => $row->played > 0)
             ->sortByDesc(fn (object $row) => $row->won / $row->played);
+    }
+
+    /** Los tributos de las partidas de este usuario */
+    private function tributesOf(User $user): Builder
+    {
+        return GameTribute::whereHas('game', fn (Builder $query) => $query->whereBelongsTo($user));
     }
 }

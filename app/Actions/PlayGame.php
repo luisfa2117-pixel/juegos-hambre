@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\Models\Character;
 use App\Models\Game;
+use App\Models\User;
 use App\Simulation\EventPool;
 use App\Simulation\EventResult;
 use App\Simulation\Simulation;
@@ -25,11 +26,15 @@ class PlayGame
     /** Por si algún día los eventos quedan tan suaves que nadie muere */
     public const MAX_ROUNDS = 100;
 
-    /** @param Collection<int, Character> $characters */
-    public function handle(Collection $characters, ?int $seed = null): Game
+    /** @param Collection<int, Character> $characters Tienen que ser del propio usuario */
+    public function handle(User $user, Collection $characters, ?int $seed = null): Game
     {
         if ($characters->count() < 2) {
             throw new InvalidArgumentException('Hacen falta al menos 2 personajes para jugar');
+        }
+
+        if ($characters->contains(fn (Character $character) => $character->user_id !== $user->id)) {
+            throw new InvalidArgumentException('Solo puedes jugar con tus propios personajes');
         }
 
         // Ordenados por id: así, con los mismos personajes y la misma semilla,
@@ -82,8 +87,8 @@ class PlayGame
 
         // 2. Guardarlo todo. Si algo falla a mitad, la transacción deshace lo guardado
         //    y no queda una partida a medias en la base de datos.
-        return DB::transaction(function () use ($seed, $simulation, $characters, $diedInRound, $kills, $killedBy, $rounds) {
-            $game = Game::create([
+        return DB::transaction(function () use ($user, $seed, $simulation, $characters, $diedInRound, $kills, $killedBy, $rounds) {
+            $game = $user->games()->create([
                 'seed' => $seed,
                 'total_rounds' => $simulation->round(),
             ]);

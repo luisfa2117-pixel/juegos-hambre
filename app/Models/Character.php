@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Storage;
  */
 class Character extends Model
 {
+    // user_id no se rellena desde formularios: se asigna con $user->characters()->make(...)
     protected $fillable = ['name', 'gender', 'district_id'];
 
     protected $casts = [
@@ -45,6 +46,11 @@ class Character extends Model
         if ($this->image_path) {
             Storage::disk('public')->delete($this->image_path);
         }
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function district(): BelongsTo

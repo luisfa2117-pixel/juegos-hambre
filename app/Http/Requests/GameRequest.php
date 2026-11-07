@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class GameRequest extends FormRequest
 {
@@ -15,7 +16,8 @@ class GameRequest extends FormRequest
     {
         return [
             'characters' => ['required', 'array', 'min:2', 'max:48'],
-            'characters.*' => ['integer', 'distinct', 'exists:characters,id'],
+            // Que exista Y que sea tuyo: no puedes meter en tu partida personajes de otro usuario
+            'characters.*' => ['integer', 'distinct', Rule::exists('characters', 'id')->where('user_id', $this->user()->id)],
             'seed' => ['nullable', 'integer', 'min:1', 'max:999999'],
         ];
     }

@@ -8,6 +8,8 @@ use App\Models\District;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
+use Database\Seeders\CharacterSeeder;
 use Tests\TestCase;
 
 class CharacterImageTest extends TestCase
@@ -16,9 +18,15 @@ class CharacterImageTest extends TestCase
 
     protected $seed = true;
 
+    private User $user;
+
     protected function setUp(): void
     {
         parent::setUp();
+
+        // Todas las páginas exigen sesión: entramos como el usuario de pruebas del seeder
+        $this->user = User::where('email', CharacterSeeder::DEMO_EMAIL)->firstOrFail();
+        $this->actingAs($this->user);
         $this->withoutVite();
 
         // Un disco "de mentira" en memoria: los tests no llenan tu carpeta storage de fotos
@@ -127,7 +135,7 @@ class CharacterImageTest extends TestCase
 
         $this->get(route('characters.index'))->assertSee($kira->image_url);
 
-        $game = app(PlayGame::class)->handle(Character::all(), 42);
+        $game = app(PlayGame::class)->handle($this->user, Character::all(), 42);
         $this->get(route('games.show', [$game, 'round' => $game->total_rounds]))->assertSee($kira->image_url);
     }
 }

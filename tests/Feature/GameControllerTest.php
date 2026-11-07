@@ -6,6 +6,8 @@ use App\Actions\PlayGame;
 use App\Models\Character;
 use App\Models\Game;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\User;
+use Database\Seeders\CharacterSeeder;
 use Tests\TestCase;
 
 class GameControllerTest extends TestCase
@@ -14,15 +16,21 @@ class GameControllerTest extends TestCase
 
     protected $seed = true;
 
+    private User $user;
+
     protected function setUp(): void
     {
         parent::setUp();
+
+        // Todas las páginas exigen sesión: entramos como el usuario de pruebas del seeder
+        $this->user = User::where('email', CharacterSeeder::DEMO_EMAIL)->firstOrFail();
+        $this->actingAs($this->user);
         $this->withoutVite();
     }
 
     private function playGame(int $seed = 42): Game
     {
-        return app(PlayGame::class)->handle(Character::all(), $seed);
+        return app(PlayGame::class)->handle($this->user, Character::all(), $seed);
     }
 
     public function test_home_redirects_to_games(): void

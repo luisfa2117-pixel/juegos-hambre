@@ -23,8 +23,10 @@ class CharacterRequest extends FormRequest
         return [
             'name' => [
                 'required', 'string', 'max:40',
-                // Al editar, el propio personaje no cuenta como "repetido"
-                Rule::unique('characters', 'name')->ignore($this->route('character')),
+                // Único entre TUS personajes; al editar, el propio personaje no cuenta como repetido
+                Rule::unique('characters', 'name')
+                    ->where('user_id', $this->user()->id)
+                    ->ignore($this->route('character')),
             ],
             'gender' => ['required', Rule::enum(Gender::class)],
             'district_id' => ['required', 'integer', 'exists:districts,id'],
@@ -39,7 +41,7 @@ class CharacterRequest extends FormRequest
         return [
             'name.required' => 'Ponle un nombre.',
             'name.max' => 'El nombre puede tener como mucho 40 caracteres.',
-            'name.unique' => 'Ya hay un personaje con ese nombre.',
+            'name.unique' => 'Ya tienes un personaje con ese nombre.',
             'gender.required' => 'Elige un género.',
             'gender.enum' => 'Elige un género de la lista.',
             'district_id.required' => 'Elige un distrito.',

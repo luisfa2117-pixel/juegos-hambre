@@ -6,6 +6,8 @@ use App\Actions\PlayGame;
 use App\Models\Character;
 use App\Models\GameTribute;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\User;
+use Database\Seeders\CharacterSeeder;
 use Tests\TestCase;
 
 class StatsControllerTest extends TestCase
@@ -14,9 +16,15 @@ class StatsControllerTest extends TestCase
 
     protected $seed = true;
 
+    private User $user;
+
     protected function setUp(): void
     {
         parent::setUp();
+
+        // Todas las páginas exigen sesión: entramos como el usuario de pruebas del seeder
+        $this->user = User::where('email', CharacterSeeder::DEMO_EMAIL)->firstOrFail();
+        $this->actingAs($this->user);
         $this->withoutVite();
     }
 
@@ -30,7 +38,7 @@ class StatsControllerTest extends TestCase
     public function test_shows_rankings_after_some_games(): void
     {
         foreach (range(1, 4) as $seed) {
-            app(PlayGame::class)->handle(Character::all(), $seed);
+            app(PlayGame::class)->handle($this->user, Character::all(), $seed);
         }
 
         $winner = GameTribute::where('placement', 1)->whereNull('died_in_round')->first();
@@ -46,7 +54,7 @@ class StatsControllerTest extends TestCase
     public function test_character_stats_are_calculated_by_the_database(): void
     {
         foreach (range(1, 3) as $seed) {
-            app(PlayGame::class)->handle(Character::all(), $seed);
+            app(PlayGame::class)->handle($this->user, Character::all(), $seed);
         }
 
         $dean = Character::withStats()->where('name', 'Dean')->first();

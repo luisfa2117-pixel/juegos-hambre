@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Actions\PlayGame;
-use App\Models\Character;
+use App\Models\User;
 use App\Models\GameTribute;
 use Illuminate\Console\Command;
 
@@ -14,23 +14,31 @@ use Illuminate\Console\Command;
  */
 class PlayGameCommand extends Command
 {
-    protected $signature = 'game:play {--seed= : Semilla para repetir exactamente una partida}';
+    protected $signature = 'game:play {--seed= : Semilla para repetir exactamente una partida} {--email=demo@juegos.test : De quién son los personajes}';
 
-    protected $description = 'Juega una partida con todos los personajes y la guarda';
+    protected $description = 'Juega una partida con todos los personajes de un usuario y la guarda';
 
     // Laravel crea el PlayGame y nos lo pasa (inyección de dependencias)
     public function handle(PlayGame $playGame): int
     {
-        $characters = Character::all();
+        $user = User::where('email', $this->option('email'))->first();
+
+        if ($user === null) {
+            $this->error("No hay ninguna cuenta con el correo {$this->option('email')}.");
+
+            return self::FAILURE;
+        }
+
+        $characters = $user->characters()->get();
 
         if ($characters->count() < 2) {
-            $this->error('Hacen falta al menos 2 personajes. Ejecuta: php artisan db:seed');
+            $this->error('Hacen falta al menos 2 personajes.');
 
             return self::FAILURE;
         }
 
         $seed = $this->option('seed') !== null ? (int) $this->option('seed') : null;
-        $game = $playGame->handle($characters, $seed);
+        $game = $playGame->handle($user, $characters, $seed);
 
         $this->info("Partida #{$game->id} guardada: {$game->total_rounds} rondas (semilla {$game->seed}).");
 

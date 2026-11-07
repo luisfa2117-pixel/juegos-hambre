@@ -2,34 +2,24 @@
 
 namespace Database\Seeders;
 
-use App\Enums\Gender;
-use App\Models\Character;
-use App\Models\District;
+use App\Actions\CreateStarterCharacters;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class CharacterSeeder extends Seeder
 {
-    /** El reparto de tu Main.java */
-    public function run(): void
+    /** El usuario de pruebas con el que entras en local (y que usan los tests) */
+    public const DEMO_EMAIL = 'demo@juegos.test';
+
+    public function run(CreateStarterCharacters $createStarterCharacters): void
     {
-        $districts = District::pluck('id', 'slug');   // ['costa_este' => 1, ...]
+        $demo = User::firstOrNew(['email' => self::DEMO_EMAIL]);
+        $demo->name = 'Demo';
+        $demo->password = 'password';
+        // is_admin no se puede rellenar con fill() (ver User::$fillable): se asigna a mano
+        $demo->is_admin = true;
+        $demo->save();
 
-        $characters = [
-            ['Dean',     Gender::Male,   'cinturon_oxidado'],
-            ['Avery',    Gender::Female, 'costa_este'],
-            ['De Santi', Gender::Male,   'norte_helado'],
-            ['Hannah',   Gender::Female, 'sur_quemado'],
-            ['Desiree',  Gender::Female, 'cinturon_oxidado'],
-            ['Noah',     Gender::Male,   'pacifico_tecno'],
-            ['Avril',    Gender::Female, 'costa_este'],
-            ['Horacio',  Gender::Male,   'norte_helado'],
-        ];
-
-        foreach ($characters as [$name, $gender, $district]) {
-            Character::updateOrCreate(
-                ['name' => $name],
-                ['gender' => $gender, 'district_id' => $districts[$district]],
-            );
-        }
+        $createStarterCharacters->handle($demo);
     }
 }

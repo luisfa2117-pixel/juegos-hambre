@@ -20,18 +20,35 @@
         <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4 py-4">
             <a href="{{ url('/') }}" class="font-display text-2xl text-hazard">Juegos del Hambre</a>
 
-            <nav class="flex gap-5">
-                @foreach (['games' => 'Partidas', 'characters' => 'Personajes', 'events' => 'Eventos', 'stats' => 'Estadísticas'] as $section => $label)
-                    <a href="{{ route("{$section}.index") }}"
-                       @class([
-                           'border-b-2 pb-0.5 hover:text-hazard',
-                           'border-hazard text-hazard' => request()->routeIs("{$section}.*"),
-                           'border-transparent' => ! request()->routeIs("{$section}.*"),
-                       ])>
-                        {{ $label }}
-                    </a>
-                @endforeach
-            </nav>
+            @auth
+                @php
+                    $sections = ['games' => 'Partidas', 'characters' => 'Personajes', 'stats' => 'Estadísticas'];
+
+                    // Eventos solo aparece en el menú de los administradores
+                    if (auth()->user()->can('manage-events')) {
+                        $sections['events'] = 'Eventos';
+                    }
+                @endphp
+
+                <nav class="flex flex-wrap items-center gap-x-5 gap-y-2">
+                    @foreach ($sections as $section => $label)
+                        <a href="{{ route("{$section}.index") }}"
+                           @class([
+                               'border-b-2 pb-0.5 hover:text-hazard',
+                               'border-hazard text-hazard' => request()->routeIs("{$section}.*"),
+                               'border-transparent' => ! request()->routeIs("{$section}.*"),
+                           ])>
+                            {{ $label }}
+                        </a>
+                    @endforeach
+
+                    <form method="POST" action="{{ route('logout') }}" class="flex items-center gap-3 border-l border-asphalt-line pl-5">
+                        @csrf
+                        <span class="text-sm text-ash-muted">{{ auth()->user()->name }}</span>
+                        <button type="submit" class="btn-quiet">Salir</button>
+                    </form>
+                </nav>
+            @endauth
         </div>
     </header>
 

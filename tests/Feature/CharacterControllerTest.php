@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use App\Models\Character;
 use App\Models\District;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\User;
+use Database\Seeders\CharacterSeeder;
 use Tests\TestCase;
 
 class CharacterControllerTest extends TestCase
@@ -13,9 +15,15 @@ class CharacterControllerTest extends TestCase
 
     protected $seed = true;
 
+    private User $user;
+
     protected function setUp(): void
     {
         parent::setUp();
+
+        // Todas las páginas exigen sesión: entramos como el usuario de pruebas del seeder
+        $this->user = User::where('email', CharacterSeeder::DEMO_EMAIL)->firstOrFail();
+        $this->actingAs($this->user);
 
         // Los tests no necesitan el CSS/JS compilado por Vite
         $this->withoutVite();
@@ -51,7 +59,7 @@ class CharacterControllerTest extends TestCase
     public function test_name_must_be_unique(): void
     {
         $this->post(route('characters.store'), $this->validData(['name' => 'Dean']))
-            ->assertSessionHasErrors(['name' => 'Ya hay un personaje con ese nombre.']);
+            ->assertSessionHasErrors(['name' => 'Ya tienes un personaje con ese nombre.']);
     }
 
     public function test_rejects_invalid_gender_and_district(): void
@@ -91,7 +99,7 @@ class CharacterControllerTest extends TestCase
             ->assertOk()
             ->assertSee('Todavía no ha jugado ninguna partida.');
 
-        $game = app(\App\Actions\PlayGame::class)->handle(Character::all(), 42);
+        $game = app(\App\Actions\PlayGame::class)->handle($this->user, Character::all(), 42);
 
         $this->get(route('characters.show', $dean))
             ->assertOk()
