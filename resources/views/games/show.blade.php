@@ -135,12 +135,20 @@
                        @if ($canSponsor) onclick="return confirm('Si ves el final, ya no podrás enviar regalos en esta partida. ¿Seguir?')" @endif>Ver el final</a>
                 </div>
 
-                {{-- Patrocinadores --}}
+                {{-- Patrocinadores. El id es el destino del #patrocinar al volver de enviar un regalo --}}
+                <div id="patrocinar" class="mt-8 scroll-mt-6 space-y-4">
+                @if (session('gift_status'))
+                    <p role="status" class="rounded-sm border-l-4 border-ally bg-asphalt-raised px-4 py-3">{{ session('gift_status') }}</p>
+                @endif
+                @if (session('gift_error'))
+                    <p role="alert" class="rounded-sm border-l-4 border-blood bg-asphalt-raised px-4 py-3">{{ session('gift_error') }}</p>
+                @endif
+
                 @if ($canSponsor)
                     @php $aliveNow = collect($snapshot)->where('alive', true)->pluck('name'); @endphp
 
                     <form method="POST" action="{{ route('games.gifts.store', $game) }}"
-                          class="mt-8 rounded-sm border border-hazard/60 p-4">
+                          class="rounded-sm border border-hazard/60 p-4">
                         @csrf
                         <p class="font-condensed text-xl font-semibold text-hazard">Patrocinar a un tributo</p>
                         <p class="mt-1 text-sm text-ash-muted">
@@ -169,8 +177,9 @@
                         </div>
                     </form>
                 @elseif ($sponsorBlocked)
-                    <p class="mt-6 text-sm text-ash-muted">{{ $sponsorBlocked }}</p>
+                    <p class="text-sm text-ash-muted">{{ $sponsorBlocked }}</p>
                 @endif
+                </div>
             @else
                 {{-- Resumen final --}}
                 <section id="resultado" class="mt-12 scroll-mt-6">

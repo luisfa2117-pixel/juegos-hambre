@@ -53,6 +53,19 @@ class SponsorGiftTest extends TestCase
         ]);
     }
 
+    public function test_after_sending_a_gift_the_page_goes_back_to_the_sponsor_box(): void
+    {
+        $this->see(3);
+
+        $this->gift($this->aliveAfter(3), 'botiquin')
+            ->assertRedirect(route('games.show', [$this->game, 'round' => 3]) . '#patrocinar');
+
+        $this->gift('Nadie', 'botiquin')   // también si hay un error
+            ->assertRedirect(route('games.show', [$this->game, 'round' => 3]) . '#patrocinar');
+
+        $this->get(route('games.show', [$this->game, 'round' => 3]))->assertSee('id="patrocinar"', escape: false);
+    }
+
     public function test_viewing_a_round_marks_it_as_seen(): void
     {
         $this->see(3);
@@ -75,7 +88,7 @@ class SponsorGiftTest extends TestCase
         $this->see(3);
         $avery = $this->aliveAfter(3);
 
-        $this->gift($avery, 'cuchillo')->assertSessionHas('status');
+        $this->gift($avery, 'cuchillo')->assertSessionHas('gift_status');
 
         $round4 = $this->game->fresh()->rounds()->where('number', 4)->first();
         $this->assertTrue($round4->events[0]['gift']);
@@ -115,10 +128,10 @@ class SponsorGiftTest extends TestCase
         $tribute = $this->aliveAfter(3);
 
         foreach (range(1, SendSponsorGift::MAX_GIFTS) as $i) {
-            $this->gift($tribute, 'vendas')->assertSessionHas('status');
+            $this->gift($tribute, 'vendas')->assertSessionHas('gift_status');
         }
 
-        $this->gift($tribute, 'vendas')->assertSessionHas('error');
+        $this->gift($tribute, 'vendas')->assertSessionHas('gift_error');
         $this->assertSame(SendSponsorGift::MAX_GIFTS, $this->game->gifts()->count());
     }
 
@@ -126,7 +139,7 @@ class SponsorGiftTest extends TestCase
     {
         $this->see($this->game->total_rounds);
 
-        $this->gift($this->aliveAfter(1), 'botiquin')->assertSessionHas('error');
+        $this->gift($this->aliveAfter(1), 'botiquin')->assertSessionHas('gift_error');
 
         $this->assertSame(0, $this->game->gifts()->count());
     }
@@ -135,11 +148,11 @@ class SponsorGiftTest extends TestCase
     {
         $this->see(3);
 
-        $this->gift('Nadie', 'botiquin')->assertSessionHas('error');
+        $this->gift('Nadie', 'botiquin')->assertSessionHas('gift_error');
 
         $dead = collect($this->game->rounds()->where('number', 3)->first()->tributes)->firstWhere('alive', false);
         if ($dead) {
-            $this->gift($dead['name'], 'botiquin')->assertSessionHas('error');
+            $this->gift($dead['name'], 'botiquin')->assertSessionHas('gift_error');
         }
 
         $this->assertSame(0, $this->game->gifts()->count());
@@ -149,7 +162,7 @@ class SponsorGiftTest extends TestCase
     {
         $this->see(3);
 
-        $this->gift($this->aliveAfter(3), 'rifle_riel')->assertSessionHas('error');
+        $this->gift($this->aliveAfter(3), 'rifle_riel')->assertSessionHas('gift_error');
 
         $this->assertSame(0, $this->game->gifts()->count());
     }

@@ -8,6 +8,7 @@ use App\Models\Item;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
 use RuntimeException;
 
 class SponsorGiftController extends Controller
@@ -16,25 +17,29 @@ class SponsorGiftController extends Controller
     {
         Gate::authorize('sponsor', $game);
 
-        $data = $request->validate([
+        // Volvemos a la misma ronda, y #patrocinar hace que el navegador baje hasta el recuadro
+        // (sin el ancla, la página se abriría desde arriba y tendrías que volver a bajar)
+        $back = route('games.show', [$game, 'round' => $game->revealed_round]) . '#patrocinar';
+
+        $validator = Validator::make($request->all(), [
             'tribute' => ['required', 'string'],
             'item_id' => ['required', 'integer', 'exists:items,id'],
-        ], [
-            'tribute.required' => 'Elige a quién se lo envías.',
-            'item_id.required' => 'Elige qué le envías.',
-            'item_id.exists' => 'Ese objeto no existe.',
         ]);
 
-        $item = Item::findOrFail($data['item_id']);
-
-        try {
-            $sendGift->handle($game, $data['tribute'], $item);
-        } catch (RuntimeException $exception) {
-            return back()->with('error', $exception->getMessage());
+        if ($validator->fails()) {
+            return redirect()->to($back)->with('gift_error', 'Elige a quién y qué le envías.');
         }
 
-        return redirect()
-            ->route('games.show', [$game, 'round' => $game->revealed_round])
-            ->with('status', "Regalo enviado: {$item->name} para {$data['tribute']}. Llegará en la siguiente ronda.");
+        $item = Item::findOrFail($request->integer('item_id'));
+        $tribute = $request->string('tribute')->toString();
+
+        try {
+            $sendGift->handle($game, $tribute, $item);
+        } catch (RuntimeException $exception) {
+            return redirect()->to($back)->with('gift_error', $exception->getMessage());
+        }
+
+        return redirect()->to($back)
+            ->with('gift_status', "Regalo enviado: {$item->name} para {$tribute}. Llegará en la siguiente ronda.");
     }
 }
