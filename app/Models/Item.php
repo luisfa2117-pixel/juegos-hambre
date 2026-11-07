@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
 {
-    protected $fillable = ['slug', 'name', 'type', 'power'];
+    protected $fillable = ['slug', 'name', 'type', 'power', 'uses'];
 
     protected $casts = [
         'type' => ItemType::class,

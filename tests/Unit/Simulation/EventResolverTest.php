@@ -35,9 +35,9 @@ class EventResolverTest extends TestCase
         return new Tribute($name, $gender, $district);
     }
 
-    private function item(string $slug, ItemType $type, int $power): Item
+    private function item(string $slug, ItemType $type, int $power, int $uses = 1): Item
     {
-        return new Item(['slug' => $slug, 'name' => ucfirst($slug), 'type' => $type, 'power' => $power]);
+        return new Item(['slug' => $slug, 'name' => ucfirst($slug), 'type' => $type, 'power' => $power, 'uses' => $uses]);
     }
 
     /**
@@ -131,6 +131,45 @@ class EventResolverTest extends TestCase
 
         $this->assertSame(7, $avery->hp());   // 20 - (10 + 3)
         $this->assertFalse($dean->hasItem($knife));
+    }
+
+    public function test_weapon_with_several_uses_survives_the_attack(): void
+    {
+        $pistol = $this->item('pistola', ItemType::Weapon, 10, uses: 3);
+        $dean = $this->tribute('Dean');
+        $dean->addItem($pistol);
+        $event = $this->event(EventCategory::Weapon, '{A} disparó a {B}', ['target_hp' => -5], requires: $pistol);
+
+        $result = $this->resolver->apply($event, [$dean, $this->tribute('Avery')]);
+
+        $this->assertSame(2, $dean->usesLeft($pistol));
+        $this->assertSame([], $result->notes);
+    }
+
+    public function test_warns_when_a_weapon_breaks(): void
+    {
+        $knife = $this->item('cuchillo', ItemType::Weapon, 5, uses: 1);
+        $dean = $this->tribute('Dean');
+        $dean->addItem($knife);
+        $event = $this->event(EventCategory::Weapon, '{A} apuñaló a {B}', ['target_hp' => -5], requires: $knife);
+
+        $result = $this->resolver->apply($event, [$dean, $this->tribute('Avery')]);
+
+        $this->assertSame('🔧 [Cuchillo] de Dean ya no sirve.', $result->notes[0]);
+    }
+
+    public function test_armor_with_several_uses_survives_a_hit(): void
+    {
+        $exo = $this->item('exotraje', ItemType::Armor, 10, uses: 3);
+        $avery = $this->tribute('Avery');
+        $avery->addItem($exo);
+        $event = $this->event(EventCategory::Duo, '{A} disparó a {B}', ['target_hp' => -8]);
+
+        $result = $this->resolver->apply($event, [$this->tribute('Dean'), $avery]);
+
+        $this->assertSame(20, $avery->hp());
+        $this->assertSame(2, $avery->usesLeft($exo));
+        $this->assertStringEndsWith('[Exotraje].', $result->notes[0]);
     }
 
     public function test_strength_does_not_affect_non_weapon_events(): void

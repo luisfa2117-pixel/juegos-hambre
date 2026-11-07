@@ -67,9 +67,12 @@ class EventResolver
             $target->changeEnergy($event->target_energy);
         }
 
-        // 3. Objetos: el requerido se gasta, el del descubrimiento se guarda
-        if ($event->requiresItem !== null) {
-            $actor->removeItem($event->requiresItem);
+        // 3. Objetos: el requerido gasta un uso, el del descubrimiento se guarda
+        if ($event->requiresItem !== null && $actor->useItem($event->requiresItem)) {
+            // Las armas avisan cuando se rompen; un botiquín gastado no hace falta anunciarlo
+            if ($event->requiresItem->type === ItemType::Weapon) {
+                $notes[] = "🔧 [{$event->requiresItem->name}] de {$actor->name} ya no sirve.";
+            }
         }
 
         if ($event->givesItem !== null) {
@@ -154,9 +157,10 @@ class EventResolver
         }
 
         $absorbed = min($armor->power, -$hpChange);
-        $target->removeItem($armor);
+        $broken = $target->useItem($armor);
 
-        $note = "🛡️ {$target->name} absorbió {$absorbed} de daño con [{$armor->name}], que quedó inservible.";
+        $note = "🛡️ {$target->name} absorbió {$absorbed} de daño con [{$armor->name}]"
+            . ($broken ? ', que quedó inservible.' : '.');
 
         return [$hpChange + $absorbed, $note];
     }

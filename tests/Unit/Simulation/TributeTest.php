@@ -21,9 +21,9 @@ class TributeTest extends TestCase
         ]);
     }
 
-    private function item(string $slug, ItemType $type, int $power): Item
+    private function item(string $slug, ItemType $type, int $power, int $uses = 1): Item
     {
-        return new Item(['slug' => $slug, 'name' => ucfirst($slug), 'type' => $type, 'power' => $power]);
+        return new Item(['slug' => $slug, 'name' => ucfirst($slug), 'type' => $type, 'power' => $power, 'uses' => $uses]);
     }
 
     private function tribute(?District $district = null, string $name = 'Dean'): Tribute
@@ -138,6 +138,43 @@ class TributeTest extends TestCase
 
         $tribute->removeItem($medkit);
         $this->assertFalse($tribute->hasItem($medkit));
+    }
+
+    public function test_items_with_several_uses_last_until_used_up(): void
+    {
+        $tribute = $this->tribute();
+        $knife = $this->item('cuchillo', ItemType::Weapon, 5, uses: 3);
+        $tribute->addItem($knife);
+
+        $this->assertFalse($tribute->useItem($knife));
+        $this->assertFalse($tribute->useItem($knife));
+        $this->assertSame(1, $tribute->usesLeft($knife));
+
+        $this->assertTrue($tribute->useItem($knife));   // el tercer uso lo rompe
+        $this->assertFalse($tribute->hasItem($knife));
+    }
+
+    public function test_each_copy_of_an_item_keeps_its_own_uses(): void
+    {
+        $tribute = $this->tribute();
+        $knife = $this->item('cuchillo', ItemType::Weapon, 5, uses: 2);
+        $tribute->addItem($knife);
+        $tribute->addItem($knife);
+
+        $tribute->useItem($knife);
+        $tribute->useItem($knife);   // se rompe el primero
+
+        $this->assertTrue($tribute->hasItem($knife));
+        $this->assertSame(2, $tribute->usesLeft($knife));   // el segundo está nuevo
+    }
+
+    public function test_snapshot_shows_remaining_uses(): void
+    {
+        $tribute = $this->tribute();
+        $tribute->addItem($this->item('pistola', ItemType::Weapon, 10, uses: 3));
+        $tribute->addItem($this->item('botiquin', ItemType::Heal, 10));
+
+        $this->assertSame(['Pistola (3 usos)', 'Botiquin'], $tribute->toArray()['items']);
     }
 
     // ---- Alianzas ----

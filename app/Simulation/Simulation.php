@@ -18,7 +18,7 @@ class Simulation
 {
     // Probabilidades en %. Son las de tu GestorEventos, con nombre para poder ajustarlas.
     public const GROUP_EVENT_CHANCE = 15;   // evento de 3 o 4 tributos
-    public const PAIR_EVENT_CHANCE = 50;    // evento de 2 tributos (el resto, 50 %, es individual)
+    public const PAIR_EVENT_CHANCE = 50;    // evento de 2 tributos (el resto, 35 %, es individual)
     public const FRIENDSHIP_CHANCE = 35;    // dos desconocidos se hacen aliados en vez de pelear
     public const BETRAYAL_CHANCE = 35;      // un aliado traiciona al otro
     public const WEAPON_CHANCE = 90;        // quien lleva arma la usa en una pelea

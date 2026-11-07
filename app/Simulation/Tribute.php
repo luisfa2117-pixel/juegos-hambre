@@ -26,6 +26,9 @@ class Tribute
     /** @var Item[] */
     private array $inventory = [];
 
+    /** @var int[] Usos que le quedan a cada objeto de la mochila (mismo índice que $inventory) */
+    private array $usesLeft = [];
+
     /** @var Tribute[] */
     private array $allies = [];
 
@@ -125,6 +128,7 @@ class Tribute
     public function addItem(Item $item): void
     {
         $this->inventory[] = $item;
+        $this->usesLeft[] = max(1, $item->uses ?? 1);
     }
 
     public function hasItem(Item $item): bool
@@ -141,14 +145,56 @@ class Tribute
     /** Quita UNA unidad del objeto (si tiene dos botiquines, le queda uno). */
     public function removeItem(Item $item): void
     {
+        $index = $this->indexOf($item);
+
+        if ($index === null) {
+            return;
+        }
+
+        array_splice($this->inventory, $index, 1);
+        array_splice($this->usesLeft, $index, 1);
+    }
+
+    /**
+     * Gasta un uso del objeto. Si era el último, desaparece de la mochila.
+     * Devuelve true si se ha gastado del todo (para avisar en el log).
+     */
+    public function useItem(Item $item): bool
+    {
+        $index = $this->indexOf($item);
+
+        if ($index === null) {
+            return false;
+        }
+
+        $this->usesLeft[$index]--;
+
+        if ($this->usesLeft[$index] > 0) {
+            return false;
+        }
+
+        $this->removeItem($item);
+
+        return true;
+    }
+
+    /** Usos que le quedan al primer objeto de ese tipo que lleva (0 si no lo lleva) */
+    public function usesLeft(Item $item): int
+    {
+        $index = $this->indexOf($item);
+
+        return $index === null ? 0 : $this->usesLeft[$index];
+    }
+
+    private function indexOf(Item $item): ?int
+    {
         foreach ($this->inventory as $index => $owned) {
             if ($owned->slug === $item->slug) {
-                unset($this->inventory[$index]);
-                $this->inventory = array_values($this->inventory);
-
-                return;
+                return $index;
             }
         }
+
+        return null;
     }
 
     /** El objeto más potente de un tipo, o null si no tiene ninguno. */
@@ -223,7 +269,12 @@ class Tribute
             'energy' => $this->energy,
             'max_energy' => $this->maxEnergy,
             'alive' => $this->isAlive(),
-            'items' => array_map(fn (Item $item) => $item->name, $this->inventory),
+            // "Pistola (2 usos)" si le queda más de uno
+            'items' => array_map(
+                fn (Item $item, int $uses) => $uses > 1 ? "{$item->name} ({$uses} usos)" : $item->name,
+                $this->inventory,
+                $this->usesLeft,
+            ),
             'allies' => array_map(fn (Tribute $ally) => $ally->name, $this->allies),
         ];
     }

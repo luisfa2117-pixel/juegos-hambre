@@ -606,6 +606,24 @@
             "energiaPropia": 0,
             "energiaRival": 0,
             "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} se bajó de su plataforma antes de tiempo y pisó una mina",
+            "numParticipantes": 1,
+            "danioPropio": -20,
+            "danioRival": 0,
+            "energiaPropia": 0,
+            "energiaRival": 0,
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} quedó atrapad{A:o/a} bajo una avalancha de cajas al derrumbarse la Cornucopia",
+            "numParticipantes": 1,
+            "danioPropio": -14,
+            "danioRival": 0,
+            "energiaPropia": -4,
+            "energiaRival": 0,
+            "fase": "cornucopia"
         }
     ],
     "eventosDescubrimiento": [
@@ -1335,6 +1353,96 @@
             "energiaPropia": -1,
             "energiaRival": 0,
             "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} le rompió el cuello a {B} en lo alto de la Cornucopia",
+            "numParticipantes": 2,
+            "danioPropio": 0,
+            "danioRival": -20,
+            "energiaPropia": -2,
+            "energiaRival": 0,
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} le clavó un hacha en la espalda a {B} mientras huía",
+            "numParticipantes": 2,
+            "danioPropio": 0,
+            "danioRival": -20,
+            "energiaPropia": -2,
+            "energiaRival": 0,
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} disparó a {B} a bocajarro con un arma de la Cornucopia",
+            "numParticipantes": 2,
+            "danioPropio": 0,
+            "danioRival": -20,
+            "energiaPropia": -1,
+            "energiaRival": 0,
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} remató a {B} con una barra de hierro junto a las cajas de suministros",
+            "numParticipantes": 2,
+            "danioPropio": 0,
+            "danioRival": -20,
+            "energiaPropia": -3,
+            "energiaRival": 0,
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} y {B} se destrozaron a golpes por una mochila",
+            "numParticipantes": 2,
+            "danioPropio": -12,
+            "danioRival": -12,
+            "energiaPropia": -3,
+            "energiaRival": -3,
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} atravesó a {B} con una lanza de la Cornucopia",
+            "numParticipantes": 2,
+            "danioPropio": 0,
+            "danioRival": -20,
+            "energiaPropia": -2,
+            "energiaRival": 0,
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} estranguló a {B} con la correa de una mochila",
+            "numParticipantes": 2,
+            "danioPropio": 0,
+            "danioRival": -20,
+            "energiaPropia": -3,
+            "energiaRival": 0,
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} golpeó a {B} con una caja de munición hasta matarl{B:o/a}",
+            "numParticipantes": 2,
+            "danioPropio": 0,
+            "danioRival": -20,
+            "energiaPropia": -3,
+            "energiaRival": 0,
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} empujó a {B} contra los pinchos de una barricada",
+            "numParticipantes": 2,
+            "danioPropio": 0,
+            "danioRival": -20,
+            "energiaPropia": -1,
+            "energiaRival": 0,
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} le cortó el paso a {B} y l{B:o/a} apuñaló con un cuchillo de la Cornucopia",
+            "numParticipantes": 2,
+            "danioPropio": 0,
+            "danioRival": -20,
+            "energiaPropia": -2,
+            "energiaRival": 0,
+            "fase": "cornucopia"
         }
     ],
     "eventosTriple": [
@@ -1550,6 +1658,24 @@
             "energiaPropia": -3,
             "energiaRival": -3,
             "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} hizo estallar una caja de explosivos junto a {B} y {C}",
+            "numParticipantes": 3,
+            "danioPropio": -2,
+            "danioRival": -20,
+            "energiaPropia": -2,
+            "energiaRival": -2,
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} lanzó cuchillos contra {B} y {C} mientras corrían",
+            "numParticipantes": 3,
+            "danioPropio": 0,
+            "danioRival": -12,
+            "energiaPropia": -2,
+            "energiaRival": 0,
+            "fase": "cornucopia"
         }
     ],
     "eventosCuatro": [
@@ -1732,6 +1858,15 @@
             "danioRival": -5,
             "energiaPropia": -3,
             "energiaRival": -3,
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} disparó una ráfaga de ametralladora contra {B}, {C} y {D}",
+            "numParticipantes": 4,
+            "danioPropio": 0,
+            "danioRival": -14,
+            "energiaPropia": -2,
+            "energiaRival": 0,
             "fase": "cornucopia"
         }
     ],
