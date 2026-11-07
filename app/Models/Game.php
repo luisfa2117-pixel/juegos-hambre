@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Game extends Model
 {
-    protected $fillable = ['seed', 'total_rounds'];
+    protected $fillable = ['seed', 'total_rounds', 'revealed_round'];
 
     public function user(): BelongsTo
     {
@@ -19,6 +19,12 @@ class Game extends Model
     public function tributes(): HasMany
     {
         return $this->hasMany(GameTribute::class)->orderBy('placement');
+    }
+
+    /** Los regalos de patrocinadores, en el orden en que se enviaron */
+    public function gifts(): HasMany
+    {
+        return $this->hasMany(GameGift::class)->orderBy('id');
     }
 
     public function rounds(): HasMany

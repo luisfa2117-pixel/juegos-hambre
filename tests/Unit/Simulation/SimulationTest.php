@@ -12,6 +12,7 @@ use App\Models\District;
 use App\Models\GameEvent;
 use App\Models\Item;
 use App\Simulation\EventPool;
+use App\Simulation\EventResult;
 use App\Simulation\Simulation;
 use App\Simulation\Tribute;
 use LogicException;
@@ -693,6 +694,20 @@ class SimulationTest extends TestCase
 
         $this->assertSame(array_slice($textsA, 0, 3), array_slice($this->playToEnd($b), 0, 3));
         $this->assertNotSame(array_slice($textsA, 0, 3), array_slice($this->playToEnd($c), 0, 3));
+    }
+
+    public function test_announcements_open_the_next_round_only(): void
+    {
+        $simulation = $this->simulation($this->tributes(4), $this->harmlessPool(), 1);
+        $simulation->runRound();
+
+        $simulation->announce(new EventResult(text: 'Un patrocinador ha enviado algo', gift: true));
+        $next = $simulation->runRound();
+        $after = $simulation->runRound();
+
+        $this->assertSame('Un patrocinador ha enviado algo', $next[0]->text);
+        $this->assertTrue($next[0]->gift);
+        $this->assertFalse($after[0]->gift);
     }
 
     public function test_last_survivor_is_the_winner_and_no_more_rounds_can_be_played(): void

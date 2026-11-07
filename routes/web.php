@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\SessionController;
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\GameEventController;
+use App\Http\Controllers\SponsorGiftController;
 use App\Http\Controllers\StatsController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::redirect('/', '/games');
 
     Route::resource('games', GameController::class)->only(['index', 'create', 'store', 'show', 'destroy']);
+    Route::post('games/{game}/gifts', [SponsorGiftController::class, 'store'])->name('games.gifts.store');
     Route::resource('characters', CharacterController::class);
     Route::get('stats', [StatsController::class, 'index'])->name('stats.index');
 

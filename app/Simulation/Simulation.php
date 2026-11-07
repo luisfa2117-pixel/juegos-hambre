@@ -54,6 +54,9 @@ class Simulation
     /** @var GameEvent[] Los eventos que ya han salido en esta ronda, para no repetirlos */
     private array $usedThisRound = [];
 
+    /** @var EventResult[] Avisos que abrirán la próxima ronda (por ejemplo, regalos de patrocinadores) */
+    private array $announcements = [];
+
     /** Ronda de la última catástrofe (muy negativa al principio: todavía no ha habido ninguna) */
     private int $lastArenaRound = -1000;
 
@@ -88,6 +91,12 @@ class Simulation
     public function seed(): int
     {
         return $this->seed;
+    }
+
+    /** Añade un aviso que aparecerá al principio de la próxima ronda */
+    public function announce(EventResult $announcement): void
+    {
+        $this->announcements[] = $announcement;
     }
 
     // ---- Guardar y continuar ----
@@ -193,7 +202,10 @@ class Simulation
         $this->random = $this->randomForRound($this->round);
         $this->phase = EventPhase::forRound($this->round);
         $this->usedThisRound = [];
-        $results = [];
+
+        // Lo primero de la ronda, los avisos pendientes
+        $results = $this->announcements;
+        $this->announcements = [];
 
         $dissolved = $this->dissolveFinalAlliance();
         if ($dissolved !== null) {

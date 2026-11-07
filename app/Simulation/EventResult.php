@@ -16,6 +16,7 @@ class EventResult
      * @param array<int, array{victim: string, killers: string[]}> $kills Quién ha matado a quién
      *                                                                  (killers vacío = accidente)
      * @param string|null $arena Si es el anuncio de una catástrofe, su nombre
+     * @param bool $gift Si es el aviso de un regalo de patrocinador
      */
     public function __construct(
         public readonly string $text,
@@ -24,6 +25,7 @@ class EventResult
         public readonly array $participants = [],
         public readonly array $kills = [],
         public readonly ?string $arena = null,
+        public readonly bool $gift = false,
     ) {
     }
 
@@ -37,6 +39,7 @@ class EventResult
             'participants' => $this->participants,
             'kills' => $this->kills,
             'arena' => $this->arena,
+            'gift' => $this->gift,
         ];
     }
 }

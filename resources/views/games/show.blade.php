@@ -47,6 +47,14 @@
 
                     <ul class="divide-y divide-asphalt-line/60">
                         @foreach ($gameRound->events as $event)
+                            {{-- El aviso de un regalo de patrocinador --}}
+                            @if ($event['gift'] ?? false)
+                                <li class="my-3 rounded-sm border-l-4 border-hazard bg-hazard/10 px-4 py-3">
+                                    🎁 {{ $event['text'] }}
+                                </li>
+                                @continue
+                            @endif
+
                             {{-- El anuncio de una catástrofe de los Vigilantes --}}
                             @if ($event['arena'] ?? null)
                                 <li class="my-3 rounded-sm border-2 border-blood bg-blood/10 p-4">
@@ -121,10 +129,48 @@
             @endforeach
 
             @if (! $finished)
-                <div class="mt-8 flex flex-wrap gap-3">
+                <div class="mt-8 flex flex-wrap items-center gap-3">
                     <a href="{{ route('games.show', [$game, 'round' => $round + 1]) }}#ronda-{{ $round + 1 }}" class="btn">Siguiente ronda</a>
-                    <a href="{{ route('games.show', [$game, 'round' => $game->total_rounds]) }}#resultado" class="btn-quiet">Ver el final</a>
+                    <a href="{{ route('games.show', [$game, 'round' => $game->total_rounds]) }}#resultado" class="btn-quiet"
+                       @if ($canSponsor) onclick="return confirm('Si ves el final, ya no podrás enviar regalos en esta partida. ¿Seguir?')" @endif>Ver el final</a>
                 </div>
+
+                {{-- Patrocinadores --}}
+                @if ($canSponsor)
+                    @php $aliveNow = collect($snapshot)->where('alive', true)->pluck('name'); @endphp
+
+                    <form method="POST" action="{{ route('games.gifts.store', $game) }}"
+                          class="mt-8 rounded-sm border border-hazard/60 p-4">
+                        @csrf
+                        <p class="font-condensed text-xl font-semibold text-hazard">Patrocinar a un tributo</p>
+                        <p class="mt-1 text-sm text-ash-muted">
+                            El regalo llegará al empezar la siguiente ronda, y lo que pase a partir de ahí puede cambiar.
+                            {{ trans_choice('Te queda :count regalo en esta partida.|Te quedan :count regalos en esta partida.', $giftsLeft) }}
+                        </p>
+
+                        <div class="mt-4 grid gap-3 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
+                            <div>
+                                <label for="tribute" class="field-label">Para</label>
+                                <select id="tribute" name="tribute" class="field" required>
+                                    @foreach ($aliveNow as $name)
+                                        <option value="{{ $name }}">{{ $name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div>
+                                <label for="item_id" class="field-label">Regalo</label>
+                                <select id="item_id" name="item_id" class="field" required>
+                                    @foreach ($catalog as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <button type="submit" class="btn">Enviar regalo</button>
+                        </div>
+                    </form>
+                @elseif ($sponsorBlocked)
+                    <p class="mt-6 text-sm text-ash-muted">{{ $sponsorBlocked }}</p>
+                @endif
             @else
                 {{-- Resumen final --}}
                 <section id="resultado" class="mt-12 scroll-mt-6">

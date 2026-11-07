@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\PlayGame;
+use App\Actions\SendSponsorGift;
 use App\Http\Requests\GameRequest;
 use App\Models\District;
 use App\Models\Game;
@@ -58,6 +59,11 @@ class GameController extends Controller
         // Si alguien pone ?round=999 o ?round=-3 en la URL, lo dejamos dentro de los límites
         $round = min(max((int) $request->query('round', 1), 1), $game->total_rounds);
 
+        // Lo que ya has visto, ha pasado: los patrocinadores solo pueden cambiar lo que viene después
+        if ($round > $game->revealed_round) {
+            $game->update(['revealed_round' => $round]);
+        }
+
         return view('games.show', [
             'game' => $game,
             'round' => $round,
@@ -69,6 +75,12 @@ class GameController extends Controller
             'winner' => $game->winner(),
             // Solo se puede repetir si siguen existiendo todos los personajes
             'canReplay' => $game->tributes->every(fn (GameTribute $t) => $t->character_id !== null),
+
+            // Patrocinadores: solo en la última ronda que has visto
+            'canSponsor' => $round === $game->revealed_round && SendSponsorGift::unavailableReason($game) === null,
+            'sponsorBlocked' => $round === $game->revealed_round ? SendSponsorGift::unavailableReason($game) : null,
+            'giftsLeft' => SendSponsorGift::MAX_GIFTS - $game->gifts()->count(),
+            'catalog' => SendSponsorGift::catalog(),
         ]);
     }
 
