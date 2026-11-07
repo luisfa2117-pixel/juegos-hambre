@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\Gender;
 use App\Simulation\Tribute;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -55,6 +56,24 @@ class Character extends Model
     public function gameTributes(): HasMany
     {
         return $this->hasMany(GameTribute::class);
+    }
+
+    /**
+     * Añade a la consulta sus estadísticas en todas las partidas, calculadas por Postgres:
+     * games_count, wins_count, deaths_count, bloodbath_deaths_count y kills_total.
+     *
+     * Uso: Character::withStats()->get()
+     */
+    public function scopeWithStats(Builder $query): void
+    {
+        $query
+            ->withCount([
+                'gameTributes as games_count',
+                'gameTributes as wins_count' => fn (Builder $q) => $q->where('placement', 1)->whereNull('died_in_round'),
+                'gameTributes as deaths_count' => fn (Builder $q) => $q->whereNotNull('died_in_round'),
+                'gameTributes as bloodbath_deaths_count' => fn (Builder $q) => $q->where('died_in_round', 1),
+            ])
+            ->withSum('gameTributes as kills_total', 'kills');
     }
 
     /** Crea el tributo que lo representa en una partida, con los stats iniciales. */

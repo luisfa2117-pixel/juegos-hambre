@@ -83,6 +83,22 @@ class CharacterControllerTest extends TestCase
         $this->assertModelMissing($dean);
     }
 
+    public function test_character_page_shows_stats_and_games(): void
+    {
+        $dean = Character::where('name', 'Dean')->first();
+
+        $this->get(route('characters.show', $dean))
+            ->assertOk()
+            ->assertSee('Todavía no ha jugado ninguna partida.');
+
+        $game = app(\App\Actions\PlayGame::class)->handle(Character::all(), 42);
+
+        $this->get(route('characters.show', $dean))
+            ->assertOk()
+            ->assertSee('Asesinatos')
+            ->assertSee("Partida #{$game->id}");
+    }
+
     public function test_create_and_edit_forms_load(): void
     {
         $this->get(route('characters.create'))->assertOk()->assertSee('Crear personaje');

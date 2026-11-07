@@ -46,9 +46,26 @@ class PlayGame
         // 1. Jugar toda la partida en memoria
         $rounds = [];
         $diedInRound = array_fill(0, count($tributes), null);
+        $kills = array_fill(0, count($tributes), 0);
+        $killedBy = array_fill(0, count($tributes), null);
+
+        // ['Dean' => 0, 'Avery' => 1, ...]: los nombres son únicos, así que sirven de clave
+        $indexByName = array_flip(array_map(fn (Tribute $tribute) => $tribute->name, $tributes));
 
         while (! $simulation->isOver() && $simulation->round() < self::MAX_ROUNDS) {
             $results = $simulation->runRound();
+
+            foreach ($results as $result) {
+                foreach ($result->kills as $kill) {
+                    if ($kill['killers'] !== []) {
+                        $killedBy[$indexByName[$kill['victim']]] = implode(' y ', $kill['killers']);
+                    }
+
+                    foreach ($kill['killers'] as $killer) {
+                        $kills[$indexByName[$killer]]++;
+                    }
+                }
+            }
 
             foreach ($tributes as $i => $tribute) {
                 if (! $tribute->isAlive() && $diedInRound[$i] === null) {
@@ -65,7 +82,7 @@ class PlayGame
 
         // 2. Guardarlo todo. Si algo falla a mitad, la transacción deshace lo guardado
         //    y no queda una partida a medias en la base de datos.
-        return DB::transaction(function () use ($seed, $simulation, $characters, $diedInRound, $rounds) {
+        return DB::transaction(function () use ($seed, $simulation, $characters, $diedInRound, $kills, $killedBy, $rounds) {
             $game = Game::create([
                 'seed' => $seed,
                 'total_rounds' => $simulation->round(),
@@ -79,6 +96,8 @@ class PlayGame
                     'district_id' => $character->district_id,
                     'died_in_round' => $diedInRound[$i],
                     'placement' => $this->placement($i, $diedInRound),
+                    'kills' => $kills[$i],
+                    'killed_by' => $killedBy[$i],
                 ]);
             }
 

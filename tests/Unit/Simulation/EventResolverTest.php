@@ -341,6 +341,73 @@ class EventResolverTest extends TestCase
         $this->assertTrue($avery->hasItem($medkit));
     }
 
+    // ---- Quién mata a quién ----
+
+    public function test_in_a_duel_the_other_one_is_the_killer(): void
+    {
+        $avery = $this->tribute('Avery');
+        $avery->changeHp(-15);
+        $event = $this->event(EventCategory::Duo, '{A} disparó a {B}', ['target_hp' => -8]);
+
+        $result = $this->resolver->apply($event, [$this->tribute('Dean'), $avery]);
+
+        $this->assertSame([['victim' => 'Avery', 'killers' => ['Dean']]], $result->kills);
+    }
+
+    public function test_if_the_attacker_dies_in_a_duel_the_target_killed_them(): void
+    {
+        $dean = $this->tribute('Dean');
+        $dean->changeHp(-17);
+        $event = $this->event(EventCategory::Duo, '{A} y {B} se pelearon', ['actor_hp' => -5, 'target_hp' => -5]);
+
+        $result = $this->resolver->apply($event, [$dean, $this->tribute('Avery')]);
+
+        $this->assertSame([['victim' => 'Dean', 'killers' => ['Avery']]], $result->kills);
+    }
+
+    public function test_both_allies_get_the_kill_in_an_ally_attack(): void
+    {
+        $noah = $this->tribute('Noah');
+        $noah->changeHp(-15);
+        $event = $this->event(EventCategory::AllyAttack, '{A} y {B} emboscaron a {C}', ['target_hp' => -9]);
+
+        $result = $this->resolver->apply($event, [$this->tribute('Avery'), $this->tribute('Avril'), $noah]);
+
+        $this->assertSame([['victim' => 'Noah', 'killers' => ['Avery', 'Avril']]], $result->kills);
+    }
+
+    public function test_group_event_where_a_attacks_has_a_killer(): void
+    {
+        [$a, $b, $c] = [$this->tribute('A'), $this->tribute('B'), $this->tribute('C')];
+        $b->changeHp(-15);
+        $event = $this->event(EventCategory::Trio, '{A} lanzó una bomba a {B} y {C}', ['actor_hp' => -1, 'target_hp' => -7]);
+
+        $result = $this->resolver->apply($event, [$a, $b, $c]);
+
+        $this->assertSame([['victim' => 'B', 'killers' => ['A']]], $result->kills);
+    }
+
+    public function test_group_accident_has_no_killer(): void
+    {
+        [$a, $b, $c] = [$this->tribute('A'), $this->tribute('B'), $this->tribute('C')];
+        $b->changeHp(-15);
+        $event = $this->event(EventCategory::Trio, '{A}, {B} y {C} quedaron atrapados en un incendio', ['actor_hp' => -6, 'target_hp' => -6]);
+
+        $result = $this->resolver->apply($event, [$a, $b, $c]);
+
+        $this->assertSame([['victim' => 'B', 'killers' => []]], $result->kills);
+    }
+
+    public function test_dying_alone_has_no_killer(): void
+    {
+        $dean = $this->tribute('Dean');
+        $event = $this->event(EventCategory::Solo, '{A} pisó una mina', ['actor_hp' => -20]);
+
+        $result = $this->resolver->apply($event, [$dean]);
+
+        $this->assertSame([['victim' => 'Dean', 'killers' => []]], $result->kills);
+    }
+
     // ---- Alianzas ----
 
     public function test_befriend_creates_alliance_and_betrayal_breaks_it(): void

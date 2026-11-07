@@ -90,6 +90,23 @@ class PlayGameTest extends TestCase
         );
     }
 
+    public function test_kills_are_counted_for_each_killer(): void
+    {
+        foreach (range(1, 5) as $seed) {
+            $game = $this->play($seed);
+
+            $kills = $game->rounds->flatMap(fn ($round) => collect($round->events)->pluck('kills')->flatten(1));
+            $credited = $kills->sum(fn (array $kill) => count($kill['killers']));
+
+            $this->assertSame($credited, (int) $game->tributes->sum('kills'), "Semilla {$seed}");
+
+            foreach ($kills->where('killers', '!=', []) as $kill) {
+                $victim = $game->tributes->firstWhere('name', $kill['victim']);
+                $this->assertSame(implode(' y ', $kill['killers']), $victim->killed_by);
+            }
+        }
+    }
+
     public function test_needs_at_least_two_characters(): void
     {
         $this->expectException(InvalidArgumentException::class);

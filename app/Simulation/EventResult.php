@@ -13,12 +13,15 @@ class EventResult
      * @param string[] $notes  Detalles extra: defensas usadas, objetos, curaciones...
      * @param string[] $deaths Nombres de los tributos que han muerto en este evento
      * @param string[] $participants Nombres de todos los que han participado, en orden {A}, {B}...
+     * @param array<int, array{victim: string, killers: string[]}> $kills Quién ha matado a quién
+     *                                                                  (killers vacío = accidente)
      */
     public function __construct(
         public readonly string $text,
         public readonly array $notes = [],
         public readonly array $deaths = [],
         public readonly array $participants = [],
+        public readonly array $kills = [],
     ) {
     }
 
@@ -30,6 +33,7 @@ class EventResult
             'notes' => $this->notes,
             'deaths' => $this->deaths,
             'participants' => $this->participants,
+            'kills' => $this->kills,
         ];
     }
 }

@@ -100,6 +100,36 @@ class GameControllerTest extends TestCase
             ->assertSee('Tras la noche 1');
     }
 
+    public function test_deaths_say_who_killed_them(): void
+    {
+        // Buscamos una partida en la que alguien mate a alguien
+        foreach (range(1, 20) as $seed) {
+            $game = $this->playGame($seed);
+            $kill = $game->rounds->flatMap(fn ($round) => collect($round->events)->pluck('kills')->flatten(1))
+                ->first(fn (array $kill) => $kill['killers'] !== []);
+
+            if ($kill) {
+                break;
+            }
+        }
+
+        $this->assertNotNull($kill, 'Ninguna partida con asesinatos en 20 semillas');
+
+        $this->get(route('games.show', [$game, 'round' => $game->total_rounds]))
+            ->assertOk()
+            ->assertSee("{$kill['victim']} ha muerto a manos de " . collect($kill['killers'])->join(', ', ' y '));
+    }
+
+    public function test_nights_show_the_fallen(): void
+    {
+        $game = $this->playGame();
+
+        $this->get(route('games.show', [$game, 'round' => 3]))
+            ->assertOk()
+            ->assertSee('Los rostros en el cielo')
+            ->assertSee('Los caídos desde el baño de sangre.');
+    }
+
     public function test_last_round_shows_the_final_ranking(): void
     {
         $game = $this->playGame();

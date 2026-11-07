@@ -14,6 +14,7 @@ class GameTribute extends Model
 {
     protected $fillable = [
         'character_id', 'name', 'gender', 'district_id', 'died_in_round', 'placement',
+        'kills', 'killed_by',
     ];
 
     protected $casts = [

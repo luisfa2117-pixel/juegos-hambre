@@ -22,6 +22,9 @@ class EventResolver
     /** Con menos energía que esto, el tributo usa un objeto de energía si lo tiene. */
     public const ENERGY_THRESHOLD = 5;
 
+    /** Peleas de dos en las que, si uno muere, le ha matado el otro */
+    private const HOSTILE_PAIRS = [EventCategory::Duo, EventCategory::Weapon, EventCategory::Betrayal];
+
     /** Categorías en las que la defensa del objetivo reduce el daño (combates directos). */
     private const ARMOR_CATEGORIES = [EventCategory::Duo, EventCategory::Weapon, EventCategory::AllyAttack];
 
@@ -91,11 +94,16 @@ class EventResolver
             $notes[] = "💔 {$actor->name} rompe con su alianza y va por su cuenta.";
         }
 
-        // 5. Muertes
+        // 5. Muertes, y quién las ha causado
         $deaths = [];
+        $kills = [];
         foreach ($participants as $tribute) {
             if (! $tribute->isAlive()) {
                 $deaths[] = $tribute->name;
+                $kills[] = [
+                    'victim' => $tribute->name,
+                    'killers' => array_map(fn (Tribute $t) => $t->name, $this->killersOf($tribute, $event, $actors, $targets)),
+                ];
             }
         }
 
@@ -111,7 +119,39 @@ class EventResolver
             notes: $notes,
             deaths: $deaths,
             participants: array_map(fn (Tribute $t) => $t->name, $participants),
+            kills: $kills,
         );
+    }
+
+    /**
+     * Quién ha matado a $victim en este evento. Vacío si ha sido un accidente.
+     *
+     * - Peleas de dos, armas y traiciones: el otro.
+     * - Aliados atacan juntos: si muere la víctima, los dos atacantes; si muere un atacante, la víctima.
+     * - Grupos de 3 o 4: {A}, pero solo si sale mejor parado que los demás (lanza la bomba).
+     *   Si todos reciben lo mismo (un incendio, una trampa), es un accidente.
+     *
+     * @param Tribute[] $actors
+     * @param Tribute[] $targets
+     * @return Tribute[]
+     */
+    private function killersOf(Tribute $victim, GameEvent $event, array $actors, array $targets): array
+    {
+        $isActor = in_array($victim, $actors, true);
+
+        if (in_array($event->category, self::HOSTILE_PAIRS, true)) {
+            return $isActor ? [$targets[0]] : [$actors[0]];
+        }
+
+        if ($event->category === EventCategory::AllyAttack) {
+            return $isActor ? [$targets[0]] : $actors;
+        }
+
+        if (in_array($event->category, [EventCategory::Trio, EventCategory::Quartet], true)) {
+            return ! $isActor && $event->actor_hp > $event->target_hp ? [$actors[0]] : [];
+        }
+
+        return [];
     }
 
     /** Comprueba que el evento se puede aplicar a estos participantes. */

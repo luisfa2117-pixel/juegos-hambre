@@ -21,7 +21,7 @@
             <a href="{{ url('/') }}" class="font-display text-2xl text-hazard">Juegos del Hambre</a>
 
             <nav class="flex gap-5">
-                @foreach (['games' => 'Partidas', 'characters' => 'Personajes', 'events' => 'Eventos'] as $section => $label)
+                @foreach (['games' => 'Partidas', 'characters' => 'Personajes', 'events' => 'Eventos', 'stats' => 'Estadísticas'] as $section => $label)
                     <a href="{{ route("{$section}.index") }}"
                        @class([
                            'border-b-2 pb-0.5 hover:text-hazard',

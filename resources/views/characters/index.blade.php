@@ -35,14 +35,15 @@
                             <li class="flex items-center justify-between gap-4 rounded-sm bg-asphalt-raised px-4 py-3">
                                 <x-tribute-avatar :name="$character->name" :district="$district->slug" :image="$character->image_url" />
                                 <div class="min-w-0 flex-1">
-                                    <p class="text-lg font-semibold">{{ $character->name }}</p>
+                                    <a href="{{ route('characters.show', $character) }}" class="text-lg font-semibold hover:text-hazard">{{ $character->name }}</a>
                                     <p class="text-sm text-ash-muted">
                                         {{ $character->gender->label() }}.
-                                        @if ($character->game_tributes_count === 0)
+                                        @if ($character->games_count === 0)
                                             Aún no ha jugado.
                                         @else
-                                            {{ trans_choice(':count partida|:count partidas', $character->game_tributes_count) }},
-                                            {{ trans_choice(':count victoria|:count victorias', $character->wins_count) }}.
+                                            {{ trans_choice(':count partida|:count partidas', $character->games_count) }},
+                                            {{ trans_choice(':count victoria|:count victorias', $character->wins_count) }},
+                                            {{ trans_choice(':count asesinato|:count asesinatos', (int) $character->kills_total) }}.
                                         @endif
                                     </p>
                                 </div>

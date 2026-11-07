@@ -59,7 +59,10 @@
                                 @endif
 
                                 @foreach ($event['deaths'] as $name)
-                                    <p class="mt-1 font-semibold text-blood">{{ $name }} ha muerto.</p>
+                                    @php $killers = collect($event['kills'] ?? [])->firstWhere('victim', $name)['killers'] ?? []; @endphp
+                                    <p class="mt-1 font-semibold text-blood">
+                                        {{ $name }} ha muerto{{ $killers ? ' a manos de ' . collect($killers)->join(', ', ' y ') : '' }}.
+                                    </p>
                                 @endforeach
                             </li>
                         @endforeach
@@ -70,6 +73,40 @@
                             {{ trans_choice('Se oye :count cañonazo|Se oyen :count cañonazos', $deaths->count()) }}:
                             {{ $deaths->join(', ', ' y ') }}.
                         </p>
+                    @endif
+
+                    {{-- Al final de cada noche, los rostros de los caídos del día se proyectan en el cielo --}}
+                    @if ($phase === EventPhase::Night)
+                        @php
+                            // La noche 1 recoge también el baño de sangre; las demás, el día y la noche anteriores
+                            $from = $gameRound->number === 3 ? 1 : $gameRound->number - 1;
+                            $fallen = $game->tributes
+                                ->filter(fn ($t) => $t->died_in_round !== null && $t->died_in_round >= $from && $t->died_in_round <= $gameRound->number)
+                                ->sortBy('died_in_round');
+                        @endphp
+
+                        <div class="mt-4 rounded-sm border border-asphalt-line bg-asphalt-raised p-4">
+                            <p class="font-condensed text-lg font-semibold text-night">Los rostros en el cielo</p>
+                            <p class="text-sm text-ash-muted">
+                                {{ $gameRound->number === 3 ? 'Los caídos desde el baño de sangre.' : 'Los caídos del día ' . intdiv($gameRound->number, 2) . '.' }}
+                            </p>
+
+                            @if ($fallen->isEmpty())
+                                <p class="mt-3 text-sm">Esta noche el cielo está vacío: no ha caído nadie.</p>
+                            @else
+                                <ul class="mt-3 flex flex-wrap gap-x-6 gap-y-3">
+                                    @foreach ($fallen as $tribute)
+                                        <li class="flex items-center gap-2">
+                                            <x-tribute-avatar :name="$tribute->name" :district="$tribute->district->slug" :image="$tribute->character?->image_url" />
+                                            <span>
+                                                <span class="block font-semibold">{{ $tribute->name }}</span>
+                                                <span class="block text-xs text-ash-muted">{{ $tribute->district->name }}</span>
+                                            </span>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                        </div>
                     @endif
                 </section>
             @endforeach
@@ -106,11 +143,18 @@
                                 <span class="w-8 text-right font-condensed text-xl text-ash-muted">{{ $tribute->placement }}.</span>
                                 <x-tribute-avatar :name="$tribute->name" :district="$tribute->district->slug" :image="$tribute->character?->image_url" size="sm" />
                                 <span class="flex-1">
-                                    <span class="font-semibold">{{ $tribute->name }}</span>
+                                    @if ($tribute->character_id)
+                                        <a href="{{ route('characters.show', $tribute->character_id) }}" class="font-semibold hover:text-hazard">{{ $tribute->name }}</a>
+                                    @else
+                                        <span class="font-semibold">{{ $tribute->name }}</span>
+                                    @endif
                                     <span class="text-sm text-ash-muted">{{ $tribute->district->name }}</span>
                                 </span>
-                                <span class="text-sm text-ash-muted">
-                                    {{ $tribute->died_in_round ? 'Murió en: ' . mb_strtolower(EventPhase::roundTitle($tribute->died_in_round)) : 'Sobrevivió' }}
+                                <span class="text-right text-sm text-ash-muted">
+                                    {{ $tribute->died_in_round ? 'Murió en: ' . mb_strtolower(EventPhase::roundTitle($tribute->died_in_round)) : 'Sobrevivió' }}{{ $tribute->killed_by ? ", a manos de {$tribute->killed_by}" : '' }}
+                                    @if ($tribute->kills > 0)
+                                        <span class="block text-blood">{{ trans_choice(':count asesinato|:count asesinatos', $tribute->kills) }}</span>
+                                    @endif
                                 </span>
                             </li>
                         @endforeach

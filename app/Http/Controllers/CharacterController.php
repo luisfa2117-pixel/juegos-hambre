@@ -15,13 +15,7 @@ class CharacterController extends Controller
     public function index(): View
     {
         $districts = District::orderBy('name')
-            ->with(['characters' => fn ($query) => $query
-                ->orderBy('name')
-                ->withCount([
-                    'gameTributes',
-                    'gameTributes as wins_count' => fn ($q) => $q->where('placement', 1)->whereNull('died_in_round'),
-                ]),
-            ])
+            ->with(['characters' => fn ($query) => $query->orderBy('name')->withStats()])
             ->get();
 
         return view('characters.index', [
@@ -51,6 +45,16 @@ class CharacterController extends Controller
 
         return redirect()->route('characters.index')
             ->with('status', "{$character->name} ya está en la lista.");
+    }
+
+    /** La ficha del personaje: estadísticas y sus partidas */
+    public function show(Character $character): View
+    {
+        return view('characters.show', [
+            // Volvemos a pedirlo con withStats() para tener sus estadísticas
+            'character' => Character::withStats()->with('district')->findOrFail($character->id),
+            'appearances' => $character->gameTributes()->with('game')->orderByDesc('game_id')->limit(30)->get(),
+        ]);
     }
 
     // Laravel busca el personaje por el id de la URL (route model binding)
