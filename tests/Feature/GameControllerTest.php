@@ -62,7 +62,7 @@ class GameControllerTest extends TestCase
         $game = Game::firstOrFail();
         $response->assertRedirect(route('games.show', [$game, 'round' => 1]));
         $this->assertSame(42, $game->seed);
-        $this->assertCount(8, $game->tributes);
+        $this->assertCount(12, $game->tributes);
     }
 
     public function test_store_needs_at_least_two_characters(): void

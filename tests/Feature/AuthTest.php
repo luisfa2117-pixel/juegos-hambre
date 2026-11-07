@@ -26,7 +26,7 @@ class AuthTest extends TestCase
         $this->get('/')->assertRedirect(route('login'));
     }
 
-    public function test_registering_creates_the_account_with_8_characters_and_logs_in(): void
+    public function test_registering_creates_the_account_with_12_characters_and_logs_in(): void
     {
         $this->post(route('register'), [
             'name' => 'Luis',
@@ -37,7 +37,7 @@ class AuthTest extends TestCase
 
         $user = User::where('email', 'luis@ejemplo.com')->firstOrFail();
         $this->assertAuthenticatedAs($user);
-        $this->assertCount(8, $user->characters);
+        $this->assertCount(12, $user->characters);
         $this->assertNotSame('contraseña-larga', $user->password);   // guardada cifrada
         $this->assertFalse($user->is_admin);
     }

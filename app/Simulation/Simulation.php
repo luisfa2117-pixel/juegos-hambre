@@ -4,6 +4,7 @@ namespace App\Simulation;
 
 use App\Enums\EventCategory;
 use App\Enums\EventPhase;
+use App\Enums\Personality;
 use App\Enums\ItemType;
 use App\Models\GameEvent;
 use LogicException;
@@ -216,7 +217,7 @@ class Simulation
         if ($roll <= $groupChance && $available >= 3) {
             $size = ($available >= 4 && $this->chance(50)) ? 4 : 3;
             $choice = $this->groupEvent($pending, $size);
-        } elseif ($roll <= $groupChance + self::PAIR_EVENT_CHANCE && $available >= 2) {
+        } elseif ($roll <= $groupChance + self::PAIR_EVENT_CHANCE + $this->modifier($pending[0], Personality::PAIR) && $available >= 2) {
             $choice = $this->allyAttackEvent($pending) ?? $this->pairEvent($pending[0], $pending[1]);
         }
 
@@ -297,7 +298,7 @@ class Simulation
         }
 
         // Primero se mira si es posible y solo entonces se tira el dado
-        if ($ally === null || $victim === null || ! $this->chance(self::ALLY_ATTACK_CHANCE)) {
+        if ($ally === null || $victim === null || ! $this->chanceFor($a, Personality::ALLY_ATTACK, self::ALLY_ATTACK_CHANCE)) {
             return null;
         }
 
@@ -309,10 +310,10 @@ class Simulation
     private function pairEvent(Tribute $a, Tribute $b): ?array
     {
         if ($a->isAllyOf($b)) {
-            $category = $this->chance(self::BETRAYAL_CHANCE) ? EventCategory::Betrayal : EventCategory::Ally;
-        } elseif ($this->canAlly($a, $b) && $this->chance(self::FRIENDSHIP_CHANCE)) {
+            $category = $this->chanceFor($a, Personality::BETRAYAL, self::BETRAYAL_CHANCE) ? EventCategory::Betrayal : EventCategory::Ally;
+        } elseif ($this->canAlly($a, $b) && $this->friendshipChance($a, $b)) {
             $category = EventCategory::Befriend;
-        } elseif ($a->bestItemOfType(ItemType::Weapon) !== null && $this->chance(self::WEAPON_CHANCE)) {
+        } elseif ($a->bestItemOfType(ItemType::Weapon) !== null && $this->chanceFor($a, Personality::WEAPON, self::WEAPON_CHANCE)) {
             $category = EventCategory::Weapon;
         } else {
             $category = EventCategory::Duo;
@@ -331,7 +332,7 @@ class Simulation
     private function soloEvent(Tribute $a): array
     {
         $discoveryChance = $this->phase === EventPhase::Bloodbath ? self::BLOODBATH_DISCOVERY_CHANCE : self::DISCOVERY_CHANCE;
-        $category = $this->chance($discoveryChance) ? EventCategory::Discovery : EventCategory::Solo;
+        $category = $this->chanceFor($a, Personality::DISCOVERY, $discoveryChance) ? EventCategory::Discovery : EventCategory::Solo;
 
         $event = $this->pick($category, $a)
             ?? $this->pick(EventCategory::Solo, $a)
@@ -362,6 +363,26 @@ class Simulation
     private function canAlly(Tribute $a, Tribute $b): bool
     {
         return count($a->alliance()) + count($b->alliance()) <= self::MAX_ALLIANCE_SIZE;
+    }
+
+    /** Lo que la personalidad del tributo suma o resta a una decisión (0 si es equilibrado) */
+    private function modifier(Tribute $tribute, string $decision): int
+    {
+        return $tribute->personality?->modifier($decision) ?? 0;
+    }
+
+    /** Como chance(), pero con la probabilidad ajustada por la personalidad del tributo */
+    private function chanceFor(Tribute $tribute, string $decision, int $percent): bool
+    {
+        return $this->chance(max(0, min(100, $percent + $this->modifier($tribute, $decision))));
+    }
+
+    /** Hacerse aliados es cosa de dos: cuenta la media de las personalidades de ambos */
+    private function friendshipChance(Tribute $a, Tribute $b): bool
+    {
+        $modifier = intdiv($this->modifier($a, Personality::FRIENDSHIP) + $this->modifier($b, Personality::FRIENDSHIP), 2);
+
+        return $this->chance(max(0, min(100, self::FRIENDSHIP_CHANCE + $modifier)));
     }
 
     /** true con un $percent % de probabilidad */

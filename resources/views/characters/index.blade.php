@@ -38,6 +38,7 @@
                                     <a href="{{ route('characters.show', $character) }}" class="text-lg font-semibold hover:text-hazard">{{ $character->name }}</a>
                                     <p class="text-sm text-ash-muted">
                                         {{ $character->gender->label() }}.
+                                        @if ($character->personality) {{ $character->personality->label($character->gender) }}. @endif
                                         @if ($character->games_count === 0)
                                             Aún no ha jugado.
                                         @else

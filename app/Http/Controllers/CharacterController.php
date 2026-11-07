@@ -38,7 +38,7 @@ class CharacterController extends Controller
     public function store(CharacterRequest $request): RedirectResponse
     {
         // make() crea el personaje ya asignado al usuario (user_id), sin guardarlo todavía
-        $character = $request->user()->characters()->make($request->safe()->only(['name', 'gender', 'district_id']));
+        $character = $request->user()->characters()->make($request->safe()->only(['name', 'gender', 'district_id', 'personality']));
 
         if ($request->hasFile('image')) {
             // Guarda el fichero en storage/app/public/characters con un nombre único
@@ -80,7 +80,7 @@ class CharacterController extends Controller
         Gate::authorize('update', $character);
 
         $oldImage = $character->image_path;
-        $character->fill($request->safe()->only(['name', 'gender', 'district_id']));
+        $character->fill($request->safe()->only(['name', 'gender', 'district_id', 'personality']));
 
         if ($request->hasFile('image')) {
             $character->image_path = $request->file('image')->store('characters', 'public');

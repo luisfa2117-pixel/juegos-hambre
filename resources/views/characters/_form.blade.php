@@ -1,5 +1,5 @@
 {{-- Campos compartidos por "crear" y "editar". Recibe $character y $districts. --}}
-@php use App\Enums\Gender; @endphp
+@php use App\Enums\Gender; use App\Enums\Personality; @endphp
 
 <div class="space-y-6">
     <div>
@@ -44,6 +44,20 @@
         </div>
         @error('gender') <p class="field-error">{{ $message }}</p> @enderror
     </fieldset>
+
+    <div>
+        <label for="personality" class="field-label">Personalidad</label>
+        <select id="personality" name="personality" class="field">
+            <option value="">Equilibrado: sin rasgos especiales</option>
+            @foreach (Personality::cases() as $personality)
+                <option value="{{ $personality->value }}" @selected(old('personality', $character->personality?->value) === $personality->value)>
+                    {{ $personality->label() }}: {{ $personality->description() }}
+                </option>
+            @endforeach
+        </select>
+        <p class="mt-1 text-sm text-ash-muted">Cambia cómo se comporta en la arena: con quién se alía, si traiciona, si busca pelea...</p>
+        @error('personality') <p class="field-error">{{ $message }}</p> @enderror
+    </div>
 
     <div>
         <label for="district_id" class="field-label">Distrito</label>

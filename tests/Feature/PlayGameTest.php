@@ -40,14 +40,14 @@ class PlayGameTest extends TestCase
         $game = $this->play();
 
         $this->assertDatabaseCount('games', 1);
-        $this->assertCount(8, $game->tributes);
+        $this->assertCount(12, $game->tributes);
         $this->assertGreaterThan(0, $game->total_rounds);
         $this->assertCount($game->total_rounds, $game->rounds);
 
         $firstRound = $game->rounds->first();
         $this->assertSame(1, $firstRound->number);
         $this->assertNotEmpty($firstRound->events);
-        $this->assertCount(8, $firstRound->tributes);
+        $this->assertCount(12, $firstRound->tributes);
     }
 
     public function test_the_winner_survives_and_everyone_else_died(): void

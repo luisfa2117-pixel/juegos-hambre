@@ -56,6 +56,30 @@ class CharacterControllerTest extends TestCase
         $this->assertDatabaseHas('characters', ['name' => 'Kira', 'gender' => 'female']);
     }
 
+    public function test_saves_the_personality_and_it_is_optional(): void
+    {
+        $this->post(route('characters.store'), $this->validData(['personality' => 'loyal']))->assertSessionHasNoErrors();
+        $this->assertDatabaseHas('characters', ['name' => 'Kira', 'personality' => 'loyal']);
+
+        $this->post(route('characters.store'), $this->validData(['name' => 'Kai']))->assertSessionHasNoErrors();
+        $this->assertDatabaseHas('characters', ['name' => 'Kai', 'personality' => null]);
+
+        $this->post(route('characters.store'), $this->validData(['name' => 'Rex', 'personality' => 'psicopata']))
+            ->assertSessionHasErrors('personality');
+    }
+
+    public function test_default_cast_has_a_boy_and_a_girl_in_each_of_the_6_districts(): void
+    {
+        $cast = $this->user->characters()->with('district')->get();
+
+        $this->assertCount(12, $cast);
+        foreach ($cast->groupBy('district.slug') as $district => $pair) {
+            $this->assertCount(2, $pair, $district);
+            $this->assertEqualsCanonicalizing(['female', 'male'], $pair->pluck('gender')->map->value->all(), $district);
+        }
+        $this->assertCount(6, $cast->groupBy('district_id'));
+    }
+
     public function test_name_must_be_unique(): void
     {
         $this->post(route('characters.store'), $this->validData(['name' => 'Dean']))

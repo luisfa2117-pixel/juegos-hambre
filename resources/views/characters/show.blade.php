@@ -8,6 +8,9 @@
         <div>
             <h1 class="font-display text-4xl">{{ $character->name }}</h1>
             <p class="text-ash-muted">{{ $character->district->name }}. {{ $character->gender->label() }}.</p>
+            @if ($character->personality)
+                <p class="mt-1"><span class="font-semibold">{{ $character->personality->label($character->gender) }}.</span> {{ $character->personality->description() }}</p>
+            @endif
         </div>
         <a href="{{ route('characters.edit', $character) }}" class="btn-quiet ml-auto">Editar</a>
     </div>

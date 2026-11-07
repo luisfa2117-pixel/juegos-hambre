@@ -200,7 +200,9 @@
                             <x-tribute-avatar :name="$state['name']" :district="$tribute->district->slug" :image="$tribute->character?->image_url" size="sm" :dead="! $state['alive']" />
                             <div class="min-w-0">
                                 <p @class(['font-semibold', 'line-through decoration-blood' => ! $state['alive']])>{{ $state['name'] }}</p>
-                                <p class="truncate text-xs text-ash-muted">{{ $tribute->district->name }}</p>
+                                <p class="truncate text-xs text-ash-muted">
+                                    {{ $tribute->district->name . (($state['personality'] ?? null) ? ". {$state['personality']}" : '') }}
+                                </p>
                             </div>
                         </div>
 

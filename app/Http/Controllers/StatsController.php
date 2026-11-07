@@ -49,6 +49,7 @@ class StatsController extends Controller
                 ->get(),
 
             'districts' => $this->districtStats($user),
+            'personalities' => $this->personalityStats($characters),
         ]);
     }
 
@@ -68,6 +69,24 @@ class StatsController extends Controller
             ])
             ->filter(fn (object $row) => $row->played > 0)
             ->sortByDesc(fn (object $row) => $row->won / $row->played);
+    }
+
+    /**
+     * Por personalidad: cuántas veces han jugado y ganado los personajes que la tienen.
+     * Se calcula a partir de las estadísticas que ya trae cada personaje (withStats).
+     */
+    private function personalityStats($characters)
+    {
+        return $characters
+            ->groupBy(fn (Character $character) => $character->personality?->value ?? 'balanced')
+            ->map(fn ($group) => (object) [
+                'label' => $group->first()->personality?->label() ?? 'Equilibrado',
+                'played' => $group->sum('games_count'),
+                'won' => $group->sum('wins_count'),
+            ])
+            ->filter(fn (object $row) => $row->played > 0)
+            ->sortByDesc(fn (object $row) => $row->won / $row->played)
+            ->values();
     }
 
     /** Los tributos de las partidas de este usuario */

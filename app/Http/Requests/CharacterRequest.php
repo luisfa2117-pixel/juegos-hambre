@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Enums\Gender;
+use App\Enums\Personality;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -29,6 +30,7 @@ class CharacterRequest extends FormRequest
                     ->ignore($this->route('character')),
             ],
             'gender' => ['required', Rule::enum(Gender::class)],
+            'personality' => ['nullable', Rule::enum(Personality::class)],
             'district_id' => ['required', 'integer', 'exists:districts,id'],
             // max se mide en kilobytes: 2048 = 2 MB
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
@@ -44,6 +46,7 @@ class CharacterRequest extends FormRequest
             'name.unique' => 'Ya tienes un personaje con ese nombre.',
             'gender.required' => 'Elige un género.',
             'gender.enum' => 'Elige un género de la lista.',
+            'personality.enum' => 'Elige una personalidad de la lista.',
             'district_id.required' => 'Elige un distrito.',
             'district_id.integer' => 'Elige un distrito de la lista.',
             'district_id.exists' => 'Elige un distrito de la lista.',

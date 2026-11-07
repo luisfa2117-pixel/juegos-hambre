@@ -12,6 +12,7 @@
         'cinturon_oxidado' => '#c98a66',
         'norte_helado' => '#b9dcef',
         'pacifico_tecno' => '#b99be8',
+        'pantanos_delta' => '#9fcf8f',
     ];
 
     $sizes = [

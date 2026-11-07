@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Gender;
+use App\Enums\Personality;
 use App\Simulation\Tribute;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -18,10 +19,11 @@ use Illuminate\Support\Facades\Storage;
 class Character extends Model
 {
     // user_id no se rellena desde formularios: se asigna con $user->characters()->make(...)
-    protected $fillable = ['name', 'gender', 'district_id'];
+    protected $fillable = ['name', 'gender', 'district_id', 'personality'];
 
     protected $casts = [
         'gender' => Gender::class,
+        'personality' => Personality::class,   // null = equilibrado
     ];
 
     /** Al borrar un personaje, se borra también su foto del disco */
@@ -85,6 +87,6 @@ class Character extends Model
     /** Crea el tributo que lo representa en una partida, con los stats iniciales. */
     public function toTribute(): Tribute
     {
-        return new Tribute($this->name, $this->gender, $this->district);
+        return new Tribute($this->name, $this->gender, $this->district, $this->personality);
     }
 }

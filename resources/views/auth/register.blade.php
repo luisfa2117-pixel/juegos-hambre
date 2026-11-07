@@ -1,7 +1,7 @@
 <x-layout title="Crear cuenta">
     <div class="mx-auto max-w-sm py-8">
         <h1 class="font-display text-4xl">Crear cuenta</h1>
-        <p class="mt-1 text-ash-muted">Empezarás con 8 personajes listos para entrar en la arena.</p>
+        <p class="mt-1 text-ash-muted">Empezarás con 12 personajes, un chico y una chica de cada distrito.</p>
 
         <form method="POST" action="{{ route('register') }}" class="mt-8 space-y-5">
             @csrf

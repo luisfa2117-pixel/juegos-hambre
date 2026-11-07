@@ -43,6 +43,6 @@ class RegisterController extends Controller
         $request->session()->regenerate();
 
         return redirect()->route('games.index')
-            ->with('status', "Cuenta creada. Ya tienes 8 personajes para tu primera partida, {$user->name}.");
+            ->with('status', 'Cuenta creada. Ya tienes ' . CreateStarterCharacters::COUNT . " personajes para tu primera partida, {$user->name}.");
     }
 }

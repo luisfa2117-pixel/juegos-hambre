@@ -65,6 +65,32 @@
             </section>
 
             <section>
+                <h2 class="font-condensed text-2xl font-semibold">Personalidades</h2>
+                <p class="text-sm text-ash-muted">De cada vez que ha jugado alguien con esa personalidad, cuántas ha ganado.</p>
+
+                <table class="mt-3 w-full text-left text-sm">
+                    <thead class="text-ash-muted">
+                        <tr class="border-b border-asphalt-line">
+                            <th class="py-2 font-normal">Personalidad</th>
+                            <th class="py-2 text-right font-normal">Jugadas</th>
+                            <th class="py-2 text-right font-normal">Ganadas</th>
+                            <th class="py-2 text-right font-normal">% de victoria</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-asphalt-line">
+                        @foreach ($personalities as $row)
+                            <tr>
+                                <td class="py-2">{{ $row->label }}</td>
+                                <td class="py-2 text-right">{{ $row->played }}</td>
+                                <td class="py-2 text-right">{{ $row->won }}</td>
+                                <td class="py-2 text-right font-semibold">{{ number_format(100 * $row->won / $row->played, 1, ',', '') }} %</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
                 <h2 class="font-condensed text-2xl font-semibold">Distritos</h2>
                 <p class="text-sm text-ash-muted">De cada vez que alguien del distrito ha jugado, cuántas ha ganado.</p>
 

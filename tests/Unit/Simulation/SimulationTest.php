@@ -6,6 +6,7 @@ use App\Enums\EventCategory;
 use App\Enums\EventPhase;
 use App\Enums\Gender;
 use App\Enums\ItemType;
+use App\Enums\Personality;
 use App\Models\ArenaEvent;
 use App\Models\District;
 use App\Models\GameEvent;
@@ -24,13 +25,13 @@ class SimulationTest extends TestCase
 
     // ---- Ayudantes ----
 
-    private function tribute(string $name): Tribute
+    private function tribute(string $name, ?Personality $personality = null): Tribute
     {
         $district = new District([
             'slug' => 'test', 'name' => 'Distrito de prueba', 'strength_bonus' => 0, 'energy_bonus' => 0,
         ]);
 
-        return new Tribute($name, Gender::Male, $district);
+        return new Tribute($name, Gender::Male, $district, $personality);
     }
 
     /** @return Tribute[] */
@@ -462,6 +463,86 @@ class SimulationTest extends TestCase
         for ($i = 0; $i < 12; $i++) {
             $this->assertNull($simulation->runRound()[0]->arena);
         }
+    }
+
+    // ---- Personalidades ----
+
+    /**
+     * Juega muchas rondas sueltas (una por semilla) y cuenta cuántos eventos empiezan por $prefix.
+     * $setup recibe los tributos recién creados para prepararlos (aliarlos, por ejemplo).
+     */
+    private function countEvents(string $prefix, ?Personality $personality, ?callable $setup = null, int $seeds = 300): int
+    {
+        $count = 0;
+
+        foreach (range(1, $seeds) as $seed) {
+            $tributes = [
+                $this->tribute('Dean', $personality),
+                $this->tribute('Avery', $personality),
+                $this->tribute('Noah', $personality),
+            ];
+
+            if ($setup !== null) {
+                $setup($tributes);
+            }
+
+            $simulation = $this->simulation($tributes, $this->harmlessPool(), $seed);
+
+            foreach ($simulation->runRound() as $result) {
+                $count += str_starts_with($result->text, $prefix) ? 1 : 0;
+            }
+        }
+
+        return $count;
+    }
+
+    public function test_loyal_tributes_never_betray(): void
+    {
+        $allies = fn (array $t) => $t[0]->befriend($t[1]);
+
+        $this->assertGreaterThan(0, $this->countEvents('[betrayal]', null, $allies));
+        $this->assertSame(0, $this->countEvents('[betrayal]', Personality::Loyal, $allies));
+    }
+
+    public function test_treacherous_tributes_betray_more(): void
+    {
+        $allies = fn (array $t) => $t[0]->befriend($t[1]);
+
+        $balanced = $this->countEvents('[betrayal]', null, $allies);
+        $treacherous = $this->countEvents('[betrayal]', Personality::Treacherous, $allies);
+
+        $this->assertGreaterThan($balanced * 1.5, $treacherous);
+    }
+
+    public function test_aggressive_tributes_make_fewer_alliances(): void
+    {
+        $balanced = $this->countEvents('[befriend]', null);
+        $aggressive = $this->countEvents('[befriend]', Personality::Aggressive);
+
+        $this->assertLessThan($balanced, $aggressive);
+    }
+
+    public function test_sociable_tributes_make_more_alliances(): void
+    {
+        $balanced = $this->countEvents('[befriend]', null);
+        $sociable = $this->countEvents('[befriend]', Personality::Sociable);
+
+        $this->assertGreaterThan($balanced, $sociable);
+    }
+
+    public function test_resourceful_tributes_find_more_items(): void
+    {
+        $balanced = $this->countEvents('[discovery]', null);
+        $resourceful = $this->countEvents('[discovery]', Personality::Resourceful);
+
+        $this->assertGreaterThan($balanced, $resourceful);
+    }
+
+    public function test_cowards_get_into_fewer_pair_events(): void
+    {
+        $pairs = fn (?Personality $p) => $this->countEvents('[duo]', $p) + $this->countEvents('[befriend]', $p);
+
+        $this->assertLessThan($pairs(null), $pairs(Personality::Coward));
     }
 
     public function test_last_survivor_is_the_winner_and_no_more_rounds_can_be_played(): void

@@ -4,6 +4,7 @@ namespace App\Simulation;
 
 use App\Enums\Gender;
 use App\Enums\ItemType;
+use App\Enums\Personality;
 use App\Models\District;
 use App\Models\Item;
 
@@ -36,6 +37,7 @@ class Tribute
         public readonly string $name,
         public readonly Gender $gender,
         public readonly District $district,
+        public readonly ?Personality $personality = null,   // null = equilibrado
     ) {
         $this->hp = self::MAX_HP;
         $this->maxEnergy = self::BASE_ENERGY + $district->energy_bonus;
@@ -269,6 +271,7 @@ class Tribute
             'energy' => $this->energy,
             'max_energy' => $this->maxEnergy,
             'alive' => $this->isAlive(),
+            'personality' => $this->personality?->label($this->gender),
             // "Pistola (2 usos)" si le queda más de uno
             'items' => array_map(
                 fn (Item $item, int $uses) => $uses > 1 ? "{$item->name} ({$uses} usos)" : $item->name,
