@@ -8,8 +8,6 @@ use App\Simulation\EventPool;
 use App\Simulation\Simulation;
 use App\Simulation\Tribute;
 use Illuminate\Console\Command;
-use Random\Engine\Mt19937;
-use Random\Randomizer;
 
 /**
  * Tu Main.java: simula una partida entera y la muestra en la terminal.
@@ -51,7 +49,7 @@ class SimulateCommand extends Command
         $simulation = new Simulation(
             $tributes,
             EventPool::fromDatabase(),
-            new Randomizer(new Mt19937($seed)),
+            $seed,
         );
 
         $this->info("Semilla: {$seed}   (para repetir esta partida: php artisan simulate --seed={$seed})");

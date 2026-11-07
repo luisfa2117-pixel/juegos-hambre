@@ -7,7 +7,10 @@ use App\Enums\EventPhase;
 use App\Enums\Personality;
 use App\Enums\ItemType;
 use App\Models\GameEvent;
+use App\Models\District;
+use App\Models\Item;
 use LogicException;
+use Random\Engine\Xoshiro256StarStar;
 use Random\Randomizer;
 use RuntimeException;
 
@@ -57,14 +60,86 @@ class Simulation
     /** @var Tribute[] */
     private array $tributes;
 
+    /** El azar de la ronda en curso (ver randomForRound) */
+    private Randomizer $random;
+
     /** @param Tribute[] $tributes */
     public function __construct(
         array $tributes,
         private readonly EventPool $events,
-        private readonly Randomizer $random,
+        private readonly int $seed,
         private readonly EventResolver $resolver = new EventResolver(),
     ) {
         $this->tributes = array_values($tributes);
+        $this->random = $this->randomForRound(0);
+    }
+
+    /**
+     * Cada ronda tiene su propio azar, que sale de la semilla de la partida y del número de ronda.
+     * Así, para continuar una partida desde la ronda 4 solo hace falta el estado de los tributos:
+     * la ronda 5 tendrá exactamente el mismo azar que la primera vez.
+     */
+    private function randomForRound(int $round): Randomizer
+    {
+        // sha256 convierte "42:5" en 32 bytes, justo la semilla que necesita este generador
+        return new Randomizer(new Xoshiro256StarStar(hash('sha256', "{$this->seed}:{$round}", true)));
+    }
+
+    public function seed(): int
+    {
+        return $this->seed;
+    }
+
+    // ---- Guardar y continuar ----
+
+    /** Todo lo necesario para continuar la partida desde aquí, en un array (se guarda en jsonb) */
+    public function toState(): array
+    {
+        return [
+            'round' => $this->round,
+            'last_arena_round' => $this->lastArenaRound,
+            'tributes' => array_map(fn (Tribute $tribute) => $tribute->toState(), $this->tributes),
+        ];
+    }
+
+    /**
+     * Reconstruye una partida a partir de toState(), para seguir jugándola desde ahí.
+     *
+     * @param array<string, District> $districts Por slug
+     * @param array<string, Item> $items Por slug
+     */
+    public static function fromState(
+        array $state,
+        EventPool $events,
+        int $seed,
+        array $districts,
+        array $items,
+        EventResolver $resolver = new EventResolver(),
+    ): self {
+        $tributes = array_map(
+            fn (array $tribute) => Tribute::fromState(
+                $tribute,
+                $districts[$tribute['district']] ?? throw new LogicException("El distrito {$tribute['district']} ya no existe"),
+                $items,
+            ),
+            $state['tributes'],
+        );
+
+        // Las alianzas se guardan por nombre: ahora que existen todos, se vuelven a enlazar
+        $byName = [];
+        foreach ($tributes as $tribute) {
+            $byName[$tribute->name] = $tribute;
+        }
+        foreach ($tributes as $i => $tribute) {
+            $tribute->restoreAllies(array_map(fn (string $name) => $byName[$name], $state['tributes'][$i]['allies']));
+        }
+
+        $simulation = new self($tributes, $events, $seed, $resolver);
+        $simulation->round = $state['round'];
+        $simulation->lastArenaRound = $state['last_arena_round'];
+        $simulation->phase = EventPhase::forRound(max(1, $state['round']));
+
+        return $simulation;
     }
 
     public function round(): int
@@ -115,6 +190,7 @@ class Simulation
         }
 
         $this->round++;
+        $this->random = $this->randomForRound($this->round);
         $this->phase = EventPhase::forRound($this->round);
         $this->usedThisRound = [];
         $results = [];

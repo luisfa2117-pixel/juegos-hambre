@@ -15,8 +15,6 @@ use App\Simulation\EventPool;
 use App\Simulation\Simulation;
 use App\Simulation\Tribute;
 use LogicException;
-use Random\Engine\Mt19937;
-use Random\Randomizer;
 use Tests\TestCase;
 
 class SimulationTest extends TestCase
@@ -101,7 +99,7 @@ class SimulationTest extends TestCase
 
     private function simulation(array $tributes, EventPool $pool, int $seed): Simulation
     {
-        return new Simulation($tributes, $pool, new Randomizer(new Mt19937($seed)));
+        return new Simulation($tributes, $pool, $seed);
     }
 
     /** Juega una partida entera y devuelve todos los textos (con un límite por si acaso). */
@@ -622,6 +620,79 @@ class SimulationTest extends TestCase
         };
 
         $this->assertGreaterThan($count(false), $count(true));
+    }
+
+    // ---- Guardar y continuar ----
+
+    /** Todos los textos ronda a ronda: [1 => [...], 2 => [...], ...] */
+    private function playToEnd(Simulation $simulation): array
+    {
+        $rounds = [];
+
+        while (! $simulation->isOver() && $simulation->round() < 200) {
+            $rounds[$simulation->round() + 1] = array_map(fn ($result) => $result->text, $simulation->runRound());
+        }
+
+        return $rounds;
+    }
+
+    public function test_a_resumed_game_continues_exactly_as_the_original(): void
+    {
+        $knife = $this->knife();
+        $districts = ['test' => $this->tribute('x')->district];
+
+        foreach (range(1, 15) as $seed) {
+            $tributes = [
+                $this->tribute('Dean', Personality::Aggressive),
+                $this->tribute('Avery', Personality::Loyal),
+                $this->tribute('De Santi'),
+                $this->tribute('Hannah', Personality::Treacherous),
+                $this->tribute('Desiree', Personality::Sociable),
+                $this->tribute('Noah', Personality::Coward),
+            ];
+            $original = $this->simulation($tributes, $this->deadlyPool(), $seed);
+
+            // Jugamos 3 rondas, guardamos, y seguimos hasta el final
+            $before = [];
+            for ($i = 0; $i < 3 && ! $original->isOver(); $i++) {
+                $before[] = $original->runRound();
+            }
+            $state = $original->toState();
+            $rest = $this->playToEnd($original);
+
+            // Otra partida reconstruida desde lo guardado tiene que hacer exactamente lo mismo
+            $resumed = Simulation::fromState($state, $this->deadlyPool(), $seed, $districts, ['cuchillo' => $knife]);
+
+            $this->assertSame($rest, $this->playToEnd($resumed), "Semilla {$seed}");
+        }
+    }
+
+    public function test_state_keeps_alliances_in_order(): void
+    {
+        [$dean, $avery, $noah, $hannah] = $this->tributes(4);
+        $dean->befriend($avery);
+        $dean->befriend($noah);
+        $simulation = $this->simulation([$dean, $avery, $noah, $hannah], $this->harmlessPool(), 1);
+
+        $resumed = Simulation::fromState($simulation->toState(), $this->harmlessPool(), 1, ['test' => $dean->district], []);
+
+        $this->assertSame($simulation->toState(), $resumed->toState());
+        [$rDean, $rAvery, $rNoah, $rHannah] = $resumed->tributes();
+        $this->assertTrue($rNoah->isAllyOf($rAvery));
+        $this->assertFalse($rHannah->isAllyOf($rDean));
+    }
+
+    public function test_each_round_has_its_own_randomness(): void
+    {
+        // Con la misma semilla, la ronda 5 sale igual llegue como llegue: solo depende de la semilla y del número
+        $a = $this->simulation($this->tributes(), $this->harmlessPool(), 42);
+        $b = $this->simulation($this->tributes(), $this->harmlessPool(), 42);
+        $c = $this->simulation($this->tributes(), $this->harmlessPool(), 43);
+
+        $textsA = $this->playToEnd($a);
+
+        $this->assertSame(array_slice($textsA, 0, 3), array_slice($this->playToEnd($b), 0, 3));
+        $this->assertNotSame(array_slice($textsA, 0, 3), array_slice($this->playToEnd($c), 0, 3));
     }
 
     public function test_last_survivor_is_the_winner_and_no_more_rounds_can_be_played(): void

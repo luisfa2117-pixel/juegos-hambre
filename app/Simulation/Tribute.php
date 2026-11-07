@@ -260,7 +260,64 @@ class Tribute
         $this->allies = [];
     }
 
-    // ---- Para guardar ----
+    // ---- Guardar y continuar ----
+
+    /** Su estado exacto, para poder reconstruirlo con fromState() (al contrario que toArray, que es para mostrar) */
+    public function toState(): array
+    {
+        return [
+            'name' => $this->name,
+            'gender' => $this->gender->value,
+            'district' => $this->district->slug,
+            'personality' => $this->personality?->value,
+            'hp' => $this->hp,
+            'energy' => $this->energy,
+            // En el mismo orden que la mochila: el orden importa (qué objeto se usa primero)
+            'items' => array_map(fn (Item $item, int $uses) => [$item->slug, $uses], $this->inventory, $this->usesLeft),
+            'allies' => array_map(fn (Tribute $ally) => $ally->name, $this->allies),
+        ];
+    }
+
+    /**
+     * Reconstruye un tributo a partir de toState(). Las alianzas se enlazan después,
+     * cuando ya existen todos (ver Simulation::fromState y restoreAllies).
+     *
+     * @param array<string, Item> $items Los objetos por slug
+     */
+    public static function fromState(array $state, District $district, array $items): self
+    {
+        $tribute = new self(
+            $state['name'],
+            Gender::from($state['gender']),
+            $district,
+            Personality::tryFrom($state['personality'] ?? ''),
+        );
+
+        $tribute->hp = $state['hp'];
+        $tribute->energy = $state['energy'];
+
+        foreach ($state['items'] as [$slug, $uses]) {
+            // Si un objeto se ha borrado de la base de datos desde entonces, se pierde sin más
+            if (isset($items[$slug])) {
+                $tribute->inventory[] = $items[$slug];
+                $tribute->usesLeft[] = $uses;
+            }
+        }
+
+        return $tribute;
+    }
+
+    /**
+     * Solo para reconstruir una partida guardada: fija sus aliados tal cual estaban, en el mismo orden.
+     *
+     * @param Tribute[] $allies
+     */
+    public function restoreAllies(array $allies): void
+    {
+        $this->allies = array_values($allies);
+    }
+
+    // ---- Para mostrar ----
 
     /** El estado actual en un array, para guardarlo en la base de datos. */
     public function toArray(): array

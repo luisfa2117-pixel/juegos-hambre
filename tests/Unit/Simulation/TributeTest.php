@@ -4,6 +4,7 @@ namespace Tests\Unit\Simulation;
 
 use App\Enums\Gender;
 use App\Enums\ItemType;
+use App\Enums\Personality;
 use App\Models\District;
 use App\Models\Item;
 use App\Simulation\Tribute;
@@ -175,6 +176,37 @@ class TributeTest extends TestCase
         $tribute->addItem($this->item('botiquin', ItemType::Heal, 10));
 
         $this->assertSame(['Pistola (3 usos)', 'Botiquin'], $tribute->toArray()['items']);
+    }
+
+    public function test_state_can_be_saved_and_restored_exactly(): void
+    {
+        $district = $this->district(strength: 3, energy: -5);
+        $pistol = $this->item('pistola', ItemType::Weapon, 10, uses: 3);
+        $medkit = $this->item('botiquin', ItemType::Heal, 10);
+
+        $avery = new Tribute('Avery', Gender::Female, $district, Personality::Loyal);
+        $avery->changeHp(-7);
+        $avery->changeEnergy(-4);
+        $avery->addItem($pistol);
+        $avery->addItem($medkit);
+        $avery->useItem($pistol);
+
+        $restored = Tribute::fromState($avery->toState(), $district, ['pistola' => $pistol, 'botiquin' => $medkit]);
+
+        $this->assertSame($avery->toState(), $restored->toState());
+        $this->assertSame(2, $restored->usesLeft($pistol));
+        $this->assertSame(Personality::Loyal, $restored->personality);
+        $this->assertSame(8, $restored->strength());   // sale del distrito, no hace falta guardarlo
+    }
+
+    public function test_items_that_no_longer_exist_are_dropped_when_restoring(): void
+    {
+        $tribute = $this->tribute();
+        $tribute->addItem($this->item('reliquia', ItemType::Weapon, 5));
+
+        $restored = Tribute::fromState($tribute->toState(), $this->district(), []);
+
+        $this->assertSame([], $restored->inventory());
     }
 
     // ---- Alianzas ----

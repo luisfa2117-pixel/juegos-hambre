@@ -45,7 +45,9 @@ class EventPool
     /** Carga todos los eventos con sus objetos y catástrofes en pocas consultas (en vez de una por evento). */
     public static function fromDatabase(): self
     {
-        return new self(GameEvent::with(['requiresItem', 'givesItem', 'arenaEvent'])->get());
+        // orderBy('id'): sin orden, Postgres puede devolver las filas en otro orden cada vez,
+        // y con la misma semilla saldría una partida distinta
+        return new self(GameEvent::with(['requiresItem', 'givesItem', 'arenaEvent'])->orderBy('id')->get());
     }
 
     public function hasArenas(): bool
