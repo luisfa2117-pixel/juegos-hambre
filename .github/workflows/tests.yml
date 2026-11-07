@@ -1,0 +1,36 @@
+# Ejecuta los tests en los servidores de GitHub cada vez que subes cambios a main
+# (y en cada pull request). El resultado sale en la pestaña "Actions" del repositorio.
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Instalar PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          # pdo_sqlite: los tests usan SQLite en memoria (ver phpunit.xml)
+          # gd: para las fotos falsas de los tests de imágenes
+          extensions: pdo_sqlite, gd
+          coverage: none
+
+      - name: Instalar las dependencias de Composer
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Preparar el .env
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Ejecutar los tests
+        run: php artisan test
