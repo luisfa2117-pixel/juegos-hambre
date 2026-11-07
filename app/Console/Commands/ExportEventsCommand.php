@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\ArenaEvent;
 use App\Models\GameEvent;
 use Database\Seeders\GameEventSeeder;
 use Illuminate\Console\Command;
@@ -33,6 +34,15 @@ class ExportEventsCommand extends Command
                 ->values()
                 ->all();
         }
+
+        $data['catastrofes'] = ArenaEvent::with(['events.requiresItem', 'events.givesItem'])->orderBy('id')->get()
+            ->map(fn (ArenaEvent $arena) => [
+                'id' => $arena->slug,
+                'nombre' => $arena->name,
+                'anuncio' => $arena->intro,
+                'eventos' => $arena->events->sortBy('id')->map(fn (GameEvent $event) => $this->toJson($event))->values()->all(),
+            ])
+            ->all();
 
         File::put($path, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n");
 

@@ -4,6 +4,7 @@ namespace App\Simulation;
 
 use App\Enums\EventCategory;
 use App\Enums\EventPhase;
+use App\Models\ArenaEvent;
 use App\Models\GameEvent;
 use Random\Randomizer;
 
@@ -16,18 +17,59 @@ class EventPool
     /** @var array<string, GameEvent[]> ['solo' => [...], 'duo' => [...], ...] */
     private array $byCategory = [];
 
+    /** @var array<string, ArenaEvent> Las catástrofes, por su slug */
+    private array $arenas = [];
+
+    /** @var array<string, GameEvent[]> Los eventos de cada catástrofe, por el slug de la catástrofe */
+    private array $arenaEvents = [];
+
     /** @param iterable<GameEvent> $events */
     public function __construct(iterable $events)
     {
         foreach ($events as $event) {
+            if ($event->category === EventCategory::Arena) {
+                $arena = $event->arenaEvent;
+
+                if ($arena !== null) {
+                    $this->arenas[$arena->slug] = $arena;
+                    $this->arenaEvents[$arena->slug][] = $event;
+                }
+
+                continue;
+            }
+
             $this->byCategory[$event->category->value][] = $event;
         }
     }
 
-    /** Carga todos los eventos con sus objetos en dos consultas (en vez de una por evento). */
+    /** Carga todos los eventos con sus objetos y catástrofes en pocas consultas (en vez de una por evento). */
     public static function fromDatabase(): self
     {
-        return new self(GameEvent::with(['requiresItem', 'givesItem'])->get());
+        return new self(GameEvent::with(['requiresItem', 'givesItem', 'arenaEvent'])->get());
+    }
+
+    public function hasArenas(): bool
+    {
+        return $this->arenas !== [];
+    }
+
+    /** Una catástrofe al azar, o null si no hay ninguna */
+    public function pickArena(Randomizer $random): ?ArenaEvent
+    {
+        $arenas = array_values($this->arenas);
+
+        return $arenas === [] ? null : $arenas[$random->getInt(0, count($arenas) - 1)];
+    }
+
+    /**
+     * Lo que le pasa a $actor durante la catástrofe: uno de sus eventos que pueda protagonizar,
+     * evitando los ya usados en la ronda mientras haya otros.
+     *
+     * @param GameEvent[] $avoid
+     */
+    public function pickArenaEvent(ArenaEvent $arena, Tribute $actor, Randomizer $random, array $avoid = []): ?GameEvent
+    {
+        return $this->chooseFrom($this->usableBy($this->arenaEvents[$arena->slug] ?? [], $actor), $random, $avoid);
     }
 
     /**
@@ -49,15 +91,37 @@ class EventPool
         ?EventPhase $phase = null,
         array $avoid = [],
     ): ?GameEvent {
-        $candidates = array_values(array_filter(
-            $this->byCategory[$category->value] ?? [],
-            fn (GameEvent $event) => $event->requiresItem === null || $actor->hasItem($event->requiresItem),
-        ));
+        $candidates = $this->usableBy($this->byCategory[$category->value] ?? [], $actor);
 
         if ($phase !== null) {
             $candidates = $this->forPhase($candidates, $phase);
         }
 
+        return $this->chooseFrom($candidates, $random, $avoid);
+    }
+
+    /**
+     * Los eventos que $actor puede protagonizar: si requieren un objeto, tiene que llevarlo.
+     *
+     * @param GameEvent[] $events
+     * @return GameEvent[]
+     */
+    private function usableBy(array $events, Tribute $actor): array
+    {
+        return array_values(array_filter(
+            $events,
+            fn (GameEvent $event) => $event->requiresItem === null || $actor->hasItem($event->requiresItem),
+        ));
+    }
+
+    /**
+     * Elige uno al azar, evitando los de $avoid mientras haya otros.
+     *
+     * @param GameEvent[] $candidates
+     * @param GameEvent[] $avoid
+     */
+    private function chooseFrom(array $candidates, Randomizer $random, array $avoid): ?GameEvent
+    {
         $fresh = array_values(array_filter($candidates, fn (GameEvent $event) => ! in_array($event, $avoid, true)));
 
         if ($fresh !== []) {

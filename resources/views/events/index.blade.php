@@ -20,7 +20,7 @@
            @class(['rounded-sm border px-3 py-1 text-sm', 'border-hazard text-hazard' => ! $category, 'border-asphalt-line hover:border-ash-muted' => $category])>
             Todos ({{ $counts->sum() }})
         </a>
-        @foreach (EventCategory::cases() as $case)
+        @foreach (EventCategory::editable() as $case)
             <a href="{{ route('events.index', ['category' => $case]) }}"
                @class(['rounded-sm border px-3 py-1 text-sm', 'border-hazard text-hazard' => $category === $case, 'border-asphalt-line hover:border-ash-muted' => $category !== $case])>
                 {{ $case->label() }} ({{ $counts[$case->value] ?? 0 }})

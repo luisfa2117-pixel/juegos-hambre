@@ -12,7 +12,7 @@
     <div>
         <label for="category" class="field-label">Tipo de evento</label>
         <select id="category" name="category" class="field" data-category>
-            @foreach (EventCategory::cases() as $case)
+            @foreach (EventCategory::editable() as $case)
                 <option value="{{ $case->value }}" data-participants="{{ $case->participants() }}" data-actors="{{ $case->actors() }}"
                         @selected($currentCategory === $case->value)>
                     {{ $case->label() }} ({{ trans_choice(':count participante|:count participantes', $case->participants()) }})

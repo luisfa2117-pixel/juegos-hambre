@@ -626,6 +626,283 @@
             "fase": "cornucopia"
         }
     ],
+    "eventosDescubrimiento": [
+        {
+            "descripcion": "{A} encontró una caja de suministros intacta",
+            "numParticipantes": 1,
+            "objeto": "BOTIQUIN"
+        },
+        {
+            "descripcion": "{A} saqueó una farmacia y llenó la mochila de material médico",
+            "numParticipantes": 1,
+            "objeto": "BOTIQUIN"
+        },
+        {
+            "descripcion": "{A} rebuscó en la basura y tuvo suerte",
+            "numParticipantes": 1,
+            "objeto": "CUCHILLO"
+        },
+        {
+            "descripcion": "{A} forzó la taquilla de un refugio abandonado",
+            "numParticipantes": 1,
+            "objeto": "CHALECO"
+        },
+        {
+            "descripcion": "{A} encontró un cargamento patrocinado caído del cielo",
+            "numParticipantes": 1,
+            "objeto": "PISTOLACLAVOS"
+        },
+        {
+            "descripcion": "{A} encontró un taller abandonado con una pistola de clavos sobre la mesa",
+            "numParticipantes": 1,
+            "objeto": "PISTOLACLAVOS"
+        },
+        {
+            "descripcion": "{A} le quitó el taser a un guardia de seguridad desactivado",
+            "numParticipantes": 1,
+            "objeto": "TASER"
+        },
+        {
+            "descripcion": "{A} encontró latas de bebida energética en una gasolinera",
+            "numParticipantes": 1,
+            "objeto": "BEBIDA_ENERGETICA"
+        },
+        {
+            "descripcion": "{A} recibió un dron de patrocinio con una bebida energética",
+            "numParticipantes": 1,
+            "objeto": "BEBIDA_ENERGETICA"
+        },
+        {
+            "descripcion": "{A} encontró una pistola con el número de serie borrado",
+            "numParticipantes": 1,
+            "objeto": "PISTOLA"
+        },
+        {
+            "descripcion": "{A} sacó un generador de escudo personal de un laboratorio en ruinas",
+            "numParticipantes": 1,
+            "objeto": "ESCUDO"
+        },
+        {
+            "descripcion": "{A} encontró un botiquín en una ambulancia abandonada a la luz de la luna",
+            "numParticipantes": 1,
+            "objeto": "BOTIQUIN",
+            "fase": "noche"
+        },
+        {
+            "descripcion": "{A} agarró un cuchillo de la Cornucopia y salió corriendo",
+            "numParticipantes": 1,
+            "objeto": "CUCHILLO",
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} se hizo con un chaleco antibalas del montón de suministros",
+            "numParticipantes": 1,
+            "objeto": "CHALECO",
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} le arrancó un botiquín de las manos a otro tributo",
+            "numParticipantes": 1,
+            "objeto": "BOTIQUIN",
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} encontró una mochila con bebidas energéticas junto a la Cornucopia",
+            "numParticipantes": 1,
+            "objeto": "BEBIDA_ENERGETICA",
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} consiguió una pistola de clavos de la Cornucopia",
+            "numParticipantes": 1,
+            "objeto": "PISTOLACLAVOS",
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} arrancó un machete oxidado de la pared de una ferretería",
+            "numParticipantes": 1,
+            "objeto": "MACHETE"
+        },
+        {
+            "descripcion": "{A} encontró un machete en el maletero de un coche patrulla",
+            "numParticipantes": 1,
+            "objeto": "MACHETE"
+        },
+        {
+            "descripcion": "{A} sacó una ballesta de caza de una tienda de deportes saqueada",
+            "numParticipantes": 1,
+            "objeto": "BALLESTA"
+        },
+        {
+            "descripcion": "{A} encontró un rifle de riel electromagnético en un búnker militar sellado",
+            "numParticipantes": 1,
+            "objeto": "RIFLE_RIEL"
+        },
+        {
+            "descripcion": "{A} recibió una granada de pulso de un patrocinador",
+            "numParticipantes": 1,
+            "objeto": "GRANADA_PEM"
+        },
+        {
+            "descripcion": "{A} encontró una granada de pulso entre los restos de un dron derribado",
+            "numParticipantes": 1,
+            "objeto": "GRANADA_PEM"
+        },
+        {
+            "descripcion": "{A} clavó puntas en un bate de béisbol y se fabricó un arma",
+            "numParticipantes": 1,
+            "objeto": "BATE_CLAVOS"
+        },
+        {
+            "descripcion": "{A} montó un lanzallamas casero con una bombona de butano y una manguera",
+            "numParticipantes": 1,
+            "objeto": "LANZALLAMAS"
+        },
+        {
+            "descripcion": "{A} reprogramó un dron de seguridad para que l{A:o/a} siguiera y disparara a sus enemigos",
+            "numParticipantes": 1,
+            "objeto": "DRON_ARMADO"
+        },
+        {
+            "descripcion": "{A} se puso un casco antidisturbios que encontró en una comisaría",
+            "numParticipantes": 1,
+            "objeto": "CASCO"
+        },
+        {
+            "descripcion": "{A} encontró un exoesqueleto blindado en una fábrica de robótica",
+            "numParticipantes": 1,
+            "objeto": "EXOTRAJE"
+        },
+        {
+            "descripcion": "{A} recogió un escudo antidisturbios de una barricada abandonada",
+            "numParticipantes": 1,
+            "objeto": "ESCUDO_POLICIAL"
+        },
+        {
+            "descripcion": "{A} encontró un inyector de nanobots en un laboratorio de la Federación del Pacífico",
+            "numParticipantes": 1,
+            "objeto": "NANOBOTS"
+        },
+        {
+            "descripcion": "{A} recibió un inyector de nanobots de un patrocinador generoso",
+            "numParticipantes": 1,
+            "objeto": "NANOBOTS"
+        },
+        {
+            "descripcion": "{A} encontró vendas y desinfectante en el botiquín de un autobús",
+            "numParticipantes": 1,
+            "objeto": "VENDAS"
+        },
+        {
+            "descripcion": "{A} rebuscó en una ambulancia volcada y se llevó unas vendas",
+            "numParticipantes": 1,
+            "objeto": "VENDAS"
+        },
+        {
+            "descripcion": "{A} encontró un estimulante militar en la taquilla de un cuartel",
+            "numParticipantes": 1,
+            "objeto": "ESTIMULANTE"
+        },
+        {
+            "descripcion": "{A} reventó una máquina expendedora y se llenó los bolsillos de barritas de proteínas",
+            "numParticipantes": 1,
+            "objeto": "BARRITAS"
+        },
+        {
+            "descripcion": "{A} encontró una caja de barritas de proteínas en un almacén",
+            "numParticipantes": 1,
+            "objeto": "BARRITAS"
+        },
+        {
+            "descripcion": "{A} encontró una pistola en la guantera de un coche abandonado",
+            "numParticipantes": 1,
+            "objeto": "PISTOLA"
+        },
+        {
+            "descripcion": "{A} le quitó el taser a un robot de seguridad desactivado",
+            "numParticipantes": 1,
+            "objeto": "TASER"
+        },
+        {
+            "descripcion": "{A} encontró un chaleco antibalas colgado en una armería vacía",
+            "numParticipantes": 1,
+            "objeto": "CHALECO"
+        },
+        {
+            "descripcion": "{A} recibió un botiquín de un dron patrocinador",
+            "numParticipantes": 1,
+            "objeto": "BOTIQUIN"
+        },
+        {
+            "descripcion": "{A} encontró un cuchillo bien afilado en la cocina de un restaurante",
+            "numParticipantes": 1,
+            "objeto": "CUCHILLO"
+        },
+        {
+            "descripcion": "{A} encontró una pistola de clavos en una obra abandonada",
+            "numParticipantes": 1,
+            "objeto": "PISTOLACLAVOS"
+        },
+        {
+            "descripcion": "{A} encontró un generador de escudo entre la chatarra de un desguace",
+            "numParticipantes": 1,
+            "objeto": "ESCUDO"
+        },
+        {
+            "descripcion": "{A} encontró un estimulante militar entre los restos de un campamento",
+            "numParticipantes": 1,
+            "objeto": "ESTIMULANTE",
+            "fase": "noche"
+        },
+        {
+            "descripcion": "{A} encontró unas vendas a la luz de una farola que aún funcionaba",
+            "numParticipantes": 1,
+            "objeto": "VENDAS",
+            "fase": "noche"
+        },
+        {
+            "descripcion": "{A} cogió una ballesta de la Cornucopia",
+            "numParticipantes": 1,
+            "objeto": "BALLESTA",
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} se llevó un machete de la Cornucopia",
+            "numParticipantes": 1,
+            "objeto": "MACHETE",
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} agarró unas vendas y una mochila de la Cornucopia",
+            "numParticipantes": 1,
+            "objeto": "VENDAS",
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} se hizo con un casco antidisturbios en la Cornucopia",
+            "numParticipantes": 1,
+            "objeto": "CASCO",
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} encontró barritas de proteínas en una caja de la Cornucopia",
+            "numParticipantes": 1,
+            "objeto": "BARRITAS",
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} consiguió un taser de la Cornucopia antes de huir",
+            "numParticipantes": 1,
+            "objeto": "TASER",
+            "fase": "cornucopia"
+        },
+        {
+            "descripcion": "{A} se llevó un escudo antidisturbios de la Cornucopia",
+            "numParticipantes": 1,
+            "objeto": "ESCUDO_POLICIAL",
+            "fase": "cornucopia"
+        }
+    ],
     "eventosDuo": [
         {
             "descripcion": "{A} le tendió una emboscada a {B} en un restaurante de comida rápida",
@@ -1872,6 +2149,122 @@
             "fase": "dia"
         }
     ],
+    "traicionAmigo": [
+        {
+            "descripcion": "{A} traicionó a {B} y le disparó por la espalda",
+            "numParticipantes": 2,
+            "danioPropio": 0,
+            "danioRival": -12,
+            "energiaPropia": 0,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} envenenó la comida que compartía con {B}",
+            "numParticipantes": 2,
+            "danioPropio": 0,
+            "danioRival": -8,
+            "energiaPropia": 0,
+            "energiaRival": -4
+        },
+        {
+            "descripcion": "{A} empujó a {B} desde una azotea para quedarse con los suministros",
+            "numParticipantes": 2,
+            "danioPropio": -2,
+            "danioRival": -10,
+            "energiaPropia": 0,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} fingió cubrir a {B}, pero l{B:o/a} dejó expuest{B:o/a} al enemigo",
+            "numParticipantes": 2,
+            "danioPropio": -1,
+            "danioRival": -9,
+            "energiaPropia": 0,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} cortó la cuerda mientras {B} escalaba un muro",
+            "numParticipantes": 2,
+            "danioPropio": 0,
+            "danioRival": -9,
+            "energiaPropia": 0,
+            "energiaRival": -3
+        },
+        {
+            "descripcion": "{A} abandonó a {B} mientras dormía y se llevó sus provisiones",
+            "numParticipantes": 2,
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": 0,
+            "energiaRival": -4,
+            "fase": "noche"
+        },
+        {
+            "descripcion": "{A} cambió el agua de {B} por anticongelante",
+            "numParticipantes": 2,
+            "danioPropio": 0,
+            "danioRival": -8,
+            "energiaPropia": 0,
+            "energiaRival": -3
+        },
+        {
+            "descripcion": "{A} dejó atrás a {B} cuando les atacaron los mutos",
+            "numParticipantes": 2,
+            "danioPropio": -1,
+            "danioRival": -7,
+            "energiaPropia": -2,
+            "energiaRival": -4
+        },
+        {
+            "descripcion": "{A} le robó la mochila a {B} y desapareció",
+            "numParticipantes": 2,
+            "danioPropio": 0,
+            "danioRival": 0,
+            "energiaPropia": 0,
+            "energiaRival": -5
+        },
+        {
+            "descripcion": "{A} disparó a {B} en cuanto bajó la guardia",
+            "numParticipantes": 2,
+            "danioPropio": 0,
+            "danioRival": -12,
+            "energiaPropia": 0,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} empujó a {B} a un foso de los Vigilantes",
+            "numParticipantes": 2,
+            "danioPropio": 0,
+            "danioRival": -10,
+            "energiaPropia": 0,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} soltó a {B} cuando colgaba del borde de una azotea",
+            "numParticipantes": 2,
+            "danioPropio": 0,
+            "danioRival": -10,
+            "energiaPropia": 0,
+            "energiaRival": 0
+        },
+        {
+            "descripcion": "{A} reveló el escondite de {B} a los drones de los Vigilantes",
+            "numParticipantes": 2,
+            "danioPropio": 0,
+            "danioRival": -6,
+            "energiaPropia": 0,
+            "energiaRival": -4
+        },
+        {
+            "descripcion": "{A} apuñaló a {B} durante su turno de guardia",
+            "numParticipantes": 2,
+            "danioPropio": 0,
+            "danioRival": -12,
+            "energiaPropia": 0,
+            "energiaRival": 0,
+            "fase": "noche"
+        }
+    ],
     "hacerAmigo": [
         {
             "descripcion": "{A} decidió no disparar a {B} y bajar su arma",
@@ -2070,491 +2463,6 @@
             "fase": "dia"
         }
     ],
-    "eventosDescubrimiento": [
-        {
-            "descripcion": "{A} encontró una caja de suministros intacta",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "BOTIQUIN"
-        },
-        {
-            "descripcion": "{A} saqueó una farmacia y llenó la mochila de material médico",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "BOTIQUIN"
-        },
-        {
-            "descripcion": "{A} rebuscó en la basura y tuvo suerte",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "CUCHILLO"
-        },
-        {
-            "descripcion": "{A} forzó la taquilla de un refugio abandonado",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "CHALECO"
-        },
-        {
-            "descripcion": "{A} encontró un cargamento patrocinado caído del cielo",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "PISTOLACLAVOS"
-        },
-        {
-            "descripcion": "{A} encontró un taller abandonado con una pistola de clavos sobre la mesa",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "PISTOLACLAVOS"
-        },
-        {
-            "descripcion": "{A} le quitó el taser a un guardia de seguridad desactivado",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "TASER"
-        },
-        {
-            "descripcion": "{A} encontró latas de bebida energética en una gasolinera",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "BEBIDA_ENERGETICA"
-        },
-        {
-            "descripcion": "{A} recibió un dron de patrocinio con una bebida energética",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "BEBIDA_ENERGETICA"
-        },
-        {
-            "descripcion": "{A} encontró una pistola con el número de serie borrado",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "PISTOLA"
-        },
-        {
-            "descripcion": "{A} sacó un generador de escudo personal de un laboratorio en ruinas",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "ESCUDO"
-        },
-        {
-            "descripcion": "{A} encontró un botiquín en una ambulancia abandonada a la luz de la luna",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "fase": "noche",
-            "objeto": "BOTIQUIN"
-        },
-        {
-            "descripcion": "{A} agarró un cuchillo de la Cornucopia y salió corriendo",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "fase": "cornucopia",
-            "objeto": "CUCHILLO"
-        },
-        {
-            "descripcion": "{A} se hizo con un chaleco antibalas del montón de suministros",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "fase": "cornucopia",
-            "objeto": "CHALECO"
-        },
-        {
-            "descripcion": "{A} le arrancó un botiquín de las manos a otro tributo",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "fase": "cornucopia",
-            "objeto": "BOTIQUIN"
-        },
-        {
-            "descripcion": "{A} encontró una mochila con bebidas energéticas junto a la Cornucopia",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "fase": "cornucopia",
-            "objeto": "BEBIDA_ENERGETICA"
-        },
-        {
-            "descripcion": "{A} consiguió una pistola de clavos de la Cornucopia",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "fase": "cornucopia",
-            "objeto": "PISTOLACLAVOS"
-        },
-        {
-            "descripcion": "{A} arrancó un machete oxidado de la pared de una ferretería",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "MACHETE"
-        },
-        {
-            "descripcion": "{A} encontró un machete en el maletero de un coche patrulla",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "MACHETE"
-        },
-        {
-            "descripcion": "{A} sacó una ballesta de caza de una tienda de deportes saqueada",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "BALLESTA"
-        },
-        {
-            "descripcion": "{A} encontró un rifle de riel electromagnético en un búnker militar sellado",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "RIFLE_RIEL"
-        },
-        {
-            "descripcion": "{A} recibió una granada de pulso de un patrocinador",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "GRANADA_PEM"
-        },
-        {
-            "descripcion": "{A} encontró una granada de pulso entre los restos de un dron derribado",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "GRANADA_PEM"
-        },
-        {
-            "descripcion": "{A} clavó puntas en un bate de béisbol y se fabricó un arma",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "BATE_CLAVOS"
-        },
-        {
-            "descripcion": "{A} montó un lanzallamas casero con una bombona de butano y una manguera",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "LANZALLAMAS"
-        },
-        {
-            "descripcion": "{A} reprogramó un dron de seguridad para que l{A:o/a} siguiera y disparara a sus enemigos",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "DRON_ARMADO"
-        },
-        {
-            "descripcion": "{A} se puso un casco antidisturbios que encontró en una comisaría",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "CASCO"
-        },
-        {
-            "descripcion": "{A} encontró un exoesqueleto blindado en una fábrica de robótica",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "EXOTRAJE"
-        },
-        {
-            "descripcion": "{A} recogió un escudo antidisturbios de una barricada abandonada",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "ESCUDO_POLICIAL"
-        },
-        {
-            "descripcion": "{A} encontró un inyector de nanobots en un laboratorio de la Federación del Pacífico",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "NANOBOTS"
-        },
-        {
-            "descripcion": "{A} recibió un inyector de nanobots de un patrocinador generoso",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "NANOBOTS"
-        },
-        {
-            "descripcion": "{A} encontró vendas y desinfectante en el botiquín de un autobús",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "VENDAS"
-        },
-        {
-            "descripcion": "{A} rebuscó en una ambulancia volcada y se llevó unas vendas",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "VENDAS"
-        },
-        {
-            "descripcion": "{A} encontró un estimulante militar en la taquilla de un cuartel",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "ESTIMULANTE"
-        },
-        {
-            "descripcion": "{A} reventó una máquina expendedora y se llenó los bolsillos de barritas de proteínas",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "BARRITAS"
-        },
-        {
-            "descripcion": "{A} encontró una caja de barritas de proteínas en un almacén",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "BARRITAS"
-        },
-        {
-            "descripcion": "{A} encontró una pistola en la guantera de un coche abandonado",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "PISTOLA"
-        },
-        {
-            "descripcion": "{A} le quitó el taser a un robot de seguridad desactivado",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "TASER"
-        },
-        {
-            "descripcion": "{A} encontró un chaleco antibalas colgado en una armería vacía",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "CHALECO"
-        },
-        {
-            "descripcion": "{A} recibió un botiquín de un dron patrocinador",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "BOTIQUIN"
-        },
-        {
-            "descripcion": "{A} encontró un cuchillo bien afilado en la cocina de un restaurante",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "CUCHILLO"
-        },
-        {
-            "descripcion": "{A} encontró una pistola de clavos en una obra abandonada",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "PISTOLACLAVOS"
-        },
-        {
-            "descripcion": "{A} encontró un generador de escudo entre la chatarra de un desguace",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "objeto": "ESCUDO"
-        },
-        {
-            "descripcion": "{A} encontró un estimulante militar entre los restos de un campamento",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "fase": "noche",
-            "objeto": "ESTIMULANTE"
-        },
-        {
-            "descripcion": "{A} encontró unas vendas a la luz de una farola que aún funcionaba",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "fase": "noche",
-            "objeto": "VENDAS"
-        },
-        {
-            "descripcion": "{A} cogió una ballesta de la Cornucopia",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "fase": "cornucopia",
-            "objeto": "BALLESTA"
-        },
-        {
-            "descripcion": "{A} se llevó un machete de la Cornucopia",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "fase": "cornucopia",
-            "objeto": "MACHETE"
-        },
-        {
-            "descripcion": "{A} agarró unas vendas y una mochila de la Cornucopia",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "fase": "cornucopia",
-            "objeto": "VENDAS"
-        },
-        {
-            "descripcion": "{A} se hizo con un casco antidisturbios en la Cornucopia",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "fase": "cornucopia",
-            "objeto": "CASCO"
-        },
-        {
-            "descripcion": "{A} encontró barritas de proteínas en una caja de la Cornucopia",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "fase": "cornucopia",
-            "objeto": "BARRITAS"
-        },
-        {
-            "descripcion": "{A} consiguió un taser de la Cornucopia antes de huir",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "fase": "cornucopia",
-            "objeto": "TASER"
-        },
-        {
-            "descripcion": "{A} se llevó un escudo antidisturbios de la Cornucopia",
-            "numParticipantes": 1,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": 0,
-            "fase": "cornucopia",
-            "objeto": "ESCUDO_POLICIAL"
-        }
-    ],
     "eventosArma": [
         {
             "descripcion": "{A} se abalanzó sobre {B} y le hizo un corte profundo con su cuchillo",
@@ -2644,8 +2552,8 @@
             "danioRival": -12,
             "energiaPropia": -1,
             "energiaRival": 0,
-            "fase": "noche",
-            "requiere": "CUCHILLO"
+            "requiere": "CUCHILLO",
+            "fase": "noche"
         },
         {
             "descripcion": "{A} dejó inconsciente a {B} con su taser y le robó las provisiones",
@@ -2681,8 +2589,8 @@
             "danioRival": -11,
             "energiaPropia": 0,
             "energiaRival": 0,
-            "fase": "noche",
-            "requiere": "PISTOLA"
+            "requiere": "PISTOLA",
+            "fase": "noche"
         },
         {
             "descripcion": "{A} atacó a {B} con su machete",
@@ -2736,8 +2644,8 @@
             "danioRival": -11,
             "energiaPropia": -1,
             "energiaRival": 0,
-            "fase": "dia",
-            "requiere": "BALLESTA"
+            "requiere": "BALLESTA",
+            "fase": "dia"
         },
         {
             "descripcion": "{A} atravesó a {B} y la pared que l{B:o/a} cubría con su rifle de riel",
@@ -2755,8 +2663,8 @@
             "danioRival": -15,
             "energiaPropia": -1,
             "energiaRival": 0,
-            "fase": "dia",
-            "requiere": "RIFLE_RIEL"
+            "requiere": "RIFLE_RIEL",
+            "fase": "dia"
         },
         {
             "descripcion": "{A} lanzó su granada de pulso a {B}, que se retorció en el suelo",
@@ -2828,123 +2736,7 @@
             "danioRival": -10,
             "energiaPropia": -1,
             "energiaRival": 0,
-            "fase": "noche",
-            "requiere": "DRON_ARMADO"
-        }
-    ],
-    "traicionAmigo": [
-        {
-            "descripcion": "{A} traicionó a {B} y le disparó por la espalda",
-            "numParticipantes": 2,
-            "danioPropio": 0,
-            "danioRival": -12,
-            "energiaPropia": 0,
-            "energiaRival": 0
-        },
-        {
-            "descripcion": "{A} envenenó la comida que compartía con {B}",
-            "numParticipantes": 2,
-            "danioPropio": 0,
-            "danioRival": -8,
-            "energiaPropia": 0,
-            "energiaRival": -4
-        },
-        {
-            "descripcion": "{A} empujó a {B} desde una azotea para quedarse con los suministros",
-            "numParticipantes": 2,
-            "danioPropio": -2,
-            "danioRival": -10,
-            "energiaPropia": 0,
-            "energiaRival": 0
-        },
-        {
-            "descripcion": "{A} fingió cubrir a {B}, pero l{B:o/a} dejó expuest{B:o/a} al enemigo",
-            "numParticipantes": 2,
-            "danioPropio": -1,
-            "danioRival": -9,
-            "energiaPropia": 0,
-            "energiaRival": 0
-        },
-        {
-            "descripcion": "{A} cortó la cuerda mientras {B} escalaba un muro",
-            "numParticipantes": 2,
-            "danioPropio": 0,
-            "danioRival": -9,
-            "energiaPropia": 0,
-            "energiaRival": -3
-        },
-        {
-            "descripcion": "{A} abandonó a {B} mientras dormía y se llevó sus provisiones",
-            "numParticipantes": 2,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": -4,
-            "fase": "noche"
-        },
-        {
-            "descripcion": "{A} cambió el agua de {B} por anticongelante",
-            "numParticipantes": 2,
-            "danioPropio": 0,
-            "danioRival": -8,
-            "energiaPropia": 0,
-            "energiaRival": -3
-        },
-        {
-            "descripcion": "{A} dejó atrás a {B} cuando les atacaron los mutos",
-            "numParticipantes": 2,
-            "danioPropio": -1,
-            "danioRival": -7,
-            "energiaPropia": -2,
-            "energiaRival": -4
-        },
-        {
-            "descripcion": "{A} le robó la mochila a {B} y desapareció",
-            "numParticipantes": 2,
-            "danioPropio": 0,
-            "danioRival": 0,
-            "energiaPropia": 0,
-            "energiaRival": -5
-        },
-        {
-            "descripcion": "{A} disparó a {B} en cuanto bajó la guardia",
-            "numParticipantes": 2,
-            "danioPropio": 0,
-            "danioRival": -12,
-            "energiaPropia": 0,
-            "energiaRival": 0
-        },
-        {
-            "descripcion": "{A} empujó a {B} a un foso de los Vigilantes",
-            "numParticipantes": 2,
-            "danioPropio": 0,
-            "danioRival": -10,
-            "energiaPropia": 0,
-            "energiaRival": 0
-        },
-        {
-            "descripcion": "{A} soltó a {B} cuando colgaba del borde de una azotea",
-            "numParticipantes": 2,
-            "danioPropio": 0,
-            "danioRival": -10,
-            "energiaPropia": 0,
-            "energiaRival": 0
-        },
-        {
-            "descripcion": "{A} reveló el escondite de {B} a los drones de los Vigilantes",
-            "numParticipantes": 2,
-            "danioPropio": 0,
-            "danioRival": -6,
-            "energiaPropia": 0,
-            "energiaRival": -4
-        },
-        {
-            "descripcion": "{A} apuñaló a {B} durante su turno de guardia",
-            "numParticipantes": 2,
-            "danioPropio": 0,
-            "danioRival": -12,
-            "energiaPropia": 0,
-            "energiaRival": 0,
+            "requiere": "DRON_ARMADO",
             "fase": "noche"
         }
     ],
@@ -3104,6 +2896,530 @@
             "energiaPropia": -4,
             "energiaRival": -10,
             "fase": "dia"
+        }
+    ],
+    "catastrofes": [
+        {
+            "id": "inundacion",
+            "nombre": "Inundación del metro",
+            "anuncio": "Los Vigilantes abren las compuertas del río y el agua empieza a inundar los túneles y las calles bajas.",
+            "eventos": [
+                {
+                    "descripcion": "{A} quedó atrapad{A:o/a} en un vagón del metro y se ahogó",
+                    "danioPropio": -20,
+                    "energiaPropia": 0,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} trepó a una farola y esperó a que bajara el agua",
+                    "danioPropio": 0,
+                    "energiaPropia": -5,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} fue arrastrad{A:o/a} por la corriente contra un coche",
+                    "danioPropio": -10,
+                    "energiaPropia": -3,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} subió a un tejado justo a tiempo",
+                    "danioPropio": 0,
+                    "energiaPropia": 0,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} nadó durante horas hasta llegar a un edificio alto",
+                    "danioPropio": 0,
+                    "energiaPropia": -10,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se agarró a una puerta que flotaba y se dejó llevar",
+                    "danioPropio": -3,
+                    "energiaPropia": -6,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} tragó agua contaminada mientras nadaba",
+                    "danioPropio": -6,
+                    "energiaPropia": -2,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se quedó atrapad{A:o/a} en un ascensor mientras subía el agua",
+                    "danioPropio": -8,
+                    "energiaPropia": -6,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} improvisó una balsa con bidones vacíos",
+                    "danioPropio": 0,
+                    "energiaPropia": -4,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} perdió la mochila en la corriente",
+                    "danioPropio": 0,
+                    "energiaPropia": -3,
+                    "numParticipantes": 1
+                }
+            ]
+        },
+        {
+            "id": "tormenta_acida",
+            "nombre": "Tormenta de ácido",
+            "anuncio": "El cielo se vuelve verde y empieza a caer una lluvia que quema la piel.",
+            "eventos": [
+                {
+                    "descripcion": "{A} no encontró refugio y la lluvia l{A:o/a} consumió",
+                    "danioPropio": -20,
+                    "energiaPropia": 0,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se metió en una alcantarilla justo a tiempo",
+                    "danioPropio": 0,
+                    "energiaPropia": 0,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se tapó con una lona que se deshizo a los pocos minutos",
+                    "danioPropio": -8,
+                    "energiaPropia": 0,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} llegó a un túnel con quemaduras por todo el cuerpo",
+                    "danioPropio": -12,
+                    "energiaPropia": -4,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se refugió bajo un puente y vio cómo el ácido derretía los coches",
+                    "danioPropio": 0,
+                    "energiaPropia": -2,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} usó la puerta de un coche como paraguas",
+                    "danioPropio": -4,
+                    "energiaPropia": -2,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se protegió con su exoesqueleto blindado y salió sin un rasguño",
+                    "danioPropio": 0,
+                    "energiaPropia": -3,
+                    "requiere": "EXOTRAJE",
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se escondió dentro de una cabina telefónica",
+                    "danioPropio": -2,
+                    "energiaPropia": 0,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} vio cómo el ácido le agujereaba las botas",
+                    "danioPropio": -5,
+                    "energiaPropia": -2,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} corrió bajo los soportales de una avenida sin mojarse",
+                    "danioPropio": 0,
+                    "energiaPropia": -4,
+                    "numParticipantes": 1
+                }
+            ]
+        },
+        {
+            "id": "mutos",
+            "nombre": "Suelta de mutos",
+            "anuncio": "Los Vigilantes liberan una manada de mutos: perros enormes con los ojos de los tributos caídos.",
+            "eventos": [
+                {
+                    "descripcion": "{A} fue alcanzad{A:o/a} por la manada y no pudo defenderse",
+                    "danioPropio": -20,
+                    "energiaPropia": 0,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se subió a un andamio y los mutos no pudieron alcanzarl{A:o/a}",
+                    "danioPropio": 0,
+                    "energiaPropia": -4,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} luchó contra un muto y escapó con un mordisco en la pierna",
+                    "danioPropio": -9,
+                    "energiaPropia": -3,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se escondió en un coche y aguantó la respiración hasta que pasaron",
+                    "danioPropio": 0,
+                    "energiaPropia": 0,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} corrió hasta quedarse sin aliento",
+                    "danioPropio": 0,
+                    "energiaPropia": -10,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} fue mordid{A:o/a} en el brazo mientras huía",
+                    "danioPropio": -7,
+                    "energiaPropia": -2,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} ahuyentó a los mutos con su lanzallamas",
+                    "danioPropio": 0,
+                    "energiaPropia": -2,
+                    "requiere": "LANZALLAMAS",
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se tiró a un contenedor de basura y los mutos pasaron de largo",
+                    "danioPropio": 0,
+                    "energiaPropia": -2,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} vio a un muto con los ojos de un tributo caído y no pudo dejar de temblar",
+                    "danioPropio": 0,
+                    "energiaPropia": -5,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} encerró a dos mutos en un vagón de metro",
+                    "danioPropio": -3,
+                    "energiaPropia": -4,
+                    "numParticipantes": 1
+                }
+            ]
+        },
+        {
+            "id": "ola_frio",
+            "nombre": "Ola de frío",
+            "anuncio": "La temperatura cae en picado y la ciudad se cubre de hielo en cuestión de minutos.",
+            "eventos": [
+                {
+                    "descripcion": "{A} se quedó dormid{A:o/a} en la nieve y no volvió a despertar",
+                    "danioPropio": -20,
+                    "energiaPropia": 0,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} quemó muebles para no congelarse",
+                    "danioPropio": 0,
+                    "energiaPropia": -3,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} perdió la sensibilidad en los dedos de las manos",
+                    "danioPropio": -6,
+                    "energiaPropia": -4,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} encontró un abrigo térmico en una tienda de deportes",
+                    "danioPropio": 0,
+                    "energiaPropia": 0,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se refugió en una sala de calderas que aún funcionaba",
+                    "danioPropio": 2,
+                    "energiaPropia": 3,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} resbaló en el hielo y se rompió la muñeca",
+                    "danioPropio": -8,
+                    "energiaPropia": 0,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se acurrucó entre cartones en un portal",
+                    "danioPropio": -2,
+                    "energiaPropia": -3,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} caminó toda la noche para no congelarse",
+                    "danioPropio": 0,
+                    "energiaPropia": -8,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} rompió el hielo de una fuente para poder beber",
+                    "danioPropio": -1,
+                    "energiaPropia": -2,
+                    "numParticipantes": 1
+                }
+            ]
+        },
+        {
+            "id": "terremoto",
+            "nombre": "Terremoto",
+            "anuncio": "Los Vigilantes activan los generadores sísmicos y los rascacielos empiezan a temblar.",
+            "eventos": [
+                {
+                    "descripcion": "{A} quedó sepultad{A:o/a} bajo los escombros de un edificio",
+                    "danioPropio": -20,
+                    "energiaPropia": 0,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se metió debajo de una mesa y salió iles{A:o/a}",
+                    "danioPropio": 0,
+                    "energiaPropia": 0,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} recibió el golpe de un trozo de cornisa",
+                    "danioPropio": -10,
+                    "energiaPropia": 0,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} cayó por una grieta en el asfalto y consiguió salir",
+                    "danioPropio": -6,
+                    "energiaPropia": -5,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} corrió a un parque abierto antes de que cayera nada",
+                    "danioPropio": 0,
+                    "energiaPropia": -3,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} vio derrumbarse el edificio donde dormía hacía un minuto",
+                    "danioPropio": 0,
+                    "energiaPropia": -2,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se protegió de los cascotes con su escudo antidisturbios",
+                    "danioPropio": 0,
+                    "energiaPropia": -2,
+                    "requiere": "ESCUDO_POLICIAL",
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} saltó de un puente justo antes de que se partiera",
+                    "danioPropio": -4,
+                    "energiaPropia": -4,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} quedó atrapad{A:o/a} en un sótano y tardó horas en salir",
+                    "danioPropio": -3,
+                    "energiaPropia": -8,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} vio caer la torre de comunicaciones a pocos metros",
+                    "danioPropio": 0,
+                    "energiaPropia": -3,
+                    "numParticipantes": 1
+                }
+            ]
+        },
+        {
+            "id": "incendio",
+            "nombre": "Incendio en la ciudad",
+            "anuncio": "Una cadena de explosiones prende fuego a los barrios del norte de la arena.",
+            "eventos": [
+                {
+                    "descripcion": "{A} quedó atrapad{A:o/a} entre las llamas",
+                    "danioPropio": -20,
+                    "energiaPropia": 0,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se tiró al canal para escapar del fuego",
+                    "danioPropio": -2,
+                    "energiaPropia": -6,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} respiró demasiado humo",
+                    "danioPropio": -8,
+                    "energiaPropia": -4,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} corrió entre los edificios en llamas con la ropa ardiendo",
+                    "danioPropio": -12,
+                    "energiaPropia": 0,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} vio el incendio desde una azotea lejana",
+                    "danioPropio": 0,
+                    "energiaPropia": 0,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se refugió en un aparcamiento subterráneo",
+                    "danioPropio": 0,
+                    "energiaPropia": -2,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se envolvió en una manta mojada y cruzó las llamas",
+                    "danioPropio": -5,
+                    "energiaPropia": -4,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} perdió todas sus provisiones en el fuego",
+                    "danioPropio": 0,
+                    "energiaPropia": -5,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se quemó las manos al abrir una puerta",
+                    "danioPropio": -6,
+                    "energiaPropia": 0,
+                    "numParticipantes": 1
+                }
+            ]
+        },
+        {
+            "id": "drones",
+            "nombre": "Enjambre de drones",
+            "anuncio": "Miles de drones de los Vigilantes oscurecen el cielo y disparan a todo lo que se mueve.",
+            "eventos": [
+                {
+                    "descripcion": "{A} fue acribillad{A:o/a} por los drones",
+                    "danioPropio": -20,
+                    "energiaPropia": 0,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se quedó inmóvil debajo de un coche hasta que pasaron",
+                    "danioPropio": 0,
+                    "energiaPropia": 0,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} derribó un dron a pedradas y huyó",
+                    "danioPropio": 0,
+                    "energiaPropia": -4,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} recibió un disparo en el hombro",
+                    "danioPropio": -9,
+                    "energiaPropia": 0,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se escondió en un túnel de servicio",
+                    "danioPropio": 0,
+                    "energiaPropia": -2,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} corrió hacia el metro mientras le llovían balas",
+                    "danioPropio": -5,
+                    "energiaPropia": -5,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} frió los circuitos de los drones con su granada de pulso",
+                    "danioPropio": 0,
+                    "energiaPropia": -2,
+                    "requiere": "GRANADA_PEM",
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se tapó con una manta térmica para que los drones no l{A:o/a} detectaran",
+                    "danioPropio": 0,
+                    "energiaPropia": -1,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se metió en una fuente y aguantó bajo el agua",
+                    "danioPropio": -2,
+                    "energiaPropia": -5,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} perdió el oído durante horas por las explosiones",
+                    "danioPropio": -3,
+                    "energiaPropia": -3,
+                    "numParticipantes": 1
+                }
+            ]
+        },
+        {
+            "id": "gas",
+            "nombre": "Nube tóxica",
+            "anuncio": "Una nube amarilla avanza por las calles desde la planta química del puerto.",
+            "eventos": [
+                {
+                    "descripcion": "{A} respiró el gas y cayó desplomad{A:o/a}",
+                    "danioPropio": -20,
+                    "energiaPropia": 0,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se tapó la cara con un trapo mojado y aguantó",
+                    "danioPropio": -4,
+                    "energiaPropia": -2,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} subió a la última planta de un rascacielos",
+                    "danioPropio": 0,
+                    "energiaPropia": -6,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} encontró una máscara de gas en un parque de bomberos",
+                    "danioPropio": 0,
+                    "energiaPropia": 0,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} tosió sangre durante horas",
+                    "danioPropio": -10,
+                    "energiaPropia": -4,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se encerró en una cámara frigorífica hasta que pasó la nube",
+                    "danioPropio": 0,
+                    "energiaPropia": -2,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se puso una bolsa en la cabeza y respiró lo justo",
+                    "danioPropio": -6,
+                    "energiaPropia": -3,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} huyó en dirección contraria al viento",
+                    "danioPropio": 0,
+                    "energiaPropia": -6,
+                    "numParticipantes": 1
+                },
+                {
+                    "descripcion": "{A} se quedó cieg{A:o/a} un rato por el gas y chocó contra una farola",
+                    "danioPropio": -5,
+                    "energiaPropia": -2,
+                    "numParticipantes": 1
+                }
+            ]
         }
     ]
 }

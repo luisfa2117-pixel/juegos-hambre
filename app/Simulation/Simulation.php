@@ -25,6 +25,11 @@ class Simulation
     public const DISCOVERY_CHANCE = 40;     // un evento individual es un descubrimiento
     public const ALLY_ATTACK_CHANCE = 40;   // dos aliados atacan juntos a un tercero (si se puede)
 
+    // Catástrofes de los Vigilantes: a partir de la ronda 4 (Día 2), y como mucho una cada 4 rondas
+    public const ARENA_EVENT_CHANCE = 12;
+    public const ARENA_FIRST_ROUND = 4;
+    public const ARENA_COOLDOWN = 4;
+
     // En el baño de sangre todos corren hacia la Cornucopia: más grupos y más objetos
     public const BLOODBATH_GROUP_CHANCE = 30;
     public const BLOODBATH_DISCOVERY_CHANCE = 60;
@@ -38,6 +43,9 @@ class Simulation
 
     /** @var GameEvent[] Los eventos que ya han salido en esta ronda, para no repetirlos */
     private array $usedThisRound = [];
+
+    /** Ronda de la última catástrofe (muy negativa al principio: todavía no ha habido ninguna) */
+    private int $lastArenaRound = -1000;
 
     /** @var Tribute[] */
     private array $tributes;
@@ -109,6 +117,10 @@ class Simulation
             $results[] = $dissolved;
         }
 
+        if ($this->shouldStartArena()) {
+            return [...$results, ...$this->arenaRound()];
+        }
+
         $pending = $this->random->shuffleArray($this->alive());
 
         while ($pending !== []) {
@@ -122,6 +134,41 @@ class Simulation
                 $pending,
                 fn (Tribute $t) => ! in_array($t, $participants, true),
             ));
+        }
+
+        return $results;
+    }
+
+    /** ¿Toca catástrofe en esta ronda? Primero se mira si es posible y solo entonces se tira el dado */
+    private function shouldStartArena(): bool
+    {
+        return $this->phase !== EventPhase::Bloodbath
+            && $this->round >= self::ARENA_FIRST_ROUND
+            && $this->round - $this->lastArenaRound >= self::ARENA_COOLDOWN
+            && $this->events->hasArenas()
+            && $this->chance(self::ARENA_EVENT_CHANCE);
+    }
+
+    /**
+     * Una ronda de catástrofe: el anuncio y, después, lo que le pasa a cada tributo vivo.
+     *
+     * @return EventResult[]
+     */
+    private function arenaRound(): array
+    {
+        $arena = $this->events->pickArena($this->random);
+        $this->lastArenaRound = $this->round;
+
+        $results = [new EventResult(text: $arena->intro, arena: $arena->name)];
+
+        foreach ($this->random->shuffleArray($this->alive()) as $tribute) {
+            // Si la catástrofe no tiene ningún evento posible para él, le pasa algo normal
+            $event = $this->events->pickArenaEvent($arena, $tribute, $this->random, $this->usedThisRound)
+                ?? $this->pick(EventCategory::Solo, $tribute, anyPhase: true)
+                ?? throw new RuntimeException('No hay eventos individuales: revisa los seeders');
+
+            $this->usedThisRound[] = $event;
+            $results[] = $this->resolver->apply($event, [$tribute]);
         }
 
         return $results;

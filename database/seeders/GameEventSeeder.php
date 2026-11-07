@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Enums\EventCategory;
 use App\Enums\EventPhase;
+use App\Models\ArenaEvent;
 use App\Models\GameEvent;
 use App\Models\Item;
 use Illuminate\Database\Seeder;
@@ -47,6 +48,24 @@ class GameEventSeeder extends Seeder
                 GameEvent::updateOrCreate(
                     ['category' => $category, 'text' => $raw['descripcion']],
                     $this->mapFields($raw, $itemIds),
+                );
+            }
+        }
+
+        // Las catástrofes: cada una con su anuncio y sus propios eventos (de una persona)
+        foreach ($data['catastrofes'] ?? [] as $raw) {
+            $arena = ArenaEvent::updateOrCreate(
+                ['slug' => $raw['id']],
+                ['name' => $raw['nombre'], 'intro' => $raw['anuncio']],
+            );
+
+            foreach ($raw['eventos'] as $eventRaw) {
+                GameEvent::updateOrCreate(
+                    ['category' => EventCategory::Arena, 'text' => $eventRaw['descripcion']],
+                    [
+                        ...$this->mapFields(['numParticipantes' => 1, ...$eventRaw], $itemIds),
+                        'arena_event_id' => $arena->id,
+                    ],
                 );
             }
         }

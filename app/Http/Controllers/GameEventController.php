@@ -20,12 +20,14 @@ class GameEventController extends Controller
 
         return view('events.index', [
             'events' => GameEvent::with(['requiresItem', 'givesItem'])
+                ->where('category', '!=', EventCategory::Arena)
                 ->when($category, fn ($query) => $query->where('category', $category))
                 ->orderBy('category')
                 ->orderBy('text')
                 ->get(),
             'category' => $category,
-            'counts' => GameEvent::selectRaw('category, count(*) as total')->groupBy('category')->pluck('total', 'category'),
+            'counts' => GameEvent::where('category', '!=', EventCategory::Arena)
+                ->selectRaw('category, count(*) as total')->groupBy('category')->pluck('total', 'category'),
         ]);
     }
 
@@ -49,11 +51,15 @@ class GameEventController extends Controller
 
     public function edit(GameEvent $event): View
     {
+        $this->ensureEditable($event);
+
         return view('events.edit', ['event' => $event, 'items' => Item::orderBy('name')->get()]);
     }
 
     public function update(GameEventRequest $request, GameEvent $event): RedirectResponse
     {
+        $this->ensureEditable($event);
+
         $event->update($request->eventData());
 
         return redirect()->route('events.index', ['category' => $event->category])
@@ -62,6 +68,8 @@ class GameEventController extends Controller
 
     public function destroy(GameEvent $event): RedirectResponse
     {
+        $this->ensureEditable($event);
+
         // El motor necesita al menos un evento de una persona (individual o descubrimiento)
         $soloCategories = [EventCategory::Solo, EventCategory::Discovery];
         $isLastSolo = in_array($event->category, $soloCategories, true)
@@ -75,6 +83,12 @@ class GameEventController extends Controller
 
         return redirect()->route('events.index', ['category' => $event->category])
             ->with('status', 'Evento eliminado.');
+    }
+
+    /** Los eventos de catástrofe no se editan desde aquí: para el editor, no existen */
+    private function ensureEditable(GameEvent $event): void
+    {
+        abort_if($event->category === EventCategory::Arena, 404);
     }
 
     /** La vista previa en directo del formulario: recibe un texto y devuelve JSON */

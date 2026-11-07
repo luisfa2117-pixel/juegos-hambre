@@ -6,6 +6,7 @@ use App\Enums\EventCategory;
 use App\Enums\EventPhase;
 use App\Enums\Gender;
 use App\Enums\ItemType;
+use App\Models\ArenaEvent;
 use App\Models\District;
 use App\Models\GameEvent;
 use App\Models\Item;
@@ -392,6 +393,75 @@ class SimulationTest extends TestCase
         $simulation = $this->simulation($this->tributes(4), $pool, 1);
 
         $this->assertCount(4, $simulation->runRound());
+    }
+
+    /** Eventos normales que no hacen nada más una catástrofe con dos eventos */
+    private function poolWithArena(): EventPool
+    {
+        $arena = new ArenaEvent(['slug' => 'inundacion', 'name' => 'Inundación', 'intro' => 'Sube el agua.']);
+        $arenaEvent = function (string $text) use ($arena) {
+            $event = $this->event(EventCategory::Arena, $text);
+            $event->setRelation('arenaEvent', $arena);
+
+            return $event;
+        };
+
+        return new EventPool([
+            $this->event(EventCategory::Solo, '[solo] {A}'),
+            $this->event(EventCategory::Duo, '[duo] {A} {B}'),
+            $arenaEvent('[arena] {A} subió a un tejado'),
+            $arenaEvent('[arena] {A} nadó'),
+        ]);
+    }
+
+    public function test_catastrophes_hit_every_alive_tribute_once_and_respect_their_timing(): void
+    {
+        $seen = 0;
+
+        foreach (range(1, 40) as $seed) {
+            $simulation = $this->simulation($this->tributes(), $this->poolWithArena(), $seed);
+            $arenaRounds = [];
+
+            for ($i = 0; $i < 16; $i++) {
+                $aliveBefore = array_map(fn (Tribute $t) => $t->name, $simulation->alive());
+                $results = $simulation->runRound();
+
+                if ($results[0]->arena === null) {
+                    continue;
+                }
+
+                $seen++;
+                $arenaRounds[] = $simulation->round();
+                $this->assertSame('Inundación', $results[0]->arena);
+                $this->assertGreaterThanOrEqual(Simulation::ARENA_FIRST_ROUND, $simulation->round());
+
+                // Después del anuncio, un evento de la catástrofe por cada tributo vivo
+                $participants = [];
+                foreach (array_slice($results, 1) as $result) {
+                    $this->assertStringStartsWith('[arena]', $result->text);
+                    array_push($participants, ...$result->participants);
+                }
+                sort($participants);
+                sort($aliveBefore);
+                $this->assertSame($aliveBefore, $participants);
+            }
+
+            // Nunca dos catástrofes demasiado seguidas
+            for ($j = 1; $j < count($arenaRounds); $j++) {
+                $this->assertGreaterThanOrEqual(Simulation::ARENA_COOLDOWN, $arenaRounds[$j] - $arenaRounds[$j - 1]);
+            }
+        }
+
+        $this->assertGreaterThan(0, $seen, 'Ninguna catástrofe en 40 partidas');
+    }
+
+    public function test_no_catastrophes_without_arena_events(): void
+    {
+        $simulation = $this->simulation($this->tributes(), $this->harmlessPool(), 1);
+
+        for ($i = 0; $i < 12; $i++) {
+            $this->assertNull($simulation->runRound()[0]->arena);
+        }
     }
 
     public function test_last_survivor_is_the_winner_and_no_more_rounds_can_be_played(): void

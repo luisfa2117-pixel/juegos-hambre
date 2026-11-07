@@ -23,7 +23,12 @@ class GameEventRequest extends FormRequest
         $stat = ['required', 'integer', 'between:-20,20'];
 
         return [
-            'category' => ['required', Rule::enum(EventCategory::class)],
+            // Las de catástrofe no se crean desde el editor (van unidas a su catástrofe)
+            'category' => [
+                'required',
+                Rule::enum(EventCategory::class),
+                Rule::in(array_map(fn (EventCategory $case) => $case->value, EventCategory::editable())),
+            ],
 
             'text' => array_filter([
                 'required', 'string', 'max:255',
@@ -62,6 +67,7 @@ class GameEventRequest extends FormRequest
         return [
             'category.required' => 'Elige el tipo de evento.',
             'category.enum' => 'Elige un tipo de evento de la lista.',
+            'category.in' => 'Elige un tipo de evento de la lista.',
             'text.required' => 'Escribe lo que pasa.',
             'text.max' => 'El texto puede tener como mucho 255 caracteres.',
             'text.unique' => 'Ya hay un evento de este tipo con ese mismo texto.',

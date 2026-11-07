@@ -65,6 +65,12 @@ class SimulateCommand extends Command
             $this->line("<options=bold>━━━━━━━━━━ {$title} ━━━━━━━━━━</>");
 
             foreach ($results as $result) {
+                if ($result->arena !== null) {
+                    $this->warn("⚠ {$result->arena}: {$result->text}");
+
+                    continue;
+                }
+
                 $this->line($result->text);
 
                 foreach ($result->notes as $note) {

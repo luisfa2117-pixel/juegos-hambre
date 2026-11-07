@@ -398,6 +398,15 @@ class EventResolverTest extends TestCase
         $this->assertSame([['victim' => 'B', 'killers' => []]], $result->kills);
     }
 
+    public function test_catastrophe_deaths_have_no_killer(): void
+    {
+        $event = $this->event(EventCategory::Arena, '{A} se ahogó en el metro', ['actor_hp' => -20]);
+
+        $result = $this->resolver->apply($event, [$this->tribute('Dean')]);
+
+        $this->assertSame([['victim' => 'Dean', 'killers' => []]], $result->kills);
+    }
+
     public function test_dying_alone_has_no_killer(): void
     {
         $dean = $this->tribute('Dean');

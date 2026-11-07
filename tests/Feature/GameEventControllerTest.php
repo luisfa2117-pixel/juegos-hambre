@@ -166,6 +166,17 @@ class GameEventControllerTest extends TestCase
             ->assertSessionHasNoErrors();
     }
 
+    public function test_catastrophe_events_are_not_managed_from_the_editor(): void
+    {
+        $this->post(route('events.store'), $this->data(['category' => 'arena']))
+            ->assertSessionHasErrors('category');
+
+        $arenaEvent = GameEvent::where('category', EventCategory::Arena)->firstOrFail();
+        $this->get(route('events.edit', $arenaEvent))->assertNotFound();
+        $this->delete(route('events.destroy', $arenaEvent))->assertNotFound();
+        $this->assertModelExists($arenaEvent);
+    }
+
     public function test_stats_must_be_between_minus_20_and_20(): void
     {
         $this->post(route('events.store'), $this->data(['actor_hp' => -50]))
@@ -217,7 +228,15 @@ class GameEventControllerTest extends TestCase
         $this->artisan('events:export', ['--path' => $path])->assertSuccessful();
 
         $json = json_decode(File::get($path), true);
-        $this->assertSame(GameEvent::count(), collect($json)->flatten(1)->count());
+        $this->assertSame(
+            GameEvent::where('category', '!=', EventCategory::Arena)->count(),
+            collect($json)->except('catastrofes')->flatten(1)->count(),
+        );
+        $this->assertCount(8, $json['catastrofes']);
+        $this->assertSame(
+            GameEvent::where('category', EventCategory::Arena)->count(),
+            collect($json['catastrofes'])->sum(fn (array $arena) => count($arena['eventos'])),
+        );
         $this->assertContains('{A} tropezó con un cable de alta tensión', array_column($json['eventosIndividuales'], 'descripcion'));
         $this->assertSame('noche', collect($json['eventosIndividuales'])->firstWhere('descripcion', '{A} pasó la noche a la intemperie bajo una lluvia ácida')['fase']);
         $this->assertSame('PISTOLA', collect($json['eventosArma'])->firstWhere('descripcion', '{A} encañonó a {B} y le disparó a quemarropa')['requiere']);

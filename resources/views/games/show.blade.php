@@ -47,6 +47,15 @@
 
                     <ul class="divide-y divide-asphalt-line/60">
                         @foreach ($gameRound->events as $event)
+                            {{-- El anuncio de una catástrofe de los Vigilantes --}}
+                            @if ($event['arena'] ?? null)
+                                <li class="my-3 rounded-sm border-2 border-blood bg-blood/10 p-4">
+                                    <p class="font-display text-2xl text-blood">{{ $event['arena'] }}</p>
+                                    <p class="mt-1">{{ $event['text'] }}</p>
+                                </li>
+                                @continue
+                            @endif
+
                             <li class="py-3">
                                 <p class="text-ash/90">{{ TextHighlighter::names($event['text'], $tributeNames) }}</p>
 
