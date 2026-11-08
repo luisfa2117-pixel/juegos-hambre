@@ -58,6 +58,12 @@ class ArenasTest extends TestCase
         $this->assertSame(['peaks'], ArenaEvent::where('slug', 'avalancha')->sole()->terrains);
     }
 
+    public function test_some_catastrophes_can_happen_in_every_arena(): void
+    {
+        $this->assertNull(ArenaEvent::where('slug', 'banquete')->sole()->terrains);
+        $this->assertNull(ArenaEvent::where('slug', 'campo_fuerza')->sole()->terrains);
+    }
+
     public function test_seeding_twice_does_not_duplicate_anything(): void
     {
         $events = GameEvent::count();

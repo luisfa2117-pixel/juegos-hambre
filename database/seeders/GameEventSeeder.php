@@ -55,6 +55,12 @@ class GameEventSeeder extends Seeder
         'pantano' => Terrain::Swamp,
     ];
 
+    /**
+     * Ficheros con más eventos, después de eventos.json y en este orden.
+     * arenas.json, además, marca en qué arenas encajan los eventos de eventos.json.
+     */
+    public const EXTRA_FILES = ['arenas.json', 'mas_eventos.json'];
+
     public function run(): void
     {
         // ['taser' => 1, 'cuchillo' => 2, ...]
@@ -62,11 +68,12 @@ class GameEventSeeder extends Seeder
 
         $this->seedFile(database_path('data/eventos.json'), $itemIds);
 
-        // Las arenas temáticas: sus propios eventos y catástrofes, y en qué arenas encajan los de eventos.json
-        $arenas = database_path('data/arenas.json');
-        if (File::exists($arenas)) {
-            $data = $this->seedFile($arenas, $itemIds);
-            $this->tagExisting($data);
+        foreach (self::EXTRA_FILES as $file) {
+            $path = database_path("data/{$file}");
+
+            if (File::exists($path)) {
+                $this->tagExisting($this->seedFile($path, $itemIds));
+            }
         }
     }
 

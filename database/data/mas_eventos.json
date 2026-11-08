@@ -1,0 +1,2378 @@
+{
+  "_leeme": "Más eventos. Mismo formato que eventos.json; \"escenarios\" limita en qué arenas pueden pasar (sin él, en todas).",
+  "eventos": {
+    "eventosIndividuales": [
+      {
+        "descripcion": "{A} se quedó mirando la cuenta atrás y salió tarde de su plataforma",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -1,
+        "energiaRival": 0,
+        "fase": "cornucopia"
+      },
+      {
+        "descripcion": "{A} cogió lo primero que encontró, que resultó ser una caja de tiritas",
+        "numParticipantes": 1,
+        "danioPropio": 1,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "fase": "cornucopia"
+      },
+      {
+        "descripcion": "{A} corrió en dirección contraria a la Cornucopia y no se detuvo hasta perderla de vista",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -4,
+        "energiaRival": 0,
+        "fase": "cornucopia"
+      },
+      {
+        "descripcion": "{A} se tiró al suelo y se hizo el muerto hasta que pasó la matanza",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -1,
+        "energiaRival": 0,
+        "fase": "cornucopia"
+      },
+      {
+        "descripcion": "{A} recibió un golpe de rebote en la estampida y se quedó sin aire",
+        "numParticipantes": 1,
+        "danioPropio": -3,
+        "danioRival": 0,
+        "energiaPropia": -2,
+        "energiaRival": 0,
+        "fase": "cornucopia"
+      },
+      {
+        "descripcion": "{A} vio caer al primer tributo y vomitó antes de echar a correr",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -3,
+        "energiaRival": 0,
+        "fase": "cornucopia"
+      },
+      {
+        "descripcion": "{A} tropezó con una mochila vacía y se partió el labio contra el suelo",
+        "numParticipantes": 1,
+        "danioPropio": -2,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "fase": "cornucopia"
+      },
+      {
+        "descripcion": "{A} pasó el día subid{A:o/a} a un árbol, vigilando sin moverse",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 2,
+        "energiaRival": 0,
+        "fase": "dia"
+      },
+      {
+        "descripcion": "{A} siguió el vuelo de los pájaros y encontró agua",
+        "numParticipantes": 1,
+        "danioPropio": 2,
+        "danioRival": 0,
+        "energiaPropia": 3,
+        "energiaRival": 0,
+        "fase": "dia"
+      },
+      {
+        "descripcion": "{A} se quemó la nuca al sol mientras buscaba refugio",
+        "numParticipantes": 1,
+        "danioPropio": -2,
+        "danioRival": 0,
+        "energiaPropia": -2,
+        "energiaRival": 0,
+        "fase": "dia"
+      },
+      {
+        "descripcion": "{A} contó los cañonazos del día y se dio cuenta de que quedaban menos de los que creía",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -1,
+        "energiaRival": 0,
+        "fase": "dia"
+      },
+      {
+        "descripcion": "{A} se pasó el día cazando y volvió con las manos vacías",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -5,
+        "energiaRival": 0,
+        "fase": "dia"
+      },
+      {
+        "descripcion": "{A} se dio cuenta de que una cámara l{A:o/a} seguía y saludó al público",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 1,
+        "energiaRival": 0,
+        "fase": "dia"
+      },
+      {
+        "descripcion": "{A} se despertó de golpe con una pesadilla sobre la Cornucopia",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -2,
+        "energiaRival": 0,
+        "fase": "noche"
+      },
+      {
+        "descripcion": "{A} durmió abrazad{A:o/a} a su mochila, sin soltarla en toda la noche",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 3,
+        "energiaRival": 0,
+        "fase": "noche"
+      },
+      {
+        "descripcion": "{A} no se atrevió a encender fuego y pasó la noche temblando",
+        "numParticipantes": 1,
+        "danioPropio": -1,
+        "danioRival": 0,
+        "energiaPropia": -3,
+        "energiaRival": 0,
+        "fase": "noche"
+      },
+      {
+        "descripcion": "{A} vio pasar un muto a pocos metros y contuvo la respiración hasta el amanecer",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -4,
+        "energiaRival": 0,
+        "fase": "noche"
+      },
+      {
+        "descripcion": "{A} durmió por fin de un tirón por primera vez desde que empezaron los Juegos",
+        "numParticipantes": 1,
+        "danioPropio": 2,
+        "danioRival": 0,
+        "energiaPropia": 6,
+        "energiaRival": 0,
+        "fase": "noche"
+      },
+      {
+        "descripcion": "{A} escuchó el himno del Capitolio y pensó en quién estaría viéndol{A:o/a} en casa",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 1,
+        "energiaRival": 0,
+        "fase": "noche"
+      },
+      {
+        "descripcion": "{A} se pasó la noche afilando un palo para tener algo con lo que defenderse",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -2,
+        "energiaRival": 0,
+        "fase": "noche"
+      },
+      {
+        "descripcion": "{A} oyó un grito en la oscuridad y no supo si era un tributo o un muto",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -3,
+        "energiaRival": 0,
+        "fase": "noche"
+      },
+      {
+        "descripcion": "{A} se envolvió en una lona y durmió entre unas rocas",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 4,
+        "energiaRival": 0,
+        "fase": "noche"
+      },
+      {
+        "descripcion": "{A} se comió unos hongos que no conocía y pasó horas alucinando",
+        "numParticipantes": 1,
+        "danioPropio": -3,
+        "danioRival": 0,
+        "energiaPropia": -4,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} se hizo un esguince al saltar una zanja",
+        "numParticipantes": 1,
+        "danioPropio": -3,
+        "danioRival": 0,
+        "energiaPropia": -2,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} encontró un riachuelo y se lavó las heridas",
+        "numParticipantes": 1,
+        "danioPropio": 3,
+        "danioRival": 0,
+        "energiaPropia": 1,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} se infectó una herida que no había limpiado",
+        "numParticipantes": 1,
+        "danioPropio": -5,
+        "danioRival": 0,
+        "energiaPropia": -2,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} pisó una trampa para osos de los Vigilantes",
+        "numParticipantes": 1,
+        "danioPropio": -8,
+        "danioRival": 0,
+        "energiaPropia": -3,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} cayó en un foso de estacas que alguien había preparado",
+        "numParticipantes": 1,
+        "danioPropio": -12,
+        "danioRival": 0,
+        "energiaPropia": -2,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} tocó una valla electrificada sin querer",
+        "numParticipantes": 1,
+        "danioPropio": -6,
+        "danioRival": 0,
+        "energiaPropia": -4,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} se escondió tan bien que se pasó el día sin ver a nadie",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 2,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} cazó un pájaro con una piedra y lo asó",
+        "numParticipantes": 1,
+        "danioPropio": 2,
+        "danioRival": 0,
+        "energiaPropia": 3,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} se cortó al intentar abrir una lata con una piedra",
+        "numParticipantes": 1,
+        "danioPropio": -2,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} estuvo horas sin agua y empezó a ver borroso",
+        "numParticipantes": 1,
+        "danioPropio": -2,
+        "danioRival": 0,
+        "energiaPropia": -5,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} se dio cuenta de que llevaba horas andando en círculos",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -5,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} se tumbó a descansar a la sombra y se quedó dormid{A:o/a}",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 4,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} encontró restos de una hoguera de otro tributo y decidió no quedarse por la zona",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -2,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} se miró las manos llenas de sangre seca y no recordó de quién era",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -2,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} esquivó por los pelos una lanza que salió disparada de un árbol",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -2,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} recibió un paracaídas con una nota de su mentor: «Bebe agua»",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 2,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} se escondió de un dron de los Vigilantes debajo de un tronco caído",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -1,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} masticó corteza para engañar al hambre",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 1,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} se rompió un dedo al trepar y se lo entablilló con dos palos",
+        "numParticipantes": 1,
+        "danioPropio": -3,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} encontró una cama de verdad en un piso abandonado y durmió doce horas",
+        "numParticipantes": 1,
+        "danioPropio": 3,
+        "danioRival": 0,
+        "energiaPropia": 6,
+        "energiaRival": 0,
+        "escenarios": [
+          "ciudad"
+        ],
+        "fase": "noche"
+      },
+      {
+        "descripcion": "{A} se cortó los pies con los cristales de un escaparate roto",
+        "numParticipantes": 1,
+        "danioPropio": -4,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "escenarios": [
+          "ciudad"
+        ]
+      },
+      {
+        "descripcion": "{A} subió treinta pisos por las escaleras para vigilar la ciudad desde arriba",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -6,
+        "energiaRival": 0,
+        "escenarios": [
+          "ciudad"
+        ]
+      },
+      {
+        "descripcion": "{A} recibió una descarga al tocar un cable pelado de una farola",
+        "numParticipantes": 1,
+        "danioPropio": -5,
+        "danioRival": 0,
+        "energiaPropia": -3,
+        "energiaRival": 0,
+        "escenarios": [
+          "ciudad"
+        ]
+      },
+      {
+        "descripcion": "{A} buscó huellas de otros tributos para salir a cazarlos",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -3,
+        "energiaRival": 0,
+        "personalidad": "agresivo"
+      },
+      {
+        "descripcion": "{A} entrenó golpes contra un tronco hasta tener los nudillos en carne viva",
+        "numParticipantes": 1,
+        "danioPropio": -1,
+        "danioRival": 0,
+        "energiaPropia": -3,
+        "energiaRival": 0,
+        "personalidad": "agresivo"
+      },
+      {
+        "descripcion": "{A} se escondió tan al fondo de su refugio que no pudo salir sin ayuda",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -3,
+        "energiaRival": 0,
+        "personalidad": "cobarde"
+      },
+      {
+        "descripcion": "{A} se tapó los oídos para no oír los cañonazos",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -1,
+        "energiaRival": 0,
+        "personalidad": "cobarde"
+      },
+      {
+        "descripcion": "{A} talló en un árbol los nombres de sus seres queridos",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 1,
+        "energiaRival": 0,
+        "personalidad": "leal"
+      },
+      {
+        "descripcion": "{A} guardó la mitad de su comida por si encontraba a su compañer{A:o/a} de distrito",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -1,
+        "energiaRival": 0,
+        "personalidad": "leal"
+      },
+      {
+        "descripcion": "{A} practicó una sonrisa sincera delante de un charco",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "personalidad": "traicionero"
+      },
+      {
+        "descripcion": "{A} apuntó en un papel los puntos débiles de cada tributo que había visto",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -1,
+        "energiaRival": 0,
+        "personalidad": "traicionero"
+      },
+      {
+        "descripcion": "{A} hizo un mapa de la arena con un palo en el barro",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -1,
+        "energiaRival": 0,
+        "personalidad": "ingenioso"
+      },
+      {
+        "descripcion": "{A} montó una alarma con cuerda y latas alrededor de su escondite",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 3,
+        "energiaRival": 0,
+        "personalidad": "ingenioso",
+        "fase": "noche"
+      },
+      {
+        "descripcion": "{A} contó un chiste a las cámaras y en el Capitolio se rieron con {A:él/ella}",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 2,
+        "energiaRival": 0,
+        "personalidad": "sociable"
+      },
+      {
+        "descripcion": "{A} echó de menos hablar con alguien y se puso a cantar en voz baja",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 1,
+        "energiaRival": 0,
+        "personalidad": "sociable"
+      },
+      {
+        "descripcion": "{A} siguió el rastro de unos buitres y encontró los restos de otro tributo",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -3,
+        "energiaRival": 0,
+        "escenarios": [
+          "desierto"
+        ]
+      },
+      {
+        "descripcion": "{A} se tapó con arena para esconderse de un dron y casi se asfixia",
+        "numParticipantes": 1,
+        "danioPropio": -2,
+        "danioRival": 0,
+        "energiaPropia": -2,
+        "energiaRival": 0,
+        "escenarios": [
+          "desierto"
+        ]
+      },
+      {
+        "descripcion": "{A} chupó una piedra para olvidar la sed, como le enseñaron en su distrito",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 1,
+        "energiaRival": 0,
+        "escenarios": [
+          "desierto"
+        ]
+      },
+      {
+        "descripcion": "{A} vio las estrellas más brillantes de su vida tumbad{A:o/a} en las dunas",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 3,
+        "energiaRival": 0,
+        "fase": "noche",
+        "escenarios": [
+          "desierto"
+        ]
+      },
+      {
+        "descripcion": "{A} se envolvió los pies en trapos para no congelarse",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -1,
+        "energiaRival": 0,
+        "escenarios": [
+          "cumbres"
+        ]
+      },
+      {
+        "descripcion": "{A} se deslizó ladera abajo sentad{A:o/a} en una bandeja de metal",
+        "numParticipantes": 1,
+        "danioPropio": -2,
+        "danioRival": 0,
+        "energiaPropia": 2,
+        "energiaRival": 0,
+        "escenarios": [
+          "cumbres"
+        ]
+      },
+      {
+        "descripcion": "{A} se refugió en una cabina del teleférico y vio amanecer sobre las nubes",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 3,
+        "energiaRival": 0,
+        "fase": "noche",
+        "escenarios": [
+          "cumbres"
+        ]
+      },
+      {
+        "descripcion": "{A} comió nieve y le dio un dolor de cabeza terrible",
+        "numParticipantes": 1,
+        "danioPropio": -1,
+        "danioRival": 0,
+        "energiaPropia": -2,
+        "energiaRival": 0,
+        "escenarios": [
+          "cumbres"
+        ]
+      },
+      {
+        "descripcion": "{A} se camufló con barro de la cabeza a los pies",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -1,
+        "energiaRival": 0,
+        "escenarios": [
+          "pantano"
+        ]
+      },
+      {
+        "descripcion": "{A} durmió dentro de una barca varada",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 4,
+        "energiaRival": 0,
+        "fase": "noche",
+        "escenarios": [
+          "pantano"
+        ]
+      },
+      {
+        "descripcion": "{A} vio unos ojos amarillos en el agua y decidió no bañarse",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -1,
+        "energiaRival": 0,
+        "escenarios": [
+          "pantano"
+        ]
+      },
+      {
+        "descripcion": "{A} se quedó atrapad{A:o/a} entre las raíces de un manglar con la marea subiendo",
+        "numParticipantes": 1,
+        "danioPropio": -3,
+        "danioRival": 0,
+        "energiaPropia": -6,
+        "energiaRival": 0,
+        "escenarios": [
+          "pantano"
+        ]
+      }
+    ],
+    "eventosDescubrimiento": [
+      {
+        "descripcion": "{A} encontró un exoesqueleto blindado en un búnker militar sellado",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "EXOTRAJE"
+      },
+      {
+        "descripcion": "{A} encontró un dron armado aparcado en una estación de carga de los Vigilantes",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "DRON_ARMADO"
+      },
+      {
+        "descripcion": "{A} recibió un lanzallamas de un patrocinador con ganas de espectáculo",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "LANZALLAMAS"
+      },
+      {
+        "descripcion": "{A} encontró un bate de béisbol y le clavó unas puntas oxidadas",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "BATE_CLAVOS"
+      },
+      {
+        "descripcion": "{A} encontró un inyector de nanobots en el bolsillo de un tributo caído",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "NANOBOTS"
+      },
+      {
+        "descripcion": "{A} recibió un estimulante militar justo cuando ya no podía más",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "ESTIMULANTE"
+      },
+      {
+        "descripcion": "{A} encontró un casco antidisturbios entre los restos de un control",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "CASCO"
+      },
+      {
+        "descripcion": "{A} le quitó el chaleco antibalas a un tributo muerto",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "CHALECO"
+      },
+      {
+        "descripcion": "{A} encontró un cuchillo clavado en un árbol, como si alguien lo hubiera dejado para {A:él/ella}",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "CUCHILLO"
+      },
+      {
+        "descripcion": "{A} recibió vendas y una nota de ánimo de su distrito",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "VENDAS"
+      },
+      {
+        "descripcion": "{A} encontró barritas de proteínas en un alijo escondido por otro tributo",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "BARRITAS"
+      },
+      {
+        "descripcion": "{A} encontró una granada de pulso en un dron de los Vigilantes estrellado",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "GRANADA_PEM"
+      },
+      {
+        "descripcion": "{A} recibió un generador de escudo personal después de una entrevista memorable",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "ESCUDO",
+        "personalidad": "sociable"
+      },
+      {
+        "descripcion": "{A} se fabricó un escudo con la tapa de un bidón y unas correas",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "ESCUDO_POLICIAL",
+        "personalidad": "ingenioso"
+      },
+      {
+        "descripcion": "{A} montó una ballesta con una rama, cable de acero y mucha paciencia",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "BALLESTA",
+        "personalidad": "ingenioso"
+      },
+      {
+        "descripcion": "{A} siguió a un tributo herido hasta su escondite y le robó el botiquín",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "BOTIQUIN",
+        "personalidad": "traicionero"
+      },
+      {
+        "descripcion": "{A} agarró un bate con clavos del montón de armas y echó a correr",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "BATE_CLAVOS",
+        "fase": "cornucopia"
+      },
+      {
+        "descripcion": "{A} cogió una pistola de lo alto de la Cornucopia antes que nadie",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "PISTOLA",
+        "fase": "cornucopia"
+      },
+      {
+        "descripcion": "{A} se llevó un botiquín de debajo de las narices de otro tributo",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "BOTIQUIN",
+        "fase": "cornucopia"
+      },
+      {
+        "descripcion": "{A} arrancó un chaleco antibalas de una caja mientras los demás peleaban",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "CHALECO",
+        "fase": "cornucopia"
+      },
+      {
+        "descripcion": "{A} encontró un estimulante militar rodando junto a su plataforma",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "ESTIMULANTE",
+        "fase": "cornucopia"
+      },
+      {
+        "descripcion": "{A} saqueó una comisaría y salió con un taser",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "TASER",
+        "escenarios": [
+          "ciudad"
+        ]
+      },
+      {
+        "descripcion": "{A} encontró un rifle de riel en el maletero de un furgón blindado",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "RIFLE_RIEL",
+        "escenarios": [
+          "ciudad"
+        ]
+      },
+      {
+        "descripcion": "{A} encontró un casco antidisturbios medio enterrado en la sal",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "CASCO",
+        "escenarios": [
+          "desierto"
+        ]
+      },
+      {
+        "descripcion": "{A} encontró un botiquín en el refugio de los guardas forestales",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "BOTIQUIN",
+        "escenarios": [
+          "cumbres"
+        ]
+      },
+      {
+        "descripcion": "{A} encontró un machete en una cabaña de pescadores",
+        "numParticipantes": 1,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "objeto": "MACHETE",
+        "escenarios": [
+          "pantano"
+        ]
+      }
+    ],
+    "eventosDuo": [
+      {
+        "descripcion": "{A} le arrancó una mochila a {B} y l{B:o/a} dejó en el suelo",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -4,
+        "energiaPropia": -1,
+        "energiaRival": -2,
+        "fase": "cornucopia"
+      },
+      {
+        "descripcion": "{A} y {B} tiraron a la vez de la misma caja hasta que se rompió",
+        "numParticipantes": 2,
+        "danioPropio": -2,
+        "danioRival": -2,
+        "energiaPropia": -2,
+        "energiaRival": -2,
+        "fase": "cornucopia"
+      },
+      {
+        "descripcion": "{A} le clavó un cuchillo de la Cornucopia a {B} antes de que pudiera bajar de su plataforma",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -20,
+        "energiaPropia": -1,
+        "energiaRival": 0,
+        "fase": "cornucopia"
+      },
+      {
+        "descripcion": "{A} le reventó la cabeza a {B} con un casco de la Cornucopia",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -20,
+        "energiaPropia": -2,
+        "energiaRival": 0,
+        "fase": "cornucopia"
+      },
+      {
+        "descripcion": "{A} disparó una flecha de la Cornucopia que atravesó a {B}",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -20,
+        "energiaPropia": -1,
+        "energiaRival": 0,
+        "fase": "cornucopia"
+      },
+      {
+        "descripcion": "{A} placó a {B} cuando corría hacia las armas",
+        "numParticipantes": 2,
+        "danioPropio": -2,
+        "danioRival": -6,
+        "energiaPropia": -2,
+        "energiaRival": -2,
+        "fase": "cornucopia"
+      },
+      {
+        "descripcion": "{A} le tiró arena a los ojos a {B} y le quitó lo que llevaba",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -3,
+        "energiaPropia": -1,
+        "energiaRival": 0,
+        "fase": "cornucopia"
+      },
+      {
+        "descripcion": "{A} se acercó a {B} en la oscuridad y l{B:o/a} golpeó con una piedra",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -8,
+        "energiaPropia": -2,
+        "energiaRival": 0,
+        "fase": "noche"
+      },
+      {
+        "descripcion": "{A} vio la hoguera de {B} y l{B:o/a} atacó mientras dormía",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -10,
+        "energiaPropia": -2,
+        "energiaRival": 0,
+        "fase": "noche"
+      },
+      {
+        "descripcion": "{A} y {B} se encontraron a oscuras y forcejearon hasta quedar agotad{AB:os/as}",
+        "numParticipantes": 2,
+        "danioPropio": -3,
+        "danioRival": -3,
+        "energiaPropia": -3,
+        "energiaRival": -3,
+        "fase": "noche"
+      },
+      {
+        "descripcion": "{A} le robó la manta a {B} en mitad de la noche",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 2,
+        "energiaRival": -4,
+        "fase": "noche"
+      },
+      {
+        "descripcion": "{A} vio a {B} bebiendo en un arroyo y le lanzó piedras desde lo alto",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -5,
+        "energiaPropia": -2,
+        "energiaRival": 0,
+        "fase": "dia"
+      },
+      {
+        "descripcion": "{A} y {B} se pelearon por un paracaídas de patrocinio",
+        "numParticipantes": 2,
+        "danioPropio": -4,
+        "danioRival": -6,
+        "energiaPropia": -3,
+        "energiaRival": -3
+      },
+      {
+        "descripcion": "{A} tendió una cuerda entre dos árboles y {B} cayó de cabeza",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -6,
+        "energiaPropia": -1,
+        "energiaRival": -2
+      },
+      {
+        "descripcion": "{A} tiró una rama ardiendo sobre el refugio de {B}",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -7,
+        "energiaPropia": -2,
+        "energiaRival": -3
+      },
+      {
+        "descripcion": "{A} le rompió la nariz a {B} de un cabezazo",
+        "numParticipantes": 2,
+        "danioPropio": -1,
+        "danioRival": -6,
+        "energiaPropia": -1,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} empujó a {B} por un terraplén",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -7,
+        "energiaPropia": -1,
+        "energiaRival": -3
+      },
+      {
+        "descripcion": "{A} siguió a {B} durante horas y l{B:o/a} atacó cuando se paró a descansar",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -9,
+        "energiaPropia": -4,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} y {B} se encontraron de frente y se dieron una paliza",
+        "numParticipantes": 2,
+        "danioPropio": -5,
+        "danioRival": -5,
+        "energiaPropia": -3,
+        "energiaRival": -3
+      },
+      {
+        "descripcion": "{A} le mordió la mano a {B} para que soltara su comida",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -3,
+        "energiaPropia": 1,
+        "energiaRival": -1
+      },
+      {
+        "descripcion": "{A} lanzó una red sobre {B} y l{B:o/a} golpeó hasta que {B} pudo soltarse",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -8,
+        "energiaPropia": -2,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} sorprendió a {B} cuando hacía sus necesidades",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -7,
+        "energiaPropia": -1,
+        "energiaRival": -2
+      },
+      {
+        "descripcion": "{A} engañó a {B} imitando la voz de un aliado y l{B:o/a} atacó",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -9,
+        "energiaPropia": -1,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} le lanzó un enjambre de avispas mutantes a {B} en una bolsa",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -6,
+        "energiaPropia": -1,
+        "energiaRival": -3
+      },
+      {
+        "descripcion": "{A} estranguló a {B} con sus propias manos",
+        "numParticipantes": 2,
+        "danioPropio": -2,
+        "danioRival": -12,
+        "energiaPropia": -4,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} y {B} se apuntaron con piedras durante un rato y acabaron yéndose cada cual por su lado",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -1,
+        "energiaRival": -1
+      },
+      {
+        "descripcion": "{A} hirió a {B} con un trozo de metal afilado",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -6,
+        "energiaPropia": -1,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} tiró una nevera por una ventana justo cuando pasaba {B}",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -10,
+        "energiaPropia": -3,
+        "energiaRival": 0,
+        "escenarios": [
+          "ciudad"
+        ]
+      },
+      {
+        "descripcion": "{A} encerró a {B} en un vagón de metro y prendió fuego al vagón",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -11,
+        "energiaPropia": -2,
+        "energiaRival": 0,
+        "escenarios": [
+          "ciudad"
+        ]
+      },
+      {
+        "descripcion": "{A} y {B} se persiguieron por un centro comercial a oscuras",
+        "numParticipantes": 2,
+        "danioPropio": -2,
+        "danioRival": -4,
+        "energiaPropia": -4,
+        "energiaRival": -4,
+        "escenarios": [
+          "ciudad"
+        ]
+      },
+      {
+        "descripcion": "{A} retó a {B} a pelear cara a cara delante de las cámaras",
+        "numParticipantes": 2,
+        "danioPropio": -4,
+        "danioRival": -8,
+        "energiaPropia": -3,
+        "energiaRival": -3,
+        "personalidad": "agresivo"
+      },
+      {
+        "descripcion": "{A} siguió golpeando a {B} mucho después de que dejara de defenderse",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -12,
+        "energiaPropia": -3,
+        "energiaRival": 0,
+        "personalidad": "agresivo"
+      },
+      {
+        "descripcion": "{A} le dio a {B} toda su comida para que l{A:o/a} dejara en paz",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -3,
+        "energiaRival": 3,
+        "personalidad": "cobarde"
+      },
+      {
+        "descripcion": "{A} vio a {B} y se escondió tan rápido que se torció el tobillo",
+        "numParticipantes": 2,
+        "danioPropio": -3,
+        "danioRival": 0,
+        "energiaPropia": -2,
+        "energiaRival": 0,
+        "personalidad": "cobarde"
+      },
+      {
+        "descripcion": "{A} se hizo pasar por herid{A:o/a} y atacó a {B} cuando se acercó a ayudar",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -10,
+        "energiaPropia": -1,
+        "energiaRival": 0,
+        "personalidad": "traicionero"
+      },
+      {
+        "descripcion": "{A} convenció a {B} de que había una salida al otro lado de un campo de minas",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -12,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "personalidad": "traicionero"
+      },
+      {
+        "descripcion": "{A} le preparó una trampa de lazo a {B}, que se quedó colgando boca abajo",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -5,
+        "energiaPropia": 0,
+        "energiaRival": -6,
+        "personalidad": "ingenioso"
+      },
+      {
+        "descripcion": "{A} se negó a pelear con {B} y le habló de su familia hasta que bajó el arma",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -1,
+        "energiaRival": 0,
+        "personalidad": "sociable"
+      },
+      {
+        "descripcion": "{A} hundió a {B} en un pozo de sal húmeda y l{B:o/a} dejó allí",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -9,
+        "energiaPropia": -2,
+        "energiaRival": -5,
+        "escenarios": [
+          "desierto"
+        ]
+      },
+      {
+        "descripcion": "{A} siguió el reflejo de la cantimplora de {B} y l{B:o/a} atacó",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -7,
+        "energiaPropia": -2,
+        "energiaRival": 0,
+        "escenarios": [
+          "desierto"
+        ]
+      },
+      {
+        "descripcion": "{A} cortó la cuerda de seguridad de {B} en una pared de hielo",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -10,
+        "energiaPropia": -1,
+        "energiaRival": 0,
+        "escenarios": [
+          "cumbres"
+        ]
+      },
+      {
+        "descripcion": "{A} y {B} se pelearon dentro de un iglú hasta que se derrumbó",
+        "numParticipantes": 2,
+        "danioPropio": -3,
+        "danioRival": -3,
+        "energiaPropia": -3,
+        "energiaRival": -3,
+        "escenarios": [
+          "cumbres"
+        ]
+      },
+      {
+        "descripcion": "{A} empujó a {B} contra un nido de serpientes",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -8,
+        "energiaPropia": -1,
+        "energiaRival": 0,
+        "escenarios": [
+          "pantano"
+        ]
+      },
+      {
+        "descripcion": "{A} siguió las burbujas de {B}, que se escondía bajo el agua, y l{B:o/a} sacó a golpes",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -7,
+        "energiaPropia": -2,
+        "energiaRival": -3,
+        "escenarios": [
+          "pantano"
+        ]
+      }
+    ],
+    "eventosTriple": [
+      {
+        "descripcion": "{A} vio cómo {B} y {C} se peleaban y aprovechó para atacarl{BC:os/as}",
+        "numParticipantes": 3,
+        "danioPropio": 0,
+        "danioRival": -6,
+        "energiaPropia": -2,
+        "energiaRival": -3
+      },
+      {
+        "descripcion": "{A}, {B} y {C} se encontraron en el mismo arroyo y nadie se atrevió a beber primero",
+        "numParticipantes": 3,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -2,
+        "energiaRival": -2
+      },
+      {
+        "descripcion": "{A} lanzó una roca desde lo alto de un risco sobre {B} y {C}",
+        "numParticipantes": 3,
+        "danioPropio": 0,
+        "danioRival": -6,
+        "energiaPropia": -2,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} se coló en el campamento de {B} y {C} y les robó las provisiones",
+        "numParticipantes": 3,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 3,
+        "energiaRival": -4
+      },
+      {
+        "descripcion": "{A}, {B} y {C} cayeron en la misma red de los Vigilantes",
+        "numParticipantes": 3,
+        "danioPropio": -4,
+        "danioRival": -4,
+        "energiaPropia": -3,
+        "energiaRival": -3
+      },
+      {
+        "descripcion": "{A} prendió fuego a la hierba seca donde se escondían {B} y {C}",
+        "numParticipantes": 3,
+        "danioPropio": 0,
+        "danioRival": -7,
+        "energiaPropia": -2,
+        "energiaRival": -3
+      },
+      {
+        "descripcion": "{A} se interpuso entre {B} y {C} y recibió golpes de l{BC:os/as} dos",
+        "numParticipantes": 3,
+        "danioPropio": -8,
+        "danioRival": -2,
+        "energiaPropia": -3,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A}, {B} y {C} se pelearon por un paracaídas de patrocinio que acabó colgado de un árbol",
+        "numParticipantes": 3,
+        "danioPropio": -3,
+        "danioRival": -4,
+        "energiaPropia": -4,
+        "energiaRival": -4
+      },
+      {
+        "descripcion": "{A} engañó a {B} y {C} para que se atacaran entre sí",
+        "numParticipantes": 3,
+        "danioPropio": 0,
+        "danioRival": -6,
+        "energiaPropia": 0,
+        "energiaRival": -3,
+        "personalidad": "traicionero"
+      },
+      {
+        "descripcion": "{A} cargó contra {B} y {C} sin pensárselo",
+        "numParticipantes": 3,
+        "danioPropio": -5,
+        "danioRival": -6,
+        "energiaPropia": -3,
+        "energiaRival": 0,
+        "personalidad": "agresivo"
+      },
+      {
+        "descripcion": "{A}, {B} y {C} lucharon por la misma mochila junto a la Cornucopia",
+        "numParticipantes": 3,
+        "danioPropio": -3,
+        "danioRival": -5,
+        "energiaPropia": -2,
+        "energiaRival": -2,
+        "fase": "cornucopia"
+      },
+      {
+        "descripcion": "{A} se tiró sobre {B} y {C} desde lo alto de la Cornucopia",
+        "numParticipantes": 3,
+        "danioPropio": -4,
+        "danioRival": -8,
+        "energiaPropia": -2,
+        "energiaRival": 0,
+        "fase": "cornucopia"
+      },
+      {
+        "descripcion": "{A} atacó a {B} y {C} mientras dormían junto a las brasas",
+        "numParticipantes": 3,
+        "danioPropio": 0,
+        "danioRival": -8,
+        "energiaPropia": -2,
+        "energiaRival": 0,
+        "fase": "noche"
+      }
+    ],
+    "eventosCuatro": [
+      {
+        "descripcion": "{A}, {B}, {C} y {D} coincidieron en el único refugio de la zona y se pelearon por él",
+        "numParticipantes": 4,
+        "danioPropio": -4,
+        "danioRival": -4,
+        "energiaPropia": -3,
+        "energiaRival": -3
+      },
+      {
+        "descripcion": "{A} atrajo a {B}, {C} y {D} con una hoguera y les tendió una trampa de estacas",
+        "numParticipantes": 4,
+        "danioPropio": 0,
+        "danioRival": -7,
+        "energiaPropia": -2,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A}, {B}, {C} y {D} huyeron junt{ABCD:os/as} de una manada de mutos",
+        "numParticipantes": 4,
+        "danioPropio": -3,
+        "danioRival": -3,
+        "energiaPropia": -6,
+        "energiaRival": -6
+      },
+      {
+        "descripcion": "{A}, {B}, {C} y {D} se pelearon a pedradas por un paracaídas de patrocinio",
+        "numParticipantes": 4,
+        "danioPropio": -4,
+        "danioRival": -5,
+        "energiaPropia": -3,
+        "energiaRival": -3
+      },
+      {
+        "descripcion": "{A} desató una avalancha de rocas sobre {B}, {C} y {D}",
+        "numParticipantes": 4,
+        "danioPropio": 0,
+        "danioRival": -7,
+        "energiaPropia": -3,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A}, {B}, {C} y {D} cayeron en un foso de los Vigilantes y tardaron horas en salir",
+        "numParticipantes": 4,
+        "danioPropio": -4,
+        "danioRival": -4,
+        "energiaPropia": -6,
+        "energiaRival": -6
+      },
+      {
+        "descripcion": "{A}, {B}, {C} y {D} se encontraron en la Cornucopia y todos salieron heridos",
+        "numParticipantes": 4,
+        "danioPropio": -5,
+        "danioRival": -6,
+        "energiaPropia": -2,
+        "energiaRival": -2,
+        "fase": "cornucopia"
+      },
+      {
+        "descripcion": "{A}, {B}, {C} y {D} pelearon a ciegas en mitad de la noche",
+        "numParticipantes": 4,
+        "danioPropio": -4,
+        "danioRival": -5,
+        "energiaPropia": -3,
+        "energiaRival": -3,
+        "fase": "noche"
+      },
+      {
+        "descripcion": "{A} se lanzó contra {B}, {C} y {D} gritando como un muto",
+        "numParticipantes": 4,
+        "danioPropio": -6,
+        "danioRival": -5,
+        "energiaPropia": -4,
+        "energiaRival": 0,
+        "personalidad": "agresivo"
+      }
+    ],
+    "eventosAmigo": [
+      {
+        "descripcion": "{A} y {B} se repartieron la última barrita a partes iguales",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 2,
+        "energiaRival": 2
+      },
+      {
+        "descripcion": "{A} le enseñó a {B} a pescar con las manos",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 1,
+        "energiaRival": 2
+      },
+      {
+        "descripcion": "{A} y {B} se taparon con la misma lona para no mojarse",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 2,
+        "energiaRival": 2,
+        "fase": "noche"
+      },
+      {
+        "descripcion": "{A} montó guardia mientras {B} se lavaba las heridas en el río",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 2,
+        "energiaPropia": -2,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} y {B} marcaron un punto de encuentro por si se separaban",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} le contó a {B} cómo era su distrito antes de la guerra",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 1,
+        "energiaRival": 1,
+        "fase": "noche"
+      },
+      {
+        "descripcion": "{A} y {B} cazaron un ciervo mutante entre l{AB:os/as} dos",
+        "numParticipantes": 2,
+        "danioPropio": -1,
+        "danioRival": -1,
+        "energiaPropia": 3,
+        "energiaRival": 3
+      },
+      {
+        "descripcion": "{A} llevó a hombros a {B} cuando ya no podía caminar",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -5,
+        "energiaRival": 3
+      },
+      {
+        "descripcion": "{A} y {B} vieron junt{AB:os/as} los rostros de los caídos en el cielo",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "fase": "noche"
+      },
+      {
+        "descripcion": "{A} le arrancó a {B} una flecha del hombro y le cerró la herida",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 3,
+        "energiaPropia": -1,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} y {B} prepararon trampas alrededor de su campamento",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -2,
+        "energiaRival": -2
+      },
+      {
+        "descripcion": "{A} y {B} se escondieron junt{AB:os/as} de un dron de los Vigilantes",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -1,
+        "energiaRival": -1
+      },
+      {
+        "descripcion": "{A} se quedó despiert{A:o/a} toda la noche cuidando de {B}, que tenía fiebre",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 3,
+        "energiaPropia": -4,
+        "energiaRival": 0,
+        "fase": "noche"
+      },
+      {
+        "descripcion": "{A} y {B} se rieron de los nombres que les ponían los comentaristas del Capitolio",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 2,
+        "energiaRival": 2
+      },
+      {
+        "descripcion": "{A} defendió a {B} de un muto con un palo",
+        "numParticipantes": 2,
+        "danioPropio": -4,
+        "danioRival": 0,
+        "energiaPropia": -2,
+        "energiaRival": 0,
+        "personalidad": "leal"
+      },
+      {
+        "descripcion": "{A} le dio a {B} su chaqueta aunque se estaba helando",
+        "numParticipantes": 2,
+        "danioPropio": -1,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 3,
+        "personalidad": "leal"
+      },
+      {
+        "descripcion": "{A} empezó a guardar provisiones a escondidas de {B}",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 2,
+        "energiaRival": 0,
+        "personalidad": "traicionero"
+      },
+      {
+        "descripcion": "{A} se fijó en dónde guardaba {B} el cuchillo, por si acaso",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "personalidad": "traicionero"
+      },
+      {
+        "descripcion": "{A} se pasó la noche hablando con {B} para que no tuviera miedo",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 1,
+        "energiaRival": 3,
+        "personalidad": "sociable",
+        "fase": "noche"
+      },
+      {
+        "descripcion": "{A} convenció a {B} de que necesitaban comer más y salieron a robar a otro campamento",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -2,
+        "energiaRival": -2,
+        "personalidad": "agresivo"
+      },
+      {
+        "descripcion": "{A} dejó que {B} hiciera todas las guardias",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 4,
+        "energiaRival": -4,
+        "personalidad": "cobarde"
+      },
+      {
+        "descripcion": "{A} le enseñó a {B} a hacer un filtro de agua con su camiseta",
+        "numParticipantes": 2,
+        "danioPropio": 1,
+        "danioRival": 1,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "personalidad": "ingenioso"
+      },
+      {
+        "descripcion": "{A} y {B} se frotaron las manos el uno al otro para no perder los dedos",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 1,
+        "energiaRival": 1,
+        "escenarios": [
+          "cumbres"
+        ]
+      }
+    ],
+    "traicionAmigo": [
+      {
+        "descripcion": "{A} le dijo a {B} que iba a por agua y desapareció con su mochila",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 2,
+        "energiaRival": -4
+      },
+      {
+        "descripcion": "{A} empujó a {B} hacia un muto para poder escapar",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -10,
+        "energiaPropia": -3,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} le puso la zancadilla a {B} cuando huían de la manada",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -8,
+        "energiaPropia": -2,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} esperó a que {B} se bañara en el río para robarle todo",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 1,
+        "energiaRival": -5
+      },
+      {
+        "descripcion": "{A} le dio a {B} unas bayas que sabía que eran venenosas",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -12,
+        "energiaPropia": 0,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} cambió de bando en mitad de un ataque y se volvió contra {B}",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -10,
+        "energiaPropia": -1,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} apuñaló a {B} mientras l{B:o/a} abrazaba",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -14,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "personalidad": "traicionero"
+      },
+      {
+        "descripcion": "{A} llevó a {B} a una emboscada de otros tributos y se marchó",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -9,
+        "energiaPropia": 0,
+        "energiaRival": -3,
+        "personalidad": "traicionero"
+      },
+      {
+        "descripcion": "{A} se cansó de compartir y atacó a {B} sin avisar",
+        "numParticipantes": 2,
+        "danioPropio": -1,
+        "danioRival": -10,
+        "energiaPropia": -2,
+        "energiaRival": 0,
+        "personalidad": "agresivo"
+      },
+      {
+        "descripcion": "{A} huyó cuando atacaron a {B} y l{B:o/a} dejó sol{B:o/a}",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -7,
+        "energiaPropia": -3,
+        "energiaRival": -3,
+        "personalidad": "cobarde"
+      },
+      {
+        "descripcion": "{A} dejó a {B} dormid{B:o/a} y se llevó sus botas",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": -6,
+        "fase": "noche"
+      }
+    ],
+    "hacerAmigo": [
+      {
+        "descripcion": "{A} encontró a {B} herid{B:o/a} y l{B:o/a} vendó en lugar de rematarl{B:o/a}",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 2,
+        "energiaPropia": -1,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} y {B} se encontraron en el mismo escondite y decidieron compartirlo",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 1,
+        "energiaRival": 1
+      },
+      {
+        "descripcion": "{A} lanzó comida a {B} desde lejos para demostrarle que no quería pelear",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -1,
+        "energiaRival": 2
+      },
+      {
+        "descripcion": "{A} y {B} se reconocieron del Centro de Entrenamiento y se dieron la mano",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} avisó a {B} de que un muto se le acercaba por la espalda",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -1,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} y {B} se ayudaron a salir de un foso de los Vigilantes",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -3,
+        "energiaRival": -3
+      },
+      {
+        "descripcion": "{A} y {B} se escondieron junt{AB:os/as} de un tributo que l{AB:os/as} buscaba",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -1,
+        "energiaRival": -1
+      },
+      {
+        "descripcion": "{A} compartió su fuego con {B}, que estaba temblando",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 3,
+        "fase": "noche"
+      },
+      {
+        "descripcion": "{A} y {B} brindaron con agua de lluvia y se juraron protección",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 1,
+        "energiaRival": 1
+      },
+      {
+        "descripcion": "{A} se ofreció a cubrir las espaldas de {B} si {B} cubría las suyas",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "personalidad": "leal"
+      },
+      {
+        "descripcion": "{A} le contó a {B} todo lo que sabía de los demás tributos para ganarse su confianza",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "personalidad": "traicionero"
+      },
+      {
+        "descripcion": "{A} se presentó a {B} con una sonrisa y una broma, y {B} bajó la guardia",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "personalidad": "sociable"
+      },
+      {
+        "descripcion": "{A} se pegó a {B} porque parecía capaz de protegerl{A:o/a}",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "personalidad": "cobarde"
+      },
+      {
+        "descripcion": "{A} le arregló a {B} la correa de la mochila y empezaron a hablar",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "personalidad": "ingenioso"
+      },
+      {
+        "descripcion": "{A} y {B} se repartieron la sombra de la misma roca y acabaron hablando",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 1,
+        "energiaRival": 1,
+        "escenarios": [
+          "desierto"
+        ]
+      },
+      {
+        "descripcion": "{A} le pasó a {B} una pértiga para salir de las arenas movedizas",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": -1,
+        "energiaRival": -1,
+        "escenarios": [
+          "pantano"
+        ]
+      }
+    ],
+    "eventosArma": [
+      {
+        "descripcion": "{A} le hizo un tajo en la cara a {B} con su cuchillo",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -8,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "requiere": "CUCHILLO"
+      },
+      {
+        "descripcion": "{A} le clavó el cuchillo a {B} en el muslo y salió corriendo",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -9,
+        "energiaPropia": -1,
+        "energiaRival": 0,
+        "requiere": "CUCHILLO"
+      },
+      {
+        "descripcion": "{A} le soltó una descarga a {B} por la espalda con su taser",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -5,
+        "energiaPropia": 0,
+        "energiaRival": -6,
+        "requiere": "TASER"
+      },
+      {
+        "descripcion": "{A} usó su taser para que {B} soltara la mochila",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -4,
+        "energiaPropia": 0,
+        "energiaRival": -5,
+        "requiere": "TASER"
+      },
+      {
+        "descripcion": "{A} le disparó un clavo en el hombro a {B} desde lejos",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -8,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "requiere": "PISTOLACLAVOS"
+      },
+      {
+        "descripcion": "{A} cortó la cuerda por la que trepaba {B} con su machete",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -11,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "requiere": "MACHETE"
+      },
+      {
+        "descripcion": "{A} le dio un machetazo a {B} en el brazo",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -10,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "requiere": "MACHETE"
+      },
+      {
+        "descripcion": "{A} esperó en silencio con su ballesta cargada hasta que apareció {B}",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -11,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "requiere": "BALLESTA"
+      },
+      {
+        "descripcion": "{A} le atravesó la mano a {B} con un virote de su ballesta",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -8,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "requiere": "BALLESTA"
+      },
+      {
+        "descripcion": "{A} vació el cargador de su pistola contra {B}",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -12,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "requiere": "PISTOLA"
+      },
+      {
+        "descripcion": "{A} le disparó a {B} en la pierna para que no pudiera seguirl{A:o/a}",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -9,
+        "energiaPropia": 0,
+        "energiaRival": -4,
+        "requiere": "PISTOLA"
+      },
+      {
+        "descripcion": "{A} atravesó tres árboles y a {B} con un disparo de su rifle de riel",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -15,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "requiere": "RIFLE_RIEL"
+      },
+      {
+        "descripcion": "{A} dejó a {B} retorciéndose en el suelo con su granada de pulso",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -10,
+        "energiaPropia": 0,
+        "energiaRival": -6,
+        "requiere": "GRANADA_PEM"
+      },
+      {
+        "descripcion": "{A} le partió la clavícula a {B} con su bate con clavos",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -10,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "requiere": "BATE_CLAVOS"
+      },
+      {
+        "descripcion": "{A} le prendió fuego a la ropa de {B} con su lanzallamas",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -12,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "requiere": "LANZALLAMAS"
+      },
+      {
+        "descripcion": "{A} rodeó el escondite de {B} de llamas con su lanzallamas",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -9,
+        "energiaPropia": 0,
+        "energiaRival": -5,
+        "requiere": "LANZALLAMAS"
+      },
+      {
+        "descripcion": "{A} mandó su dron armado a disparar a {B} mientras {A:él/ella} seguía escondid{A:o/a}",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -11,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "requiere": "DRON_ARMADO"
+      },
+      {
+        "descripcion": "{A} siguió con su dron armado a {B} hasta que no pudo correr más",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -9,
+        "energiaPropia": 0,
+        "energiaRival": -6,
+        "requiere": "DRON_ARMADO"
+      },
+      {
+        "descripcion": "{A} acorraló a {B} y le disparó a bocajarro con su pistola de clavos",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -10,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "requiere": "PISTOLACLAVOS"
+      },
+      {
+        "descripcion": "{A} lanzó su granada de pulso al campamento de {B} y oyó los gritos",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -11,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "requiere": "GRANADA_PEM",
+        "fase": "noche"
+      },
+      {
+        "descripcion": "{A} se acercó a {B} por la espalda y l{B:o/a} rajó con su cuchillo",
+        "numParticipantes": 2,
+        "danioPropio": 0,
+        "danioRival": -10,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "requiere": "CUCHILLO",
+        "fase": "noche"
+      }
+    ],
+    "aliadosAtacan": [
+      {
+        "descripcion": "{A} y {B} rodearon a {C} y no l{C:o/a} dejaron escapar",
+        "numParticipantes": 3,
+        "danioPropio": 0,
+        "danioRival": -9,
+        "energiaPropia": -2,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} vigiló mientras {B} se acercaba a {C} por detrás",
+        "numParticipantes": 3,
+        "danioPropio": 0,
+        "danioRival": -9,
+        "energiaPropia": -1,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} y {B} tiraron piedras a {C} desde los dos lados de un barranco",
+        "numParticipantes": 3,
+        "danioPropio": 0,
+        "danioRival": -7,
+        "energiaPropia": -2,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} hizo ruido para atraer a {C} y {B} l{C:o/a} esperaba escondid{B:o/a}",
+        "numParticipantes": 3,
+        "danioPropio": 0,
+        "danioRival": -10,
+        "energiaPropia": 0,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} y {B} robaron el campamento de {C} y l{C:o/a} dejaron sin nada",
+        "numParticipantes": 3,
+        "danioPropio": 0,
+        "danioRival": 0,
+        "energiaPropia": 1,
+        "energiaRival": -6
+      },
+      {
+        "descripcion": "{A} y {B} persiguieron a {C} hasta un precipicio",
+        "numParticipantes": 3,
+        "danioPropio": 0,
+        "danioRival": -8,
+        "energiaPropia": -3,
+        "energiaRival": -4
+      },
+      {
+        "descripcion": "{A} sujetó a {C} contra el suelo mientras {B} le quitaba el arma",
+        "numParticipantes": 3,
+        "danioPropio": 0,
+        "danioRival": -6,
+        "energiaPropia": -1,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} y {B} atacaron a {C}, pero {C} se defendió y salieron herid{AB:os/as}",
+        "numParticipantes": 3,
+        "danioPropio": -4,
+        "danioRival": -6,
+        "energiaPropia": -2,
+        "energiaRival": 0
+      },
+      {
+        "descripcion": "{A} y {B} entraron en el refugio de {C} en plena noche",
+        "numParticipantes": 3,
+        "danioPropio": 0,
+        "danioRival": -10,
+        "energiaPropia": -1,
+        "energiaRival": 0,
+        "fase": "noche"
+      },
+      {
+        "descripcion": "{A} y {B} usaron la luz del día para cazar a {C} desde lejos",
+        "numParticipantes": 3,
+        "danioPropio": 0,
+        "danioRival": -8,
+        "energiaPropia": -2,
+        "energiaRival": 0,
+        "fase": "dia"
+      },
+      {
+        "descripcion": "{A} se quedó atrás cuando {B} atacó a {C}, por si salía mal",
+        "numParticipantes": 3,
+        "danioPropio": 0,
+        "danioRival": -8,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "personalidad": "cobarde"
+      },
+      {
+        "descripcion": "{A} se puso delante de {B} para recibir los golpes de {C}",
+        "numParticipantes": 3,
+        "danioPropio": -4,
+        "danioRival": -8,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "personalidad": "leal"
+      },
+      {
+        "descripcion": "{A} empujó a {B} delante para que {C} se cebara con {B:él/ella}, y luego atacó",
+        "numParticipantes": 3,
+        "danioPropio": -3,
+        "danioRival": -8,
+        "energiaPropia": 0,
+        "energiaRival": 0,
+        "personalidad": "traicionero"
+      },
+      {
+        "descripcion": "{A} y {B} prepararon una trampa con cuerda y piedras en la que cayó {C}",
+        "numParticipantes": 3,
+        "danioPropio": 0,
+        "danioRival": -9,
+        "energiaPropia": -2,
+        "energiaRival": 0,
+        "personalidad": "ingenioso"
+      }
+    ]
+  },
+  "catastrofes": [
+    {
+      "id": "banquete",
+      "nombre": "El banquete",
+      "anuncio": "Los Vigilantes anuncian un banquete en la Cornucopia: allí espera algo que cada tributo necesita desesperadamente.",
+      "eventos": [
+        {
+          "descripcion": "{A} fue al banquete y cayó en una emboscada",
+          "numParticipantes": 1,
+          "danioPropio": -20,
+          "energiaPropia": 0
+        },
+        {
+          "descripcion": "{A} llegó corriendo, agarró un botiquín y desapareció",
+          "numParticipantes": 1,
+          "danioPropio": 0,
+          "energiaPropia": -4,
+          "objeto": "BOTIQUIN"
+        },
+        {
+          "descripcion": "{A} esperó a que se fueran todos y recogió unas barritas olvidadas",
+          "numParticipantes": 1,
+          "danioPropio": 0,
+          "energiaPropia": -2,
+          "objeto": "BARRITAS"
+        },
+        {
+          "descripcion": "{A} cogió un inyector de nanobots y recibió un corte al escapar",
+          "numParticipantes": 1,
+          "danioPropio": -5,
+          "energiaPropia": -3,
+          "objeto": "NANOBOTS"
+        },
+        {
+          "descripcion": "{A} se llevó un estimulante militar entre empujones",
+          "numParticipantes": 1,
+          "danioPropio": -3,
+          "energiaPropia": -2,
+          "objeto": "ESTIMULANTE"
+        },
+        {
+          "descripcion": "{A} decidió que era una trampa y se quedó en su escondite",
+          "numParticipantes": 1,
+          "danioPropio": 0,
+          "energiaPropia": 1
+        },
+        {
+          "descripcion": "{A} vio la matanza desde lejos y se alegró de no haber ido",
+          "numParticipantes": 1,
+          "danioPropio": 0,
+          "energiaPropia": -1
+        },
+        {
+          "descripcion": "{A} llegó tarde: solo quedaban mochilas vacías",
+          "numParticipantes": 1,
+          "danioPropio": 0,
+          "energiaPropia": -5
+        },
+        {
+          "descripcion": "{A} recibió un golpe en la cabeza en la pelea por las mochilas",
+          "numParticipantes": 1,
+          "danioPropio": -9,
+          "energiaPropia": -2
+        }
+      ]
+    },
+    {
+      "id": "campo_fuerza",
+      "nombre": "La arena se encoge",
+      "anuncio": "Un campo de fuerza empieza a cerrarse desde los bordes de la arena y empuja a todos hacia el centro.",
+      "eventos": [
+        {
+          "descripcion": "{A} no corrió lo bastante rápido y el campo de fuerza l{A:o/a} alcanzó",
+          "numParticipantes": 1,
+          "danioPropio": -20,
+          "energiaPropia": 0
+        },
+        {
+          "descripcion": "{A} corrió hacia el centro con todas sus fuerzas",
+          "numParticipantes": 1,
+          "danioPropio": 0,
+          "energiaPropia": -8
+        },
+        {
+          "descripcion": "{A} rozó el campo de fuerza y se quemó el brazo",
+          "numParticipantes": 1,
+          "danioPropio": -7,
+          "energiaPropia": -3
+        },
+        {
+          "descripcion": "{A} ya estaba cerca del centro y apenas tuvo que moverse",
+          "numParticipantes": 1,
+          "danioPropio": 0,
+          "energiaPropia": -1
+        },
+        {
+          "descripcion": "{A} tuvo que abandonar su escondite y todo lo que había guardado",
+          "numParticipantes": 1,
+          "danioPropio": 0,
+          "energiaPropia": -4
+        },
+        {
+          "descripcion": "{A} se cruzó con otros tributos en la huida y nadie se paró a pelear",
+          "numParticipantes": 1,
+          "danioPropio": 0,
+          "energiaPropia": -5
+        },
+        {
+          "descripcion": "{A} se protegió con su generador de escudo personal al cruzar el borde",
+          "numParticipantes": 1,
+          "danioPropio": 0,
+          "energiaPropia": -2,
+          "requiere": "ESCUDO"
+        },
+        {
+          "descripcion": "{A} se torció un tobillo corriendo y llegó cojeando",
+          "numParticipantes": 1,
+          "danioPropio": -4,
+          "energiaPropia": -6
+        }
+      ]
+    }
+  ]
+}

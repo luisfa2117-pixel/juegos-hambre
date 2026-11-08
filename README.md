@@ -11,7 +11,7 @@ Empezó como un proyecto en Java que dejé a medias y lo he rehecho desde cero e
 ## Qué hace
 
 - **Partidas ronda a ronda.** El baño de sangre en la Cornucopia, y después días y noches alternos. Al final de cada noche se proyectan en el cielo los rostros de los caídos.
-- **488 eventos** con concordancia de género («Avery fue herida», «Dean y Noah, juntos»), filtrados por fase del día, por objetos que hacen falta y por la personalidad de quien los protagoniza.
+- **+500 eventos** con concordancia de género («Avery fue herida», «Dean y Noah, juntos»), filtrados por fase del día, por objetos que hacen falta y por la personalidad de quien los protagoniza.
 - **Objetos que funcionan**: 22 armas, defensas, curas y bebidas, con usos limitados. Las defensas absorben daño y los consumibles se usan solos cuando hacen falta.
 - **Alianzas** que se forman, atacan juntas y se rompen con traiciones. Los compañeros de distrito se alían con más facilidad.
 - **Personalidades** (agresivo, cobarde, leal, traicionero, ingenioso, sociable) que cambian las probabilidades y tienen sus propios eventos.
