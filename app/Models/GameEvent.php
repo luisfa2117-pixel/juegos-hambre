@@ -22,17 +22,23 @@ class GameEvent extends Model
         'personality' => Personality::class,   // null = para cualquiera; si no, solo para {A} con esa personalidad
     ];
 
+    /** @return BelongsTo<Item, $this> */
     public function givesItem(): BelongsTo
     {
         return $this->belongsTo(Item::class, 'gives_item_id');
     }
 
-    /** Si es un evento de catástrofe, a cuál pertenece */
+    /**
+     * Si es un evento de catástrofe, a cuál pertenece
+     *
+     * @return BelongsTo<ArenaEvent, $this>
+     */
     public function arenaEvent(): BelongsTo
     {
         return $this->belongsTo(ArenaEvent::class);
     }
 
+    /** @return BelongsTo<Item, $this> */
     public function requiresItem(): BelongsTo
     {
         return $this->belongsTo(Item::class, 'requires_item_id');

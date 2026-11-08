@@ -16,6 +16,7 @@ class GameRound extends Model
         'state' => 'array',      // el estado exacto, para poder continuar desde aquí (null en partidas antiguas)
     ];
 
+    /** @return BelongsTo<Game, $this> */
     public function game(): BelongsTo
     {
         return $this->belongsTo(Game::class);

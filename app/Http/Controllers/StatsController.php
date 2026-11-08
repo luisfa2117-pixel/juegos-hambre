@@ -78,7 +78,8 @@ class StatsController extends Controller
     private function personalityStats($characters)
     {
         return $characters
-            ->groupBy(fn (Character $character) => $character->personality?->value ?? 'balanced')
+            // ?? ya admite que personality sea null, así que basta con -> (con métodos, en cambio, hace falta ?->)
+            ->groupBy(fn (Character $character) => $character->personality->value ?? 'balanced')
             ->map(fn ($group) => (object) [
                 'label' => $group->first()->personality?->label() ?? 'Equilibrado',
                 'played' => $group->sum('games_count'),

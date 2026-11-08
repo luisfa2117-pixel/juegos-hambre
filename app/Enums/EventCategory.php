@@ -53,7 +53,15 @@ enum EventCategory: string
      */
     public static function editable(): array
     {
-        return array_values(array_filter(self::cases(), fn (self $case) => $case !== self::Arena));
+        $editable = [];
+
+        foreach (self::cases() as $case) {
+            if ($case !== self::Arena) {
+                $editable[] = $case;
+            }
+        }
+
+        return $editable;
     }
 
     /**

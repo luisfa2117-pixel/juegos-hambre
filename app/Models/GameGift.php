@@ -10,11 +10,13 @@ class GameGift extends Model
 {
     protected $fillable = ['after_round', 'tribute_name', 'item_id'];
 
+    /** @return BelongsTo<Game, $this> */
     public function game(): BelongsTo
     {
         return $this->belongsTo(Game::class);
     }
 
+    /** @return BelongsTo<Item, $this> */
     public function item(): BelongsTo
     {
         return $this->belongsTo(Item::class);

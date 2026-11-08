@@ -1,4 +1,4 @@
-# Ejecuta los tests en los servidores de GitHub cada vez que subes cambios a main
+# Comprueba el proyecto en los servidores de GitHub cada vez que subes cambios a main
 # (y en cada pull request). El resultado sale en la pestaña "Actions" del repositorio.
 name: Tests
 
@@ -31,6 +31,13 @@ jobs:
         run: |
           cp .env.example .env
           php artisan key:generate
+
+      # --test: no cambia nada, solo falla si algún fichero no tiene el formato de Pint
+      - name: Comprobar el formato (Pint)
+        run: vendor/bin/pint --test
+
+      - name: Análisis estático (Larastan)
+        run: vendor/bin/phpstan analyse --memory-limit=1G --no-progress
 
       - name: Ejecutar los tests
         run: php artisan test

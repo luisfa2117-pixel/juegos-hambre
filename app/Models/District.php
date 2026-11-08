@@ -9,6 +9,7 @@ class District extends Model
 {
     protected $fillable = ['slug', 'name', 'strength_bonus', 'energy_bonus'];
 
+    /** @return HasMany<Character, $this> */
     public function characters(): HasMany
     {
         return $this->hasMany(Character::class);

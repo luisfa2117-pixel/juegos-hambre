@@ -11,10 +11,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
+use LogicException;
 
 /**
  * Un personaje del catálogo: lo creas una vez y puede participar en muchas partidas.
  * Durante una partida, se convierte en un Tribute (con su vida, mochila...).
+ *
+ * Estas propiedades no son columnas: solo existen si la consulta usa withStats().
+ * Se declaran aquí para que PHPStan (y tu editor) sepan que existen y de qué tipo son.
+ *
+ * @property-read int $games_count
+ * @property-read int $wins_count
+ * @property-read int $deaths_count
+ * @property-read int $bloodbath_deaths_count
+ * @property-read int|null $kills_total  withSum devuelve null si no tiene ninguna partida
  */
 class Character extends Model
 {
@@ -50,17 +60,23 @@ class Character extends Model
         }
     }
 
+    /** @return BelongsTo<User, $this> */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /** @return BelongsTo<District, $this> */
     public function district(): BelongsTo
     {
         return $this->belongsTo(District::class);
     }
 
-    /** Sus participaciones en partidas guardadas */
+    /**
+     * Sus participaciones en partidas guardadas
+     *
+     * @return HasMany<GameTribute, $this>
+     */
     public function gameTributes(): HasMany
     {
         return $this->hasMany(GameTribute::class);
@@ -87,6 +103,8 @@ class Character extends Model
     /** Crea el tributo que lo representa en una partida, con los stats iniciales. */
     public function toTribute(): Tribute
     {
-        return new Tribute($this->name, $this->gender, $this->district, $this->personality);
+        $district = $this->district ?? throw new LogicException("El personaje {$this->name} no tiene distrito");
+
+        return new Tribute($this->name, $this->gender, $district, $this->personality);
     }
 }

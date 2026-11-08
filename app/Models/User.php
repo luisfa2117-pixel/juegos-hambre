@@ -26,11 +26,13 @@ class User extends Authenticatable
         ];
     }
 
+    /** @return HasMany<Character, $this> */
     public function characters(): HasMany
     {
         return $this->hasMany(Character::class);
     }
 
+    /** @return HasMany<Game, $this> */
     public function games(): HasMany
     {
         return $this->hasMany(Game::class);

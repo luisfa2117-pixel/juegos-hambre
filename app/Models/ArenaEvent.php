@@ -10,7 +10,11 @@ class ArenaEvent extends Model
 {
     protected $fillable = ['slug', 'name', 'intro'];
 
-    /** Lo que le puede pasar a cada tributo durante la catástrofe */
+    /**
+     * Lo que le puede pasar a cada tributo durante la catástrofe
+     *
+     * @return HasMany<GameEvent, $this>
+     */
     public function events(): HasMany
     {
         return $this->hasMany(GameEvent::class);
