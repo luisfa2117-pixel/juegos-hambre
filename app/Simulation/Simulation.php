@@ -4,6 +4,7 @@ namespace App\Simulation;
 
 use App\Enums\EventCategory;
 use App\Enums\EventPhase;
+use App\Enums\GameRule;
 use App\Enums\ItemType;
 use App\Enums\Personality;
 use App\Models\District;
@@ -53,6 +54,13 @@ class Simulation
     /** Los compañeros de distrito se alían más fácilmente */
     public const DISTRICT_FRIENDSHIP_BONUS = 25;
 
+    // Con la regla "Los Vigilantes se aburren"
+    public const BORED_ARENA_FIRST_ROUND = 2;
+
+    public const BORED_ARENA_COOLDOWN = 3;
+
+    public const BORED_ARENA_CHANCE = 35;
+
     /** Máximo de miembros por alianza, para que no acaben todos en el mismo bando */
     public const MAX_ALLIANCE_SIZE = 3;
 
@@ -80,6 +88,7 @@ class Simulation
         array $tributes,
         private readonly EventPool $events,
         private readonly int $seed,
+        private readonly GameRules $rules = new GameRules,
         private readonly EventResolver $resolver = new EventResolver,
     ) {
         $this->tributes = array_values($tributes);
@@ -100,6 +109,37 @@ class Simulation
     public function seed(): int
     {
         return $this->seed;
+    }
+
+    public function rules(): GameRules
+    {
+        return $this->rules;
+    }
+
+    /**
+     * Aplica las reglas que cambian cómo empieza la partida (armas, media vida...).
+     * Solo antes de la primera ronda: al continuar una partida guardada, ya están aplicadas en el estado.
+     *
+     * @param  Item[]  $weapons  Las armas que pueden tocar con "Armados hasta los dientes"
+     */
+    public function applyStartingRules(array $weapons): void
+    {
+        if ($this->round !== 0) {
+            throw new LogicException('Las reglas de inicio solo se aplican antes de la primera ronda');
+        }
+
+        // Un azar aparte, para no alterar el de las rondas: así las reglas no cambian el resto de la partida
+        $random = new Randomizer(new Xoshiro256StarStar(hash('sha256', "{$this->seed}:inicio", true)));
+
+        foreach ($this->tributes as $tribute) {
+            if ($this->rules->has(GameRule::Armed) && $weapons !== []) {
+                $tribute->addItem($weapons[$random->getInt(0, count($weapons) - 1)]);
+            }
+
+            if ($this->rules->has(GameRule::HalfLife)) {
+                $tribute->changeHp(-intdiv(Tribute::MAX_HP, 2));
+            }
+        }
     }
 
     /** Añade un aviso que aparecerá al principio de la próxima ronda */
@@ -132,6 +172,7 @@ class Simulation
         int $seed,
         array $districts,
         array $items,
+        GameRules $rules = new GameRules,
         EventResolver $resolver = new EventResolver,
     ): self {
         $tributes = array_map(
@@ -152,7 +193,7 @@ class Simulation
             $tribute->restoreAllies(array_map(fn (string $name) => $byName[$name], $state['tributes'][$i]['allies']));
         }
 
-        $simulation = new self($tributes, $events, $seed, $resolver);
+        $simulation = new self($tributes, $events, $seed, $rules, $resolver);
         $simulation->round = $state['round'];
         $simulation->lastArenaRound = $state['last_arena_round'];
         $simulation->phase = EventPhase::forRound(max(1, $state['round']));
@@ -246,11 +287,14 @@ class Simulation
     /** ¿Toca catástrofe en esta ronda? Primero se mira si es posible y solo entonces se tira el dado */
     private function shouldStartArena(): bool
     {
+        // "Los Vigilantes se aburren": desde el Día 1, con más frecuencia y mucha más probabilidad
+        $bored = $this->rules->has(GameRule::Catastrophes);
+
         return $this->phase !== EventPhase::Bloodbath
-            && $this->round >= self::ARENA_FIRST_ROUND
-            && $this->round - $this->lastArenaRound >= self::ARENA_COOLDOWN
+            && $this->round >= ($bored ? self::BORED_ARENA_FIRST_ROUND : self::ARENA_FIRST_ROUND)
+            && $this->round - $this->lastArenaRound >= ($bored ? self::BORED_ARENA_COOLDOWN : self::ARENA_COOLDOWN)
             && $this->events->hasArenas()
-            && $this->chance(self::ARENA_EVENT_CHANCE);
+            && $this->chance($bored ? self::BORED_ARENA_CHANCE : self::ARENA_EVENT_CHANCE);
     }
 
     /**
@@ -416,7 +460,7 @@ class Simulation
             $category = $this->chanceFor($a, Personality::BETRAYAL, self::BETRAYAL_CHANCE) ? EventCategory::Betrayal : EventCategory::Ally;
         } elseif ($this->canAlly($a, $b) && $this->friendshipChance($a, $b)) {
             $category = EventCategory::Befriend;
-        } elseif ($a->bestItemOfType(ItemType::Weapon) !== null && $this->chanceFor($a, Personality::WEAPON, self::WEAPON_CHANCE)) {
+        } elseif ($this->canUseWeapon($a) && $this->chanceFor($a, Personality::WEAPON, self::WEAPON_CHANCE)) {
             $category = EventCategory::Weapon;
         } else {
             $category = EventCategory::Duo;
@@ -432,6 +476,19 @@ class Simulation
         return $event !== null ? [$event, [$a, $b]] : null;
     }
 
+    /**
+     * Con "Armados hasta los dientes" todos llevan arma desde el principio, pero en la Cornucopia
+     * se sigue peleando por las provisiones: si no, el baño de sangre apenas tendría muertes.
+     */
+    private function canUseWeapon(Tribute $a): bool
+    {
+        if ($this->phase === EventPhase::Bloodbath && $this->rules->has(GameRule::Armed)) {
+            return false;
+        }
+
+        return $a->bestItemOfType(ItemType::Weapon) !== null;
+    }
+
     private function soloEvent(Tribute $a): array
     {
         $discoveryChance = $this->phase === EventPhase::Bloodbath ? self::BLOODBATH_DISCOVERY_CHANCE : self::DISCOVERY_CHANCE;
@@ -439,7 +496,8 @@ class Simulation
 
         $event = $this->pick($category, $a)
             ?? $this->pick(EventCategory::Solo, $a)
-            ?? $this->pick(EventCategory::Discovery, $a)
+            // Con "Escasez" no se encuentra nada, ni siquiera si no queda otra
+            ?? ($this->rules->has(GameRule::Scarcity) ? null : $this->pick(EventCategory::Discovery, $a))
             // Por si todos los eventos individuales fueran de otra fase
             ?? $this->pick(EventCategory::Solo, $a, anyPhase: true);
 
@@ -480,10 +538,10 @@ class Simulation
         return $size <= self::MAX_ALLIANCE_SIZE && $size < count($this->alive());
     }
 
-    /** Lo que la personalidad del tributo suma o resta a una decisión (0 si es equilibrado) */
+    /** Lo que suman o restan a una decisión la personalidad del tributo y las reglas de la partida */
     private function modifier(Tribute $tribute, string $decision): int
     {
-        return $tribute->personality?->modifier($decision) ?? 0;
+        return ($tribute->personality?->modifier($decision) ?? 0) + $this->rules->modifier($decision);
     }
 
     /** Como chance(), pero con la probabilidad ajustada por la personalidad del tributo */
@@ -498,7 +556,11 @@ class Simulation
      */
     private function friendshipChance(Tribute $a, Tribute $b): bool
     {
-        $modifier = intdiv($this->modifier($a, Personality::FRIENDSHIP) + $this->modifier($b, Personality::FRIENDSHIP), 2);
+        // La media de las dos personalidades, más lo que digan las reglas de la partida
+        $modifier = intdiv(
+            ($a->personality?->modifier(Personality::FRIENDSHIP) ?? 0) + ($b->personality?->modifier(Personality::FRIENDSHIP) ?? 0),
+            2,
+        ) + $this->rules->modifier(Personality::FRIENDSHIP);
 
         if ($a->district->slug === $b->district->slug) {
             $modifier += self::DISTRICT_FRIENDSHIP_BONUS;

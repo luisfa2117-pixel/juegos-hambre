@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\PlayGame;
 use App\Actions\SendSponsorGift;
+use App\Enums\GameRule;
 use App\Http\Requests\GameRequest;
 use App\Models\District;
 use App\Models\Game;
@@ -37,6 +38,7 @@ class GameController extends Controller
             'districts' => $districts,
             'allIds' => $allIds,
             'totalCharacters' => count($allIds),
+            'gameRules' => GameRule::cases(),
         ]);
     }
 
@@ -50,7 +52,13 @@ class GameController extends Controller
         }
 
         $characters = $request->user()->characters()->whereIn('id', $request->validated('characters'))->get();
-        $game = $playGame->handle($request->user(), $characters, $request->validated('seed'));
+        $game = $playGame->handle(
+            $request->user(),
+            $characters,
+            $request->validated('seed'),
+            $request->gameRules(),
+            $request->boolean('quell'),
+        );
 
         return redirect()->route('games.show', [$game, 'round' => 1]);
     }

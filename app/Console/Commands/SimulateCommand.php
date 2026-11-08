@@ -3,8 +3,12 @@
 namespace App\Console\Commands;
 
 use App\Enums\EventPhase;
+use App\Enums\GameRule;
+use App\Enums\ItemType;
+use App\Models\Item;
 use App\Models\User;
 use App\Simulation\EventPool;
+use App\Simulation\GameRules;
 use App\Simulation\Simulation;
 use App\Simulation\Tribute;
 use Illuminate\Console\Command;
@@ -13,10 +17,14 @@ use Illuminate\Console\Command;
  * Tu Main.java: simula una partida entera y la muestra en la terminal.
  * Uso: php artisan simulate             (partida al azar)
  *      php artisan simulate --seed=42   (repite siempre la misma partida)
+ *      php artisan simulate --regla=armed --regla=half_life
+ *      php artisan simulate --vasallaje
  */
 class SimulateCommand extends Command
 {
-    protected $signature = 'simulate {--seed= : Semilla para repetir exactamente una partida} {--email=demo@juegos.test : De quién son los personajes}';
+    protected $signature = 'simulate {--seed= : Semilla para repetir exactamente una partida} {--email=demo@juegos.test : De quién son los personajes}
+        {--regla=* : Reglas especiales (no_alliances, traitors, armed, half_life, catastrophes, scarcity)}
+        {--vasallaje : Vasallaje de los 25: dos reglas al azar}';
 
     protected $description = 'Simula una partida completa con los personajes de la base de datos';
 
@@ -46,13 +54,29 @@ class SimulateCommand extends Command
 
         $seed = $this->option('seed') !== null ? (int) $this->option('seed') : random_int(1, 999_999);
 
-        $simulation = new Simulation(
-            $tributes,
-            EventPool::fromDatabase(),
-            $seed,
-        );
+        $unknown = array_filter($this->option('regla'), fn (string $value) => GameRule::tryFrom($value) === null);
+        if ($unknown !== []) {
+            $this->error('No existe la regla: '.implode(', ', $unknown));
+
+            return self::FAILURE;
+        }
+
+        $rules = $this->option('vasallaje')
+            ? new GameRules(GameRule::quell($seed))
+            : GameRules::fromValues($this->option('regla'));
+
+        $simulation = new Simulation($tributes, EventPool::fromDatabase(), $seed, $rules);
+        $simulation->applyStartingRules(Item::where('type', ItemType::Weapon)->orderBy('id')->get()->all());
+
+        if ($announcement = $rules->announcement($this->option('vasallaje'))) {
+            $simulation->announce($announcement);
+        }
 
         $this->info("Semilla: {$seed}   (para repetir esta partida: php artisan simulate --seed={$seed})");
+        if (! $rules->isEmpty()) {
+            $prefix = $this->option('vasallaje') ? 'Vasallaje de los 25' : 'Reglas';
+            $this->warn("{$prefix}: ".implode(', ', array_map(fn (GameRule $rule) => $rule->label(), $rules->all())));
+        }
         $this->line('Participan: '.implode(', ', array_map(fn (Tribute $t) => $t->name, $tributes)));
 
         while (! $simulation->isOver() && $simulation->round() < self::MAX_ROUNDS) {

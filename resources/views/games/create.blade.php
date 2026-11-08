@@ -39,6 +39,35 @@
                 @endforeach
             </div>
 
+            <fieldset class="mt-10 max-w-2xl">
+                <legend class="font-condensed text-xl font-semibold">Reglas especiales</legend>
+                <p class="mb-4 text-sm text-ash-muted">Opcionales. Puedes combinar varias.</p>
+
+                @error('rules') <p class="field-error mb-4">{{ $message }}</p> @enderror
+                @error('rules.*') <p class="field-error mb-4">{{ $message }}</p> @enderror
+
+                <label class="mb-4 flex cursor-pointer items-start gap-3 rounded-sm border border-blood/60 p-3 hover:bg-asphalt-raised">
+                    <input type="checkbox" name="quell" value="1" class="mt-1 size-4 accent-blood" data-quell @checked(old('quell'))>
+                    <span>
+                        <span class="block font-semibold text-blood">Vasallaje de los 25</span>
+                        <span class="block text-sm text-ash-muted">El Capitolio elige dos reglas por sorpresa. No sabrás cuáles hasta que empiece.</span>
+                    </span>
+                </label>
+
+                <div class="grid gap-2 sm:grid-cols-2" data-rules>
+                    @foreach ($gameRules as $rule)
+                        <label class="flex cursor-pointer items-start gap-3 rounded-sm px-2 py-1.5 hover:bg-asphalt-raised">
+                            <input type="checkbox" name="rules[]" value="{{ $rule->value }}" class="mt-1 size-4 accent-hazard"
+                                   @checked(in_array($rule->value, old('rules', [])))>
+                            <span>
+                                <span class="block">{{ $rule->label() }}</span>
+                                <span class="block text-sm text-ash-muted">{{ $rule->description() }}</span>
+                            </span>
+                        </label>
+                    @endforeach
+                </div>
+            </fieldset>
+
             <details class="mt-8 max-w-sm">
                 <summary class="cursor-pointer text-ash-muted hover:text-ash">Repetir una partida concreta</summary>
                 <div class="mt-3">
@@ -61,6 +90,15 @@
                     document.querySelectorAll('input[name="characters[]"]').forEach(box => box.checked = checked);
                 });
             });
+
+            // Con el Vasallaje, las reglas las elige el Capitolio: se desactivan las demás
+            const quell = document.querySelector('[data-quell]');
+            const syncRules = () => {
+                document.querySelector('[data-rules]').classList.toggle('opacity-40', quell.checked);
+                document.querySelectorAll('input[name="rules[]"]').forEach(box => box.disabled = quell.checked);
+            };
+            quell.addEventListener('change', syncRules);
+            syncRules();
         </script>
     @endif
 </x-layout>

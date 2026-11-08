@@ -4,6 +4,7 @@ namespace Tests\Unit\Simulation;
 
 use App\Enums\EventCategory;
 use App\Enums\EventPhase;
+use App\Enums\GameRule;
 use App\Enums\Gender;
 use App\Enums\ItemType;
 use App\Enums\Personality;
@@ -13,6 +14,7 @@ use App\Models\GameEvent;
 use App\Models\Item;
 use App\Simulation\EventPool;
 use App\Simulation\EventResult;
+use App\Simulation\GameRules;
 use App\Simulation\Simulation;
 use App\Simulation\Tribute;
 use LogicException;
@@ -98,9 +100,9 @@ class SimulationTest extends TestCase
         ]);
     }
 
-    private function simulation(array $tributes, EventPool $pool, int $seed): Simulation
+    private function simulation(array $tributes, EventPool $pool, int $seed, GameRules $rules = new GameRules): Simulation
     {
-        return new Simulation($tributes, $pool, $seed);
+        return new Simulation($tributes, $pool, $seed, $rules);
     }
 
     /** Juega una partida entera y devuelve todos los textos (con un límite por si acaso). */
@@ -721,5 +723,163 @@ class SimulationTest extends TestCase
 
         $this->expectException(LogicException::class);
         $simulation->runRound();
+    }
+
+    // ---- Reglas especiales ----
+
+    /** Cuántos eventos de cada tipo salen en 200 rondas sueltas con estas reglas */
+    private function categoriesWith(GameRules $rules, ?callable $setup = null): array
+    {
+        $counts = [];
+
+        foreach (range(1, 200) as $seed) {
+            $tributes = $this->tributes();
+            $simulation = $this->simulation($tributes, $this->harmlessPool(), $seed, $rules);
+            $setup && $setup($tributes);
+            $simulation->runRound();
+
+            foreach ($simulation->runRound() as $result) {
+                $category = substr($result->text, 1, strpos($result->text, ']') - 1);
+                $counts[$category] = ($counts[$category] ?? 0) + 1;
+            }
+        }
+
+        return $counts;
+    }
+
+    public function test_without_alliances_nobody_befriends_anybody(): void
+    {
+        $counts = $this->categoriesWith(new GameRules([GameRule::NoAlliances]));
+
+        $this->assertArrayNotHasKey('befriend', $counts);
+        $this->assertArrayNotHasKey('ally', $counts);
+        $this->assertArrayNotHasKey('betrayal', $counts);
+        $this->assertGreaterThan(0, $counts['duo']);
+    }
+
+    public function test_traitors_rule_means_more_alliances_and_more_betrayals(): void
+    {
+        // Para las traiciones, que todos empiecen aliados por parejas
+        $inPairs = function (array $tributes) {
+            for ($i = 0; $i < count($tributes); $i += 2) {
+                $tributes[$i]->befriend($tributes[$i + 1]);
+            }
+        };
+
+        $this->assertGreaterThan(
+            $this->categoriesWith(new GameRules)['befriend'],
+            $this->categoriesWith(new GameRules([GameRule::Traitors]))['befriend'],
+        );
+        $this->assertGreaterThan(
+            $this->categoriesWith(new GameRules, $inPairs)['betrayal'],
+            $this->categoriesWith(new GameRules([GameRule::Traitors]), $inPairs)['betrayal'],
+        );
+    }
+
+    public function test_scarcity_means_no_discoveries(): void
+    {
+        $counts = $this->categoriesWith(new GameRules([GameRule::Scarcity]));
+
+        $this->assertArrayNotHasKey('discovery', $counts);
+        $this->assertGreaterThan(0, $counts['solo']);
+    }
+
+    public function test_armed_rule_gives_everybody_a_weapon_before_the_first_round(): void
+    {
+        $tributes = $this->tributes();
+        $simulation = $this->simulation($tributes, $this->harmlessPool(), 1, new GameRules([GameRule::Armed]));
+
+        $simulation->applyStartingRules([$this->knife()]);
+
+        foreach ($tributes as $tribute) {
+            $this->assertNotNull($tribute->bestItemOfType(ItemType::Weapon), "{$tribute->name} no lleva arma");
+        }
+    }
+
+    public function test_with_everybody_armed_the_bloodbath_is_still_about_supplies(): void
+    {
+        foreach (range(1, 30) as $seed) {
+            $simulation = $this->simulation($this->tributes(), $this->harmlessPool(), $seed, new GameRules([GameRule::Armed]));
+            $simulation->applyStartingRules([$this->knife()]);
+
+            foreach ($simulation->runRound() as $result) {
+                $this->assertStringStartsNotWith('[weapon]', $result->text);
+            }
+        }
+    }
+
+    public function test_half_life_rule_halves_everybodys_health(): void
+    {
+        $tributes = $this->tributes();
+        $simulation = $this->simulation($tributes, $this->harmlessPool(), 1, new GameRules([GameRule::HalfLife]));
+
+        $simulation->applyStartingRules([]);
+
+        foreach ($tributes as $tribute) {
+            $this->assertSame(intdiv(Tribute::MAX_HP, 2), $tribute->hp());
+        }
+    }
+
+    public function test_starting_rules_only_apply_before_the_first_round(): void
+    {
+        $simulation = $this->simulation($this->tributes(), $this->harmlessPool(), 1, new GameRules([GameRule::Armed]));
+        $simulation->runRound();
+
+        $this->expectException(LogicException::class);
+        $simulation->applyStartingRules([$this->knife()]);
+    }
+
+    public function test_starting_rules_do_not_change_the_randomness_of_the_rounds(): void
+    {
+        // Sin armas que dar, "Armados" no cambia nada: la partida tiene que ser la misma que sin reglas
+        $plain = $this->simulation($this->tributes(), $this->deadlyPool(), 7);
+        $armed = $this->simulation($this->tributes(), $this->deadlyPool(), 7, new GameRules([GameRule::Armed]));
+        $armed->applyStartingRules([]);
+
+        $this->assertSame($this->playToEnd($plain), $this->playToEnd($armed));
+    }
+
+    public function test_bored_gamemakers_start_catastrophes_earlier_and_more_often(): void
+    {
+        $count = function (GameRules $rules) {
+            $arenas = 0;
+            $earliest = PHP_INT_MAX;
+
+            foreach (range(1, 40) as $seed) {
+                $simulation = $this->simulation($this->tributes(), $this->poolWithArena(), $seed, $rules);
+
+                for ($i = 0; $i < 12; $i++) {
+                    if ($simulation->runRound()[0]->arena !== null) {
+                        $arenas++;
+                        $earliest = min($earliest, $simulation->round());
+                    }
+                }
+            }
+
+            return [$arenas, $earliest];
+        };
+
+        [$normal] = $count(new GameRules);
+        [$bored, $earliest] = $count(new GameRules([GameRule::Catastrophes]));
+
+        $this->assertGreaterThan($normal * 2, $bored);
+        $this->assertSame(Simulation::BORED_ARENA_FIRST_ROUND, $earliest);
+    }
+
+    public function test_a_resumed_game_keeps_its_rules(): void
+    {
+        $districts = ['test' => $this->tribute('x')->district];
+        $rules = new GameRules([GameRule::NoAlliances, GameRule::Catastrophes]);
+
+        foreach (range(1, 10) as $seed) {
+            $original = $this->simulation($this->tributes(), $this->deadlyPool(), $seed, $rules);
+            $original->runRound();
+            $original->runRound();
+            $state = $original->toState();
+
+            $resumed = Simulation::fromState($state, $this->deadlyPool(), $seed, $districts, ['cuchillo' => $this->knife()], $rules);
+
+            $this->assertSame($this->playToEnd($original), $this->playToEnd($resumed), "Semilla {$seed}");
+        }
     }
 }

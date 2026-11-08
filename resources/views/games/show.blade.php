@@ -11,6 +11,7 @@
                 Jugada el {{ $game->created_at->format('d/m/Y') }} a las {{ $game->created_at->format('H:i') }}
                 con {{ $game->tributes->count() }} tributos. Semilla {{ $game->seed }}.
             </p>
+            <x-game-rules :game="$game" class="mt-3" />
         </div>
 
         <form method="POST" action="{{ route('games.destroy', $game) }}"
@@ -231,6 +232,13 @@
                             <form method="POST" action="{{ route('games.store') }}">
                                 @csrf
                                 <input type="hidden" name="seed" value="{{ $game->seed }}">
+                                @if ($game->quell)
+                                    <input type="hidden" name="quell" value="1">
+                                @else
+                                    @foreach ($game->rules as $rule)
+                                        <input type="hidden" name="rules[]" value="{{ $rule }}">
+                                    @endforeach
+                                @endif
                                 @foreach ($game->tributes as $tribute)
                                     <input type="hidden" name="characters[]" value="{{ $tribute->character_id }}">
                                 @endforeach

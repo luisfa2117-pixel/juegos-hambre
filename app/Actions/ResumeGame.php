@@ -40,6 +40,7 @@ class ResumeGame
             $game->seed,
             District::all()->keyBy('slug')->all(),
             Item::all()->keyBy('slug')->all(),
+            $game->gameRules(),
         );
 
         if ($change !== null) {

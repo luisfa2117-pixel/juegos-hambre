@@ -36,6 +36,7 @@
                                 {{ $game->tributes->count() }} tributos,
                                 {{ trans_choice(':count ronda|:count rondas', $game->total_rounds) }}
                             </p>
+                            <x-game-rules :game="$game" class="mt-1" />
                         </div>
                     </a>
                 </li>

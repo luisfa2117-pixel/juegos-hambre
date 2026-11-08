@@ -2,13 +2,29 @@
 
 namespace App\Models;
 
+use App\Simulation\GameRules;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property array<int, string> $rules
+ * @property bool $quell
+ */
 class Game extends Model
 {
-    protected $fillable = ['seed', 'total_rounds', 'revealed_round'];
+    protected $fillable = ['seed', 'total_rounds', 'revealed_round', 'rules', 'quell'];
+
+    protected $casts = [
+        'rules' => 'array',
+        'quell' => 'boolean',
+    ];
+
+    /** Las reglas especiales de la partida, listas para el motor */
+    public function gameRules(): GameRules
+    {
+        return GameRules::fromValues($this->rules);
+    }
 
     /** @return BelongsTo<User, $this> */
     public function user(): BelongsTo
