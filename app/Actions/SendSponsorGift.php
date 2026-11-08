@@ -39,6 +39,7 @@ class SendSponsorGift
     public static function unavailableReason(Game $game): ?string
     {
         return match (true) {
+            $game->revealed_round < 1 => 'Mira primero la primera ronda.',
             $game->revealed_round >= $game->total_rounds => 'Ya has visto el final de la partida: lo que ha pasado no se puede cambiar.',
             $game->gifts()->count() >= self::MAX_GIFTS => 'Ya has enviado los '.self::MAX_GIFTS.' regalos de esta partida.',
             $game->rounds()->where('number', $game->revealed_round)->value('state') === null => 'Esta partida se jugó antes de que existieran los patrocinadores.',

@@ -73,6 +73,8 @@ class PlayGame
             $game = $user->games()->create([
                 'seed' => $seed,
                 'total_rounds' => 0,
+                // Aún no has visto ninguna ronda: así la primera también se cuenta en directo
+                'revealed_round' => 0,
                 'rules' => $rules->values(),
                 'quell' => $quell,
             ]);

@@ -22,6 +22,9 @@
         </form>
     </div>
 
+    {{-- Modo en directo: la ronda nueva aparece evento a evento (ver games/partials/live) --}}
+    @include('games.partials.live-controls')
+
     <div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_18rem]">
         {{-- El relato, ronda a ronda --}}
         <div>
@@ -29,9 +32,11 @@
                 @php
                     $deaths = collect($gameRound->events)->pluck('deaths')->flatten();
                     $phase = EventPhase::forRound($gameRound->number);
+                    // Solo se cuenta en directo la última ronda, y solo si es la primera vez que la ves
+                    $isLive = $live && $loop->last;
                 @endphp
 
-                <section aria-labelledby="ronda-{{ $gameRound->number }}" class="mt-10 first:mt-0">
+                <section aria-labelledby="ronda-{{ $gameRound->number }}" class="mt-10 first:mt-0" @if ($isLive) data-live-round="{{ $gameRound->number }}" @endif>
                     <h2 id="ronda-{{ $gameRound->number }}" @class([
                         'mb-2 scroll-mt-6 rounded-sm p-2',
                         'blood-stripes' => $phase === EventPhase::Bloodbath,
@@ -50,7 +55,7 @@
                         @foreach ($gameRound->events as $event)
                             {{-- El aviso de un regalo de patrocinador --}}
                             @if ($event['gift'] ?? false)
-                                <li class="my-3 rounded-sm border-l-4 border-hazard bg-hazard/10 px-4 py-3">
+                                <li class="my-3 rounded-sm border-l-4 border-hazard bg-hazard/10 px-4 py-3" data-live-item>
                                     🎁 {{ $event['text'] }}
                                 </li>
                                 @continue
@@ -58,14 +63,14 @@
 
                             {{-- El anuncio de una catástrofe de los Vigilantes --}}
                             @if ($event['arena'] ?? null)
-                                <li class="my-3 rounded-sm border-2 border-blood bg-blood/10 p-4">
+                                <li class="my-3 rounded-sm border-2 border-blood bg-blood/10 p-4" data-live-item data-live-kind="arena">
                                     <p class="font-display text-2xl text-blood">{{ $event['arena'] }}</p>
                                     <p class="mt-1">{{ $event['text'] }}</p>
                                 </li>
                                 @continue
                             @endif
 
-                            <li class="py-3">
+                            <li class="py-3" data-live-item data-live-deaths="{{ count($event['deaths']) }}">
                                 <p class="text-ash/90">{{ TextHighlighter::names($event['text'], $tributeNames) }}</p>
 
                                 @if ($event['notes'])
@@ -87,7 +92,7 @@
                     </ul>
 
                     @if ($deaths->isNotEmpty())
-                        <p class="mt-2 border-l-4 border-blood pl-3 text-sm">
+                        <p class="mt-2 border-l-4 border-blood pl-3 text-sm" data-live-item>
                             {{ trans_choice('Se oye :count cañonazo|Se oyen :count cañonazos', $deaths->count()) }}:
                             {{ $deaths->join(', ', ' y ') }}.
                         </p>
@@ -103,7 +108,7 @@
                                 ->sortBy('died_in_round');
                         @endphp
 
-                        <div class="mt-4 rounded-sm border border-asphalt-line bg-asphalt-raised p-4">
+                        <div class="mt-4 rounded-sm border border-asphalt-line bg-asphalt-raised p-4" data-live-item data-live-kind="sky">
                             <p class="font-condensed text-lg font-semibold text-night">Los rostros en el cielo</p>
                             <p class="text-sm text-ash-muted">
                                 {{ $gameRound->number === 3 ? 'Los caídos desde el baño de sangre.' : 'Los caídos del día ' . intdiv($gameRound->number, 2) . '.' }}
@@ -114,7 +119,7 @@
                             @else
                                 <ul class="mt-3 flex flex-wrap gap-x-6 gap-y-3">
                                     @foreach ($fallen as $tribute)
-                                        <li class="flex items-center gap-2">
+                                        <li class="flex items-center gap-2" data-live-face style="--live-index: {{ $loop->index }}">
                                             <x-tribute-avatar :name="$tribute->name" :district="$tribute->district->slug" :image="$tribute->character?->image_url" />
                                             <span>
                                                 <span class="block font-semibold">{{ $tribute->name }}</span>
@@ -130,14 +135,14 @@
             @endforeach
 
             @if (! $finished)
-                <div class="mt-8 flex flex-wrap items-center gap-3">
+                <div class="mt-8 flex flex-wrap items-center gap-3" data-live-after>
                     <a href="{{ route('games.show', [$game, 'round' => $round + 1]) }}#ronda-{{ $round + 1 }}" class="btn">Siguiente ronda</a>
                     <a href="{{ route('games.show', [$game, 'round' => $game->total_rounds]) }}#resultado" class="btn-quiet"
                        @if ($canSponsor) onclick="return confirm('Si ves el final, ya no podrás enviar regalos en esta partida. ¿Seguir?')" @endif>Ver el final</a>
                 </div>
 
                 {{-- Patrocinadores. El id es el destino del #patrocinar al volver de enviar un regalo --}}
-                <div id="patrocinar" class="mt-8 scroll-mt-6 space-y-4">
+                <div id="patrocinar" class="mt-8 scroll-mt-6 space-y-4" data-live-after>
                 @if (session('gift_status'))
                     <p role="status" class="rounded-sm border-l-4 border-ally bg-asphalt-raised px-4 py-3">{{ session('gift_status') }}</p>
                 @endif
@@ -183,7 +188,7 @@
                 </div>
             @else
                 {{-- Resumen final --}}
-                <section id="resultado" class="mt-12 scroll-mt-6">
+                <section id="resultado" class="mt-12 scroll-mt-6" data-live-after>
                     @if ($bet)
                         @if ($bet->won())
                             <p role="status" class="mb-4 rounded-sm border-l-4 border-ally bg-asphalt-raised px-4 py-3">
@@ -263,7 +268,7 @@
         </div>
 
         {{-- Estado de los tributos tras la última ronda vista --}}
-        <aside class="lg:sticky lg:top-6 lg:self-start">
+        <aside class="lg:sticky lg:top-6 lg:self-start" data-live-aside>
             <h2 class="mb-3 font-condensed text-xl font-semibold">{{ EventPhase::afterRound($round) }}</h2>
 
             @if ($bet)
@@ -318,4 +323,6 @@
             </ul>
         </aside>
     </div>
+
+    @include('games.partials.live-script')
 </x-layout>

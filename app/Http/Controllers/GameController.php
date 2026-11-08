@@ -74,6 +74,9 @@ class GameController extends Controller
         // Si alguien pone ?round=999 o ?round=-3 en la URL, lo dejamos dentro de los límites
         $round = min(max((int) $request->query('round', 1), 1), $game->total_rounds);
 
+        // Modo en directo: solo para una ronda que aún no habías visto (al recargar ya no se repite)
+        $live = $round > $game->revealed_round;
+
         // Lo que ya has visto, ha pasado: los patrocinadores solo pueden cambiar lo que viene después
         if ($round > $game->revealed_round) {
             $game->update(['revealed_round' => $round]);
@@ -83,6 +86,7 @@ class GameController extends Controller
             'game' => $game,
             'round' => $round,
             'finished' => $round === $game->total_rounds,
+            'live' => $live,
             'visibleRounds' => $game->rounds->take($round),
             'snapshot' => $this->sortedSnapshot($game->rounds[$round - 1]->tributes),
             'tributesByName' => $game->tributes->keyBy('name'),
