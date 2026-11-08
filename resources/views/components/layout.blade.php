@@ -1,4 +1,7 @@
-@props(['title' => 'Juegos del Hambre'])
+@props([
+    'title' => 'Juegos del Hambre',
+    'description' => 'Simulador de los Juegos del Hambre en una Norteamérica futurista en ruinas: crea tributos, mira cómo sobreviven ronda a ronda y patrocina a tus favoritos.',
+])
 
 <!DOCTYPE html>
 <html lang="es">
@@ -8,10 +11,19 @@
     {{-- Lo usa el JavaScript que hace peticiones con fetch (por ejemplo, la vista previa de eventos) --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title }} | Juegos del Hambre</title>
+    <meta name="description" content="{{ $description }}">
+    <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600&family=Saira+Stencil+One&display=swap" rel="stylesheet">
+    {{-- Cómo se ve el enlace al compartirlo (WhatsApp, LinkedIn...) --}}
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ $title }} | Juegos del Hambre">
+    <meta property="og:description" content="{{ $description }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    @if (file_exists(public_path('og-image.png')))
+        <meta property="og:image" content="{{ asset('og-image.png') }}">
+    @endif
+
+    {{-- Las fuentes ya no vienen de Google: van dentro del CSS que compila Vite (ver app.css) --}}
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -42,10 +54,13 @@
                         </a>
                     @endforeach
 
-                    <form method="POST" action="{{ route('logout') }}" class="flex items-center gap-3 border-l border-asphalt-line pl-5">
+                    <form method="POST" action="{{ route('logout') }}" class="flex items-center gap-3 border-l border-asphalt-line pl-5"
+                          @if (auth()->user()->is_guest)
+                              onsubmit="return confirm('Eres un invitado: al salir se borrarán tus tributos y tus partidas. ¿Seguro?')"
+                          @endif>
                         @csrf
                         <span class="text-sm text-ash-muted">{{ auth()->user()->name }}</span>
-                        <button type="submit" class="btn-quiet">Salir</button>
+                        <button type="submit" class="btn-quiet">{{ auth()->user()->is_guest ? 'Salir y borrar' : 'Salir' }}</button>
                     </form>
                 </nav>
             @endauth
@@ -67,5 +82,11 @@
 
         {{ $slot }}
     </main>
+
+    <footer class="mx-auto max-w-5xl border-t border-asphalt-line px-4 py-6 text-sm text-ash-muted">
+        Un proyecto de {{ config('juegos.author') }}.
+        <a href="{{ route('about') }}" class="underline hover:text-hazard">Acerca del proyecto y privacidad</a>.
+        <a href="{{ config('juegos.repository') }}" class="underline hover:text-hazard">El código, en GitHub</a>.
+    </footer>
 </body>
 </html>

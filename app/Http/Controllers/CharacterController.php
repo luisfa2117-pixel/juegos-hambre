@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CharacterRequest;
 use App\Models\Character;
 use App\Models\District;
+use App\Services\AvatarImage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -13,6 +14,8 @@ use Illuminate\View\View;
 
 class CharacterController extends Controller
 {
+    public function __construct(private readonly AvatarImage $avatars) {}
+
     /** Lista de personajes, agrupados por distrito */
     public function index(Request $request): View
     {
@@ -37,12 +40,18 @@ class CharacterController extends Controller
 
     public function store(CharacterRequest $request): RedirectResponse
     {
+        $limit = config('juegos.limits.characters');
+
+        if ($request->user()->characters()->count() >= $limit) {
+            return back()->withInput()->with('error', "Has llegado al máximo de {$limit} personajes. Borra alguno para crear otro.");
+        }
+
         // make() crea el personaje ya asignado al usuario (user_id), sin guardarlo todavía
         $character = $request->user()->characters()->make($request->safe()->only(['name', 'gender', 'district_id', 'personality']));
 
         if ($request->hasFile('image')) {
             // Guarda el fichero en storage/app/public/characters con un nombre único
-            $character->image_path = $request->file('image')->store('characters', 'public');
+            $character->image_path = $this->avatars->store($request->file('image'));
         }
 
         $character->save();
@@ -83,7 +92,7 @@ class CharacterController extends Controller
         $character->fill($request->safe()->only(['name', 'gender', 'district_id', 'personality']));
 
         if ($request->hasFile('image')) {
-            $character->image_path = $request->file('image')->store('characters', 'public');
+            $character->image_path = $this->avatars->store($request->file('image'));
         } elseif ($request->boolean('remove_image')) {
             $character->image_path = null;
         }

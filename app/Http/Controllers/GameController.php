@@ -43,6 +43,12 @@ class GameController extends Controller
     // PlayGame llega por inyección de dependencias, igual que en el comando game:play
     public function store(GameRequest $request, PlayGame $playGame): RedirectResponse
     {
+        $limit = config('juegos.limits.games');
+
+        if ($request->user()->games()->count() >= $limit) {
+            return back()->with('error', "Tienes {$limit} partidas guardadas, que es el máximo. Borra alguna para jugar más.");
+        }
+
         $characters = $request->user()->characters()->whereIn('id', $request->validated('characters'))->get();
         $game = $playGame->handle($request->user(), $characters, $request->validated('seed'));
 

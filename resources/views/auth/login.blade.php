@@ -27,8 +27,18 @@
             <button type="submit" class="btn w-full">Entrar</button>
         </form>
 
-        <p class="mt-6 text-center text-sm text-ash-muted">
-            ¿No tienes cuenta? <a href="{{ route('register') }}" class="text-hazard underline">Regístrate</a>
-        </p>
+        <div class="mt-8 border-t border-asphalt-line pt-6 text-center">
+            <p class="text-sm text-ash-muted">¿Solo quieres probarlo?</p>
+            <form method="POST" action="{{ route('guest.store') }}" class="mt-2">
+                @csrf
+                <button type="submit" class="btn-quiet">Probar sin registrarse</button>
+            </form>
+
+            @if (Route::has('register'))
+                <p class="mt-4 text-sm text-ash-muted">
+                    ¿Quieres guardar tus partidas? <a href="{{ route('register') }}" class="text-hazard underline">Crea una cuenta</a>
+                </p>
+            @endif
+        </div>
     </div>
 </x-layout>

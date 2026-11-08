@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Actions\DeleteAccount;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -44,11 +45,20 @@ class SessionController extends Controller
         return redirect()->intended(route('games.index'));
     }
 
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(Request $request, DeleteAccount $deleteAccount): RedirectResponse
     {
+        $user = $request->user();
+
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
+        // Un invitado no puede volver a entrar (no tiene contraseña): al salir, se borra todo lo suyo
+        if ($user->is_guest) {
+            $deleteAccount->handle($user);
+
+            return redirect()->route('home')->with('status', 'Tu cuenta de invitado y sus partidas se han borrado.');
+        }
 
         return redirect()->route('login');
     }

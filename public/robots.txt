@@ -1,2 +1,5 @@
+# La portada y la página "Acerca" se pueden indexar; el resto es la aplicación, detrás del login
 User-agent: *
-Disallow:
+Allow: /$
+Allow: /acerca$
+Disallow: /

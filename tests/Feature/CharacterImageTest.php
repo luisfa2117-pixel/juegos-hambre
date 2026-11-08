@@ -59,6 +59,18 @@ class CharacterImageTest extends TestCase
         Storage::disk('public')->assertExists($kira->image_path);
     }
 
+    public function test_photo_is_cropped_and_reduced_to_256_pixels(): void
+    {
+        $this->post(route('characters.store'), $this->data([
+            'image' => UploadedFile::fake()->image('panoramica.jpg', 1600, 900),
+        ]));
+
+        $path = Character::where('name', 'Kira')->value('image_path');
+        [$width, $height] = getimagesizefromstring(Storage::disk('public')->get($path));
+
+        $this->assertSame([256, 256], [$width, $height]);
+    }
+
     public function test_photo_is_optional(): void
     {
         $this->post(route('characters.store'), $this->data())->assertSessionHasNoErrors();

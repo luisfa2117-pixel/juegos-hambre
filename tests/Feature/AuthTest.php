@@ -19,11 +19,10 @@ class AuthTest extends TestCase
         $this->withoutVite();
     }
 
-    public function test_guests_are_sent_to_the_login_page(): void
+    public function test_visitors_without_session_are_sent_to_the_login_page(): void
     {
         $this->get(route('games.index'))->assertRedirect(route('login'));
         $this->get(route('characters.index'))->assertRedirect(route('login'));
-        $this->get('/')->assertRedirect(route('login'));
     }
 
     public function test_registering_creates_the_account_with_12_characters_and_logs_in(): void
