@@ -25,6 +25,8 @@ class GameRequest extends FormRequest
             'rules' => ['nullable', 'array'],
             'rules.*' => ['distinct', Rule::enum(GameRule::class)],
             'quell' => ['nullable', 'boolean'],
+            // Tiene que ser uno de los que juegan. Y con semilla no se apuesta: ya sabrías quién gana
+            'bet' => ['nullable', 'integer', Rule::in(array_filter((array) $this->input('characters', []), 'is_scalar')), 'prohibits:seed'],
         ];
     }
 
@@ -71,6 +73,9 @@ class GameRequest extends FormRequest
             'seed.max' => 'La semilla tiene que estar entre 1 y 999999.',
             'rules.*.enum' => 'Alguna de las reglas elegidas no existe.',
             'rules.*.distinct' => 'Has elegido una regla dos veces.',
+            'bet.in' => 'Solo puedes apostar por alguien que entre en la arena.',
+            'bet.integer' => 'Solo puedes apostar por alguien que entre en la arena.',
+            'bet.prohibits' => 'Con una semilla no se puede apostar: el resultado ya estaría decidido.',
         ];
     }
 }

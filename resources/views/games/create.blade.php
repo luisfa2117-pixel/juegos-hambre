@@ -39,6 +39,22 @@
                 @endforeach
             </div>
 
+            <div class="mt-10 max-w-sm">
+                <label for="bet" class="font-condensed text-xl font-semibold">¿Quién ganará?</label>
+                <p class="mb-3 text-sm text-ash-muted">Apuesta por un tributo y lleva la cuenta de tus aciertos en Estadísticas.</p>
+                <select id="bet" name="bet" class="field">
+                    <option value="">Sin apuesta</option>
+                    @foreach ($districts as $district)
+                        <optgroup label="{{ $district->name }}">
+                            @foreach ($district->characters as $character)
+                                <option value="{{ $character->id }}" @selected((string) old('bet') === (string) $character->id)>{{ $character->name }}</option>
+                            @endforeach
+                        </optgroup>
+                    @endforeach
+                </select>
+                @error('bet') <p class="field-error">{{ $message }}</p> @enderror
+            </div>
+
             <fieldset class="mt-10 max-w-2xl">
                 <legend class="font-condensed text-xl font-semibold">Reglas especiales</legend>
                 <p class="mb-4 text-sm text-ash-muted">Opcionales. Puedes combinar varias.</p>
@@ -75,6 +91,7 @@
                     <input id="seed" name="seed" type="number" min="1" max="999999" value="{{ old('seed') }}" class="field">
                     <p class="mt-1 text-sm text-ash-muted">
                         Con la misma semilla y los mismos tributos, la partida sale igual. Déjalo vacío para una partida nueva.
+                        Con semilla no se puede apostar.
                     </p>
                     @error('seed') <p class="field-error">{{ $message }}</p> @enderror
                 </div>
@@ -99,6 +116,16 @@
             };
             quell.addEventListener('change', syncRules);
             syncRules();
+
+            // Con semilla ya se sabría quién gana, así que no se apuesta
+            const seed = document.getElementById('seed');
+            const bet = document.getElementById('bet');
+            const syncBet = () => {
+                bet.disabled = seed.value !== '';
+                if (bet.disabled) bet.value = '';
+            };
+            seed.addEventListener('input', syncBet);
+            syncBet();
         </script>
     @endif
 </x-layout>

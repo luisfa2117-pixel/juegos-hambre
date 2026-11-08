@@ -184,6 +184,18 @@
             @else
                 {{-- Resumen final --}}
                 <section id="resultado" class="mt-12 scroll-mt-6">
+                    @if ($bet)
+                        @if ($bet->won())
+                            <p role="status" class="mb-4 rounded-sm border-l-4 border-ally bg-asphalt-raised px-4 py-3">
+                                <span class="font-semibold text-ally">¡Acertaste!</span> Apostaste por {{ $bet->name }}.
+                            </p>
+                        @else
+                            <p role="status" class="mb-4 rounded-sm border-l-4 border-blood bg-asphalt-raised px-4 py-3">
+                                <span class="font-semibold text-blood">Fallaste.</span> Apostaste por {{ $bet->name }}, que acabó en el puesto {{ $bet->placement }}.
+                            </p>
+                        @endif
+                    @endif
+
                     @if ($winner)
                         <div class="flex items-center gap-5 rounded-sm bg-asphalt-raised p-6">
                             <x-tribute-avatar :name="$winner->name" :district="$winner->district->slug" :image="$winner->character?->image_url" size="lg" />
@@ -253,6 +265,12 @@
         {{-- Estado de los tributos tras la última ronda vista --}}
         <aside class="lg:sticky lg:top-6 lg:self-start">
             <h2 class="mb-3 font-condensed text-xl font-semibold">{{ EventPhase::afterRound($round) }}</h2>
+
+            @if ($bet)
+                <p class="mb-3 rounded-sm border border-hazard/60 px-3 py-2 text-sm">
+                    <span class="text-ash-muted">Tu apuesta:</span> <span class="font-semibold text-hazard">{{ $bet->name }}</span>
+                </p>
+            @endif
 
             <ul class="space-y-3">
                 @foreach ($snapshot as $state)

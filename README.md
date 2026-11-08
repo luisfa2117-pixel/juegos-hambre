@@ -18,7 +18,7 @@ Empezó como un proyecto en Java que dejé a medias y lo he rehecho desde cero e
 - **8 catástrofes de los Vigilantes**: inundaciones, tormentas de ácido, sueltas de mutos... que afectan a todos los tributos a la vez.
 - **Reglas especiales**: cada uno por su cuenta, juego de traidores, armados hasta los dientes, al límite, escasez... o el **Vasallaje de los 25**, en el que el Capitolio elige dos por sorpresa.
 - **Patrocinadores**: envía hasta 3 regalos por partida a tus favoritos. La partida se vuelve a jugar desde ese momento, sin cambiar lo que ya has visto.
-- **Estadísticas**: quién mata a quién, victorias por personaje, distrito y personalidad, y las partidas más sangrientas.
+- **Estadísticas**: quién mata a quién, némesis y rivalidades, tu porcentaje de acierto en las apuestas, victorias por personaje, distrito y personalidad, y las partidas más sangrientas.
 - **Editor de eventos** con vista previa en directo, y personajes con foto.
 - **Usuarios** con sus propios personajes y partidas.
 

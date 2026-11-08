@@ -52,6 +52,24 @@ class Game extends Model
         return $this->hasMany(GameGift::class)->orderBy('id');
     }
 
+    /** @return HasMany<GameKill, $this> */
+    public function kills(): HasMany
+    {
+        return $this->hasMany(GameKill::class);
+    }
+
+    /** El tributo al que apostaste, si apostaste */
+    public function bet(): ?GameTribute
+    {
+        return $this->tributes->firstWhere('is_bet', true);
+    }
+
+    /** ¿Ya se sabe si acertaste? Solo cuando has visto la partida entera (los regalos aún pueden cambiarla) */
+    public function betSettled(): bool
+    {
+        return $this->bet() !== null && $this->revealed_round >= $this->total_rounds;
+    }
+
     /** @return HasMany<GameRound, $this> */
     public function rounds(): HasMany
     {

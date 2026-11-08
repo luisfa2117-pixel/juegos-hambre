@@ -20,6 +20,55 @@
         @endphp
 
         <div class="mt-8 grid gap-10 md:grid-cols-2">
+            <section>
+                <h2 class="font-condensed text-2xl font-semibold">Tus apuestas</h2>
+
+                @if ($bets->total === 0)
+                    <p class="mt-3 text-sm text-ash-muted">
+                        Aún no has apostado. Al crear una partida, elige quién crees que ganará.
+                    </p>
+                @else
+                    <div class="mt-3 flex items-baseline gap-6">
+                        <p>
+                            <span class="font-condensed text-5xl font-semibold text-hazard">
+                                {{ $bets->settled > 0 ? number_format(100 * $bets->won / $bets->settled, 0, ',', '') . ' %' : '—' }}
+                            </span>
+                            <span class="block text-sm text-ash-muted">de acierto</span>
+                        </p>
+                        <p class="text-sm">
+                            {{ trans_choice(':count acertada|:count acertadas', $bets->won) }} de {{ $bets->settled }}.
+                            @if ($bets->total > $bets->settled)
+                                <span class="block text-ash-muted">
+                                    {{ trans_choice(':count partida sin terminar de ver|:count partidas sin terminar de ver', $bets->total - $bets->settled) }}
+                                </span>
+                            @endif
+                        </p>
+                    </div>
+                @endif
+            </section>
+
+            <section>
+                <h2 class="font-condensed text-2xl font-semibold">Rivalidades</h2>
+                <p class="text-sm text-ash-muted">Quién ha matado más veces a quién (al menos dos).</p>
+
+                @if ($rivalries->isEmpty())
+                    <p class="mt-3 text-sm text-ash-muted">Todavía no hay cuentas pendientes.</p>
+                @else
+                    <ol class="mt-3 divide-y divide-asphalt-line border-y border-asphalt-line">
+                        @foreach ($rivalries as $rivalry)
+                            <li class="flex items-center gap-2 py-2">
+                                <x-tribute-avatar :name="$rivalry->killer->name" :district="$rivalry->killer->district->slug" :image="$rivalry->killer->image_url" size="sm" />
+                                <a href="{{ route('characters.show', $rivalry->killer) }}" class="font-semibold hover:text-hazard">{{ $rivalry->killer->name }}</a>
+                                <span class="text-blood" aria-label="ha matado a">→</span>
+                                <x-tribute-avatar :name="$rivalry->victim->name" :district="$rivalry->victim->district->slug" :image="$rivalry->victim->image_url" size="sm" />
+                                <a href="{{ route('characters.show', $rivalry->victim) }}" class="flex-1 font-semibold hover:text-hazard">{{ $rivalry->victim->name }}</a>
+                                <span class="text-sm text-ash-muted">{{ trans_choice(':count vez|:count veces', $rivalry->times) }}</span>
+                            </li>
+                        @endforeach
+                    </ol>
+                @endif
+            </section>
+
             @foreach ($rankings as $ranking)
                 <section>
                     <h2 class="font-condensed text-2xl font-semibold">{{ $ranking['title'] }}</h2>

@@ -14,12 +14,19 @@ class GameTribute extends Model
 {
     protected $fillable = [
         'character_id', 'name', 'gender', 'district_id', 'died_in_round', 'placement',
-        'kills', 'killed_by',
+        'kills', 'killed_by', 'is_bet',
     ];
 
     protected $casts = [
         'gender' => Gender::class,
+        'is_bet' => 'boolean',
     ];
+
+    /** ¿Ganó la partida? (puesto 1 y vivo: si mueren todos a la vez, el puesto 1 no es una victoria) */
+    public function won(): bool
+    {
+        return $this->placement === 1 && $this->died_in_round === null;
+    }
 
     /** @return BelongsTo<Game, $this> */
     public function game(): BelongsTo

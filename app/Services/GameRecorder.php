@@ -3,6 +3,9 @@
 namespace App\Services;
 
 use App\Models\Game;
+use App\Models\GameKill;
+use App\Models\GameRound;
+use App\Models\GameTribute;
 use App\Simulation\EventResult;
 use App\Simulation\Simulation;
 use App\Simulation\Tribute;
@@ -66,6 +69,7 @@ class GameRecorder
 
         $game->update(['total_rounds' => $rounds->count()]);
         $tributes = $game->tributes()->get();
+        $this->recordKills($game, $rounds, $tributes->keyBy('name')->all());
 
         foreach ($tributes as $tribute) {
             $died = $diedInRound[$tribute->name] ?? null;
@@ -77,6 +81,37 @@ class GameRecorder
                 'killed_by' => $killedBy[$tribute->name] ?? null,
             ]);
         }
+    }
+
+    /**
+     * Guarda en game_kills quién mató a quién, una fila por asesino.
+     * Se borran y se vuelven a crear: si un regalo cambia la partida, los asesinatos también cambian.
+     *
+     * @param  iterable<GameRound>  $rounds
+     * @param  array<string, GameTribute>  $tributesByName
+     */
+    private function recordKills(Game $game, iterable $rounds, array $tributesByName): void
+    {
+        $game->kills()->delete();
+        $rows = [];
+
+        foreach ($rounds as $round) {
+            foreach ($round->events as $event) {
+                foreach ($event['kills'] ?? [] as $kill) {
+                    foreach ($kill['killers'] as $killer) {
+                        $rows[] = [
+                            'game_id' => $game->id,
+                            'killer_id' => $tributesByName[$killer]->id,
+                            'victim_id' => $tributesByName[$kill['victim']]->id,
+                            'round' => $round->number,
+                        ];
+                    }
+                }
+            }
+        }
+
+        // Una sola consulta para todos
+        GameKill::insert($rows);
     }
 
     /**

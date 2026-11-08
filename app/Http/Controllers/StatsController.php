@@ -7,6 +7,7 @@ use App\Models\District;
 use App\Models\Game;
 use App\Models\GameTribute;
 use App\Models\User;
+use App\Services\Rivalries;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -14,7 +15,7 @@ use Illuminate\View\View;
 class StatsController extends Controller
 {
     /** El salón de la fama: rankings con todas las partidas jugadas */
-    public function index(Request $request): View
+    public function index(Request $request, Rivalries $rivalries): View
     {
         $user = $request->user();
 
@@ -49,8 +50,26 @@ class StatsController extends Controller
                 ->get(),
 
             'districts' => $this->districtStats($user),
+            'bets' => $this->betStats($user),
+            'rivalries' => $rivalries->topFor($user),
             'personalities' => $this->personalityStats($characters),
         ]);
+    }
+
+    /**
+     * Tus apuestas: cuántas has acertado. Solo cuentan las partidas que has visto enteras,
+     * porque hasta el final un regalo de patrocinador aún puede cambiar quién gana.
+     */
+    private function betStats(User $user): object
+    {
+        $bets = $this->tributesOf($user)->where('is_bet', true);
+        $settled = (clone $bets)->whereHas('game', fn (Builder $query) => $query->whereColumn('revealed_round', '>=', 'total_rounds'));
+
+        return (object) [
+            'total' => (clone $bets)->count(),
+            'settled' => (clone $settled)->count(),
+            'won' => (clone $settled)->where('placement', 1)->whereNull('died_in_round')->count(),
+        ];
     }
 
     /** Por distrito: cuántas veces ha participado alguien de allí y cuántas ha ganado */

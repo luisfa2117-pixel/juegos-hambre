@@ -58,6 +58,7 @@ class GameController extends Controller
             $request->validated('seed'),
             $request->gameRules(),
             $request->boolean('quell'),
+            $request->validated('bet') !== null ? (int) $request->validated('bet') : null,
         );
 
         return redirect()->route('games.show', [$game, 'round' => 1]);
@@ -87,6 +88,7 @@ class GameController extends Controller
             'tributesByName' => $game->tributes->keyBy('name'),
             'tributeNames' => $game->tributes->pluck('name'),
             'winner' => $game->winner(),
+            'bet' => $game->bet(),
             // Solo se puede repetir si siguen existiendo todos los personajes
             'canReplay' => $game->tributes->every(fn (GameTribute $t) => $t->character_id !== null),
 

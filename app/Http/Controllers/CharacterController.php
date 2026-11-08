@@ -6,6 +6,7 @@ use App\Http\Requests\CharacterRequest;
 use App\Models\Character;
 use App\Models\District;
 use App\Services\AvatarImage;
+use App\Services\Rivalries;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -61,7 +62,7 @@ class CharacterController extends Controller
     }
 
     /** La ficha del personaje: estadísticas y sus partidas */
-    public function show(Character $character): View
+    public function show(Character $character, Rivalries $rivalries): View
     {
         // Si no es suyo, Laravel corta aquí con un error 403 (ver CharacterPolicy)
         Gate::authorize('view', $character);
@@ -70,6 +71,8 @@ class CharacterController extends Controller
             // Volvemos a pedirlo con withStats() para tener sus estadísticas
             'character' => Character::withStats()->with('district')->findOrFail($character->id),
             'appearances' => $character->gameTributes()->with('game')->orderByDesc('game_id')->limit(30)->get(),
+            'nemesis' => $rivalries->nemesisOf($character),
+            'favouriteVictim' => $rivalries->favouriteVictimOf($character),
         ]);
     }
 

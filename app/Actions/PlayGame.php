@@ -28,6 +28,7 @@ class PlayGame
     /**
      * @param  Collection<int, Character>  $characters  Tienen que ser del propio usuario
      * @param  bool  $quell  Vasallaje de los 25: las reglas las elige la semilla (y se ignora $rules)
+     * @param  int|null  $betCharacterId  El personaje al que apuestas que ganará (tiene que jugar)
      */
     public function handle(
         User $user,
@@ -35,6 +36,7 @@ class PlayGame
         ?int $seed = null,
         GameRules $rules = new GameRules,
         bool $quell = false,
+        ?int $betCharacterId = null,
     ): Game {
         if ($characters->count() < 2) {
             throw new InvalidArgumentException('Hacen falta al menos 2 personajes para jugar');
@@ -42,6 +44,10 @@ class PlayGame
 
         if ($characters->contains(fn (Character $character) => $character->user_id !== $user->id)) {
             throw new InvalidArgumentException('Solo puedes jugar con tus propios personajes');
+        }
+
+        if ($betCharacterId !== null && ! $characters->contains('id', $betCharacterId)) {
+            throw new InvalidArgumentException('Solo puedes apostar por alguien que juegue la partida');
         }
 
         // Ordenados por id: así, con los mismos personajes y la misma semilla,
@@ -63,7 +69,7 @@ class PlayGame
         }
 
         // Si algo falla a mitad, la transacción deshace lo guardado y no queda una partida a medias
-        return DB::transaction(function () use ($user, $seed, $rules, $quell, $characters, $simulation) {
+        return DB::transaction(function () use ($user, $seed, $rules, $quell, $betCharacterId, $characters, $simulation) {
             $game = $user->games()->create([
                 'seed' => $seed,
                 'total_rounds' => 0,
@@ -79,6 +85,7 @@ class PlayGame
                     'gender' => $character->gender,
                     'district_id' => $character->district_id,
                     'placement' => 0,
+                    'is_bet' => $character->id === $betCharacterId,
                 ]);
             }
 
