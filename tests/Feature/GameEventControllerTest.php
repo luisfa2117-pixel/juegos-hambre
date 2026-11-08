@@ -50,7 +50,7 @@ class GameEventControllerTest extends TestCase
     {
         $this->get(route('events.index'))
             ->assertOk()
-            ->assertSee('Todos (411)');
+            ->assertSee('Todos (501)');   // 411 de eventos.json y 90 de las arenas temáticas
 
         $this->get(route('events.index', ['category' => 'weapon']))
             ->assertOk()
@@ -241,7 +241,7 @@ class GameEventControllerTest extends TestCase
             GameEvent::where('category', '!=', EventCategory::Arena)->count(),
             collect($json)->except('catastrofes')->flatten(1)->count(),
         );
-        $this->assertCount(8, $json['catastrofes']);
+        $this->assertCount(17, $json['catastrofes']);   // 8 de la ciudad y 3 por cada arena temática
         $this->assertSame(
             GameEvent::where('category', EventCategory::Arena)->count(),
             collect($json['catastrofes'])->sum(fn (array $arena) => count($arena['eventos'])),

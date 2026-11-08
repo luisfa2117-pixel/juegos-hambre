@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Enums\Terrain;
 use App\Models\ArenaEvent;
 use App\Models\GameEvent;
 use Database\Seeders\GameEventSeeder;
@@ -36,12 +37,13 @@ class ExportEventsCommand extends Command
         }
 
         $data['catastrofes'] = ArenaEvent::with(['events.requiresItem', 'events.givesItem'])->orderBy('id')->get()
-            ->map(fn (ArenaEvent $arena) => [
+            ->map(fn (ArenaEvent $arena) => array_filter([
                 'id' => $arena->slug,
                 'nombre' => $arena->name,
                 'anuncio' => $arena->intro,
+                'escenarios' => $this->terrains($arena->terrains),
                 'eventos' => $arena->events->sortBy('id')->map(fn (GameEvent $event) => $this->toJson($event))->values()->all(),
-            ])
+            ], fn ($value) => $value !== null))
             ->all();
 
         File::put($path, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)."\n");
@@ -79,6 +81,28 @@ class ExportEventsCommand extends Command
             $json['requiere'] = strtoupper($event->requiresItem->slug);
         }
 
+        if ($event->terrains !== null) {
+            $json['escenarios'] = $this->terrains($event->terrains);
+        }
+
         return $json;
+    }
+
+    /**
+     * ['city', 'desert'] => ['ciudad', 'desierto'], como en el JSON
+     *
+     * @param  string[]|null  $terrains
+     * @return string[]|null
+     */
+    private function terrains(?array $terrains): ?array
+    {
+        if ($terrains === null) {
+            return null;
+        }
+
+        return array_map(
+            fn (string $value) => array_search(Terrain::from($value), GameEventSeeder::TERRAIN_MAP, true),
+            $terrains,
+        );
     }
 }

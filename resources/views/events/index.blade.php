@@ -42,6 +42,7 @@
                             @unless ($category) {{ $event->category->label() }}. @endunless
                             @if ($event->phase) {{ $event->phase->label() }}. @endif
                             @if ($event->personality) Solo para: {{ $event->personality->label() }}. @endif
+                            @if ($event->terrains) Solo en: {{ collect($event->terrains)->map(fn ($t) => \App\Enums\Terrain::from($t)->label())->join(', ', ' y ') }}. @endif
                             {{ EventPreview::effects($event) }}
                             @if ($event->requiresItem) Necesita: {{ $event->requiresItem->name }}. @endif
                             @if ($event->givesItem) Da: {{ $event->givesItem->name }}. @endif

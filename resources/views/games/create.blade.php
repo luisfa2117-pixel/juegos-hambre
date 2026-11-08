@@ -39,6 +39,25 @@
                 @endforeach
             </div>
 
+            <fieldset class="mt-10">
+                <legend class="font-condensed text-xl font-semibold">La arena</legend>
+                <p class="mb-4 text-sm text-ash-muted">Cada una tiene sus propios eventos y catástrofes.</p>
+
+                <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                    @foreach ($terrains as $terrain)
+                        <label class="flex cursor-pointer gap-3 rounded-sm border border-asphalt-line p-3 hover:bg-asphalt-raised has-checked:border-hazard has-checked:bg-asphalt-raised">
+                            <input type="radio" name="terrain" value="{{ $terrain->value }}" class="mt-1 size-4 shrink-0 accent-hazard"
+                                   @checked(old('terrain', 'city') === $terrain->value)>
+                            <span>
+                                <span class="block font-semibold">{{ $terrain->label() }}</span>
+                                <span class="block text-sm text-ash-muted">{{ $terrain->description() }}</span>
+                            </span>
+                        </label>
+                    @endforeach
+                </div>
+                @error('terrain') <p class="field-error">{{ $message }}</p> @enderror
+            </fieldset>
+
             <div class="mt-10 max-w-sm">
                 <label for="bet" class="font-condensed text-xl font-semibold">¿Quién ganará?</label>
                 <p class="mb-3 text-sm text-ash-muted">Apuesta por un tributo y lleva la cuenta de tus aciertos en Estadísticas.</p>

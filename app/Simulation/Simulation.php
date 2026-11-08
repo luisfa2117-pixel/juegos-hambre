@@ -538,10 +538,16 @@ class Simulation
         return $size <= self::MAX_ALLIANCE_SIZE && $size < count($this->alive());
     }
 
-    /** Lo que suman o restan a una decisión la personalidad del tributo y las reglas de la partida */
+    /** Lo que suman o restan a una decisión la personalidad del tributo, las reglas de la partida y la arena */
     private function modifier(Tribute $tribute, string $decision): int
     {
-        return ($tribute->personality?->modifier($decision) ?? 0) + $this->rules->modifier($decision);
+        return ($tribute->personality?->modifier($decision) ?? 0) + $this->globalModifier($decision);
+    }
+
+    /** Lo que no depende del tributo: las reglas de la partida y la arena */
+    private function globalModifier(string $decision): int
+    {
+        return $this->rules->modifier($decision) + $this->events->terrain()->modifier($decision);
     }
 
     /** Como chance(), pero con la probabilidad ajustada por la personalidad del tributo */
@@ -560,7 +566,7 @@ class Simulation
         $modifier = intdiv(
             ($a->personality?->modifier(Personality::FRIENDSHIP) ?? 0) + ($b->personality?->modifier(Personality::FRIENDSHIP) ?? 0),
             2,
-        ) + $this->rules->modifier(Personality::FRIENDSHIP);
+        ) + $this->globalModifier(Personality::FRIENDSHIP);
 
         if ($a->district->slug === $b->district->slug) {
             $modifier += self::DISTRICT_FRIENDSHIP_BONUS;

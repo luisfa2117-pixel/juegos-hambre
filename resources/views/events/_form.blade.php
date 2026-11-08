@@ -2,6 +2,7 @@
 @use('App\Enums\EventCategory')
 @use('App\Enums\EventPhase')
 @use('App\Enums\Personality')
+@use('App\Enums\Terrain')
 @use('App\Support\EventPreview')
 
 @php
@@ -52,6 +53,25 @@
         </p>
         @error('personality') <p class="field-error">{{ $message }}</p> @enderror
     </div>
+
+    <fieldset>
+        <legend class="field-label">En qué arenas puede pasar</legend>
+        @php $checkedTerrains = old('terrains', $event->terrains ?? []); @endphp
+        <div class="flex flex-wrap gap-x-6 gap-y-2">
+            @foreach (Terrain::cases() as $terrain)
+                <label class="flex cursor-pointer items-center gap-2">
+                    <input type="checkbox" name="terrains[]" value="{{ $terrain->value }}" class="size-4 accent-hazard"
+                           @checked(in_array($terrain->value, $checkedTerrains, true))>
+                    {{ $terrain->label() }}
+                </label>
+            @endforeach
+        </div>
+        <p class="mt-1 text-sm text-ash-muted">
+            Sin marcar ninguna, puede pasar en todas. Marca solo la ciudad si habla de metros, coches o rascacielos.
+        </p>
+        @error('terrains') <p class="field-error">{{ $message }}</p> @enderror
+        @error('terrains.*') <p class="field-error">{{ $message }}</p> @enderror
+    </fieldset>
 
     <div>
         <label for="text" class="field-label">Qué pasa</label>

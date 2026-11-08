@@ -5,9 +5,11 @@ namespace App\Console\Commands;
 use App\Enums\EventPhase;
 use App\Enums\GameRule;
 use App\Enums\ItemType;
+use App\Enums\Terrain;
 use App\Models\Item;
 use App\Models\User;
 use App\Simulation\EventPool;
+use App\Simulation\EventResult;
 use App\Simulation\GameRules;
 use App\Simulation\Simulation;
 use App\Simulation\Tribute;
@@ -19,12 +21,14 @@ use Illuminate\Console\Command;
  *      php artisan simulate --seed=42   (repite siempre la misma partida)
  *      php artisan simulate --regla=armed --regla=half_life
  *      php artisan simulate --vasallaje
+ *      php artisan simulate --arena=desert
  */
 class SimulateCommand extends Command
 {
     protected $signature = 'simulate {--seed= : Semilla para repetir exactamente una partida} {--email=demo@juegos.test : De quién son los personajes}
         {--regla=* : Reglas especiales (no_alliances, traitors, armed, half_life, catastrophes, scarcity)}
-        {--vasallaje : Vasallaje de los 25: dos reglas al azar}';
+        {--vasallaje : Vasallaje de los 25: dos reglas al azar}
+        {--arena=city : Dónde se juega (city, desert, peaks, swamp)}';
 
     protected $description = 'Simula una partida completa con los personajes de la base de datos';
 
@@ -61,12 +65,23 @@ class SimulateCommand extends Command
             return self::FAILURE;
         }
 
+        $terrain = Terrain::tryFrom((string) $this->option('arena'));
+        if ($terrain === null) {
+            $this->error("No existe la arena {$this->option('arena')}. Elige entre: city, desert, peaks, swamp.");
+
+            return self::FAILURE;
+        }
+
         $rules = $this->option('vasallaje')
             ? new GameRules(GameRule::quell($seed))
             : GameRules::fromValues($this->option('regla'));
 
-        $simulation = new Simulation($tributes, EventPool::fromDatabase(), $seed, $rules);
+        $simulation = new Simulation($tributes, EventPool::fromDatabase($terrain), $seed, $rules);
         $simulation->applyStartingRules(Item::where('type', ItemType::Weapon)->orderBy('id')->get()->all());
+
+        if ($intro = $terrain->intro()) {
+            $simulation->announce(new EventResult(text: $intro, arena: $terrain->label()));
+        }
 
         if ($announcement = $rules->announcement($this->option('vasallaje'))) {
             $simulation->announce($announcement);

@@ -8,18 +8,22 @@ use App\Enums\Personality;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property array<int, string>|null $terrains Las arenas donde puede pasar (null = en todas)
+ */
 class GameEvent extends Model
 {
     protected $fillable = [
         'category', 'text', 'participants', 'phase', 'personality',
         'actor_hp', 'actor_energy', 'target_hp', 'target_energy',
-        'gives_item_id', 'requires_item_id', 'arena_event_id',
+        'gives_item_id', 'requires_item_id', 'arena_event_id', 'terrains',
     ];
 
     protected $casts = [
         'category' => EventCategory::class,
         'phase' => EventPhase::class,   // null = de día o de noche
         'personality' => Personality::class,   // null = para cualquiera; si no, solo para {A} con esa personalidad
+        'terrains' => 'array',
     ];
 
     /** @return BelongsTo<Item, $this> */

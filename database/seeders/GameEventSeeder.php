@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Enums\EventCategory;
 use App\Enums\EventPhase;
 use App\Enums\Personality;
+use App\Enums\Terrain;
 use App\Models\ArenaEvent;
 use App\Models\GameEvent;
 use App\Models\Item;
@@ -46,16 +47,38 @@ class GameEventSeeder extends Seeder
         'sociable' => Personality::Sociable,
     ];
 
+    /** Valor de "escenarios" en el JSON => arena (sin "escenarios" = en todas) */
+    public const TERRAIN_MAP = [
+        'ciudad' => Terrain::City,
+        'desierto' => Terrain::Desert,
+        'cumbres' => Terrain::Peaks,
+        'pantano' => Terrain::Swamp,
+    ];
+
     public function run(): void
     {
-        $json = File::get(database_path('data/eventos.json'));
-        $data = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
-
         // ['taser' => 1, 'cuchillo' => 2, ...]
         $itemIds = Item::pluck('id', 'slug');
 
+        $this->seedFile(database_path('data/eventos.json'), $itemIds);
+
+        // Las arenas temáticas: sus propios eventos y catástrofes, y en qué arenas encajan los de eventos.json
+        $arenas = database_path('data/arenas.json');
+        if (File::exists($arenas)) {
+            $data = $this->seedFile($arenas, $itemIds);
+            $this->tagExisting($data);
+        }
+    }
+
+    /** Crea o actualiza los eventos y catástrofes de un fichero con el formato de eventos.json */
+    private function seedFile(string $path, Collection $itemIds): array
+    {
+        $data = json_decode(File::get($path), true, flags: JSON_THROW_ON_ERROR);
+        // eventos.json tiene las categorías arriba del todo; arenas.json, dentro de "eventos"
+        $byCategory = $data['eventos'] ?? $data;
+
         foreach (self::CATEGORY_MAP as $key => $category) {
-            foreach ($data[$key] ?? [] as $raw) {
+            foreach ($byCategory[$key] ?? [] as $raw) {
                 GameEvent::updateOrCreate(
                     ['category' => $category, 'text' => $raw['descripcion']],
                     $this->mapFields($raw, $itemIds),
@@ -67,7 +90,7 @@ class GameEventSeeder extends Seeder
         foreach ($data['catastrofes'] ?? [] as $raw) {
             $arena = ArenaEvent::updateOrCreate(
                 ['slug' => $raw['id']],
-                ['name' => $raw['nombre'], 'intro' => $raw['anuncio']],
+                ['name' => $raw['nombre'], 'intro' => $raw['anuncio'], 'terrains' => $this->terrains($raw['escenarios'] ?? null)],
             );
 
             foreach ($raw['eventos'] as $eventRaw) {
@@ -79,6 +102,25 @@ class GameEventSeeder extends Seeder
                     ],
                 );
             }
+        }
+
+        return $data;
+    }
+
+    /**
+     * Marca en qué arenas encajan eventos que ya existen (los de eventos.json hablan de metros y
+     * rascacielos: en el desierto no pegan). Si un texto ya no existe, se ignora.
+     */
+    private function tagExisting(array $data): void
+    {
+        foreach ($data['etiquetas'] ?? [] as $tag) {
+            GameEvent::where('text', $tag['descripcion'])
+                ->where('category', '!=', EventCategory::Arena)
+                ->update(['terrains' => json_encode($this->terrains($tag['escenarios']))]);
+        }
+
+        foreach ($data['catastrofesDeLaCiudad'] ?? [] as $slug) {
+            ArenaEvent::where('slug', $slug)->update(['terrains' => json_encode([Terrain::City->value])]);
         }
     }
 
@@ -98,7 +140,27 @@ class GameEventSeeder extends Seeder
             'target_energy' => $raw['energiaRival'] ?? $energy,
             'gives_item_id' => $this->itemId($raw['objeto'] ?? null, $itemIds),
             'requires_item_id' => $this->itemId($raw['requiere'] ?? $raw['arma'] ?? null, $itemIds),
+            'terrains' => $this->terrains($raw['escenarios'] ?? null),
         ];
+    }
+
+    /**
+     * ['ciudad', 'desierto'] => ['city', 'desert'] (null = en todas)
+     *
+     * @param  string[]|null  $values
+     * @return string[]|null
+     */
+    private function terrains(?array $values): ?array
+    {
+        if ($values === null) {
+            return null;
+        }
+
+        return array_map(
+            fn (string $value) => (self::TERRAIN_MAP[$value]
+                ?? throw new RuntimeException("Arena desconocida: {$value} (usa ciudad, desierto, cumbres o pantano)"))->value,
+            $values,
+        );
     }
 
     private function phase(?string $value): ?EventPhase

@@ -6,6 +6,7 @@ use App\Enums\EventCategory;
 use App\Enums\EventPhase;
 use App\Enums\ItemType;
 use App\Enums\Personality;
+use App\Enums\Terrain;
 use App\Rules\EventText;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -41,6 +42,9 @@ class GameEventRequest extends FormRequest
 
             'phase' => ['nullable', Rule::enum(EventPhase::class)],
             'personality' => ['nullable', Rule::enum(Personality::class)],
+            // Sin marcar ninguna, vale para todas las arenas
+            'terrains' => ['nullable', 'array'],
+            'terrains.*' => ['distinct', Rule::enum(Terrain::class)],
 
             'actor_hp' => $stat,
             'actor_energy' => $stat,
@@ -75,6 +79,7 @@ class GameEventRequest extends FormRequest
             'text.unique' => 'Ya hay un evento de este tipo con ese mismo texto.',
             'phase.enum' => 'Elige cuándo puede pasar de la lista.',
             'personality.enum' => 'Elige una personalidad de la lista.',
+            'terrains.*.enum' => 'Alguna de las arenas elegidas no existe.',
             '*.required' => 'Este campo es obligatorio.',
             'actor_hp.between' => $between,
             'actor_energy.between' => $between,
@@ -97,6 +102,12 @@ class GameEventRequest extends FormRequest
         $data['requires_item_id'] ??= null;
         $data['phase'] ??= null;
         $data['personality'] ??= null;
+        // Todas marcadas es lo mismo que ninguna: vale para cualquier arena. Siempre en el orden del enum
+        $terrains = array_values(array_filter(
+            array_map(fn (Terrain $terrain) => $terrain->value, Terrain::cases()),
+            fn (string $value) => in_array($value, $data['terrains'] ?? [], true),
+        ));
+        $data['terrains'] = $terrains === [] || count($terrains) === count(Terrain::cases()) ? null : $terrains;
         $data['gives_item_id'] = $category === EventCategory::Discovery ? ($data['gives_item_id'] ?? null) : null;
 
         // En los eventos de una persona no hay "los demás"

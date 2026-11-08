@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Actions\PlayGame;
 use App\Actions\SendSponsorGift;
 use App\Enums\GameRule;
+use App\Enums\Terrain;
 use App\Http\Requests\GameRequest;
 use App\Models\District;
 use App\Models\Game;
@@ -39,6 +40,7 @@ class GameController extends Controller
             'allIds' => $allIds,
             'totalCharacters' => count($allIds),
             'gameRules' => GameRule::cases(),
+            'terrains' => Terrain::cases(),
         ]);
     }
 
@@ -59,6 +61,7 @@ class GameController extends Controller
             $request->gameRules(),
             $request->boolean('quell'),
             $request->validated('bet') !== null ? (int) $request->validated('bet') : null,
+            $request->enum('terrain', Terrain::class) ?? Terrain::City,
         );
 
         return redirect()->route('games.show', [$game, 'round' => 1]);

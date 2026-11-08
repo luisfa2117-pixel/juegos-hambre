@@ -4,12 +4,14 @@ namespace App\Actions;
 
 use App\Enums\GameRule;
 use App\Enums\ItemType;
+use App\Enums\Terrain;
 use App\Models\Character;
 use App\Models\Game;
 use App\Models\Item;
 use App\Models\User;
 use App\Services\GameRecorder;
 use App\Simulation\EventPool;
+use App\Simulation\EventResult;
 use App\Simulation\GameRules;
 use App\Simulation\Simulation;
 use Illuminate\Database\Eloquent\Collection;
@@ -29,6 +31,7 @@ class PlayGame
      * @param  Collection<int, Character>  $characters  Tienen que ser del propio usuario
      * @param  bool  $quell  Vasallaje de los 25: las reglas las elige la semilla (y se ignora $rules)
      * @param  int|null  $betCharacterId  El personaje al que apuestas que ganará (tiene que jugar)
+     * @param  Terrain  $terrain  La arena: cambia los eventos y las catástrofes que pueden salir
      */
     public function handle(
         User $user,
@@ -37,6 +40,7 @@ class PlayGame
         GameRules $rules = new GameRules,
         bool $quell = false,
         ?int $betCharacterId = null,
+        Terrain $terrain = Terrain::City,
     ): Game {
         if ($characters->count() < 2) {
             throw new InvalidArgumentException('Hacen falta al menos 2 personajes para jugar');
@@ -61,15 +65,20 @@ class PlayGame
         }
 
         $tributes = $characters->map(fn (Character $character) => $character->toTribute())->all();
-        $simulation = new Simulation($tributes, EventPool::fromDatabase(), $seed, $rules);
+        $simulation = new Simulation($tributes, EventPool::fromDatabase($terrain), $seed, $rules);
         $simulation->applyStartingRules(Item::where('type', ItemType::Weapon)->orderBy('id')->get()->all());
+
+        // Primero, dónde se juega; después, con qué reglas
+        if ($intro = $terrain->intro()) {
+            $simulation->announce(new EventResult(text: $intro, arena: $terrain->label()));
+        }
 
         if ($announcement = $rules->announcement($quell)) {
             $simulation->announce($announcement);
         }
 
         // Si algo falla a mitad, la transacción deshace lo guardado y no queda una partida a medias
-        return DB::transaction(function () use ($user, $seed, $rules, $quell, $betCharacterId, $characters, $simulation) {
+        return DB::transaction(function () use ($user, $seed, $rules, $quell, $betCharacterId, $terrain, $characters, $simulation) {
             $game = $user->games()->create([
                 'seed' => $seed,
                 'total_rounds' => 0,
@@ -77,6 +86,7 @@ class PlayGame
                 'revealed_round' => 0,
                 'rules' => $rules->values(),
                 'quell' => $quell,
+                'terrain' => $terrain,
             ]);
 
             // Copia de cómo era cada personaje; el resultado (puesto, muertes...) lo rellena el GameRecorder

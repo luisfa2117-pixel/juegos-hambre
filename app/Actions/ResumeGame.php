@@ -36,7 +36,7 @@ class ResumeGame
 
         $simulation = Simulation::fromState(
             $saved->state,
-            EventPool::fromDatabase(),
+            EventPool::fromDatabase($game->terrain),
             $game->seed,
             District::all()->keyBy('slug')->all(),
             Item::all()->keyBy('slug')->all(),

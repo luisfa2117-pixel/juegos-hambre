@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Enums\GameRule;
+use App\Enums\Terrain;
 use App\Simulation\GameRules;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -25,6 +26,7 @@ class GameRequest extends FormRequest
             'rules' => ['nullable', 'array'],
             'rules.*' => ['distinct', Rule::enum(GameRule::class)],
             'quell' => ['nullable', 'boolean'],
+            'terrain' => ['nullable', Rule::enum(Terrain::class)],
             // Tiene que ser uno de los que juegan. Y con semilla no se apuesta: ya sabrías quién gana
             'bet' => ['nullable', 'integer', Rule::in(array_filter((array) $this->input('characters', []), 'is_scalar')), 'prohibits:seed'],
         ];
@@ -72,6 +74,7 @@ class GameRequest extends FormRequest
             'seed.min' => 'La semilla tiene que estar entre 1 y 999999.',
             'seed.max' => 'La semilla tiene que estar entre 1 y 999999.',
             'rules.*.enum' => 'Alguna de las reglas elegidas no existe.',
+            'terrain.enum' => 'Elige una arena de la lista.',
             'rules.*.distinct' => 'Has elegido una regla dos veces.',
             'bet.in' => 'Solo puedes apostar por alguien que entre en la arena.',
             'bet.integer' => 'Solo puedes apostar por alguien que entre en la arena.',

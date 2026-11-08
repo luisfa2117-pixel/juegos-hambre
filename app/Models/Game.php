@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Terrain;
 use App\Simulation\GameRules;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,12 +11,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property array<int, string> $rules
  * @property bool $quell
+ * @property Terrain $terrain
  */
 class Game extends Model
 {
-    protected $fillable = ['seed', 'total_rounds', 'revealed_round', 'rules', 'quell'];
+    protected $fillable = ['seed', 'total_rounds', 'revealed_round', 'rules', 'quell', 'terrain'];
 
     protected $casts = [
+        'terrain' => Terrain::class,
         'rules' => 'array',
         'quell' => 'boolean',
     ];

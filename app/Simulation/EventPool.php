@@ -4,16 +4,20 @@ namespace App\Simulation;
 
 use App\Enums\EventCategory;
 use App\Enums\EventPhase;
+use App\Enums\Terrain;
 use App\Models\ArenaEvent;
 use App\Models\GameEvent;
 use Random\Randomizer;
 
 /**
- * Todos los eventos posibles, agrupados por categoría.
+ * Todos los eventos posibles en una arena, agrupados por categoría.
  * Sustituye a las listas eventosIndividuales, eventosDuo... de tu GestorEventos.
  */
 class EventPool
 {
+    /** En una arena temática, probabilidad de que salga un evento propio de la arena si lo hay */
+    public const OWN_TERRAIN_CHANCE = 40;
+
     /** @var array<string, GameEvent[]> ['solo' => [...], 'duo' => [...], ...] */
     private array $byCategory = [];
 
@@ -23,14 +27,19 @@ class EventPool
     /** @var array<string, GameEvent[]> Los eventos de cada catástrofe, por el slug de la catástrofe */
     private array $arenaEvents = [];
 
-    /** @param iterable<GameEvent> $events */
-    public function __construct(iterable $events)
+    /**
+     * Se queda solo con los eventos (y catástrofes) que pueden pasar en $terrain:
+     * los que no tienen arena (valen para todas) y los que la incluyen.
+     *
+     * @param  iterable<GameEvent>  $events
+     */
+    public function __construct(iterable $events, private readonly Terrain $terrain = Terrain::City)
     {
         foreach ($events as $event) {
             if ($event->category === EventCategory::Arena) {
                 $arena = $event->arenaEvent;
 
-                if ($arena !== null) {
+                if ($arena !== null && $this->fits($arena->terrains)) {
                     $this->arenas[$arena->slug] = $arena;
                     $this->arenaEvents[$arena->slug][] = $event;
                 }
@@ -38,16 +47,29 @@ class EventPool
                 continue;
             }
 
-            $this->byCategory[$event->category->value][] = $event;
+            if ($this->fits($event->terrains)) {
+                $this->byCategory[$event->category->value][] = $event;
+            }
         }
     }
 
+    /** @param string[]|null $terrains Las arenas donde puede pasar (null = en todas) */
+    private function fits(?array $terrains): bool
+    {
+        return $terrains === null || in_array($this->terrain->value, $terrains, true);
+    }
+
+    public function terrain(): Terrain
+    {
+        return $this->terrain;
+    }
+
     /** Carga todos los eventos con sus objetos y catástrofes en pocas consultas (en vez de una por evento). */
-    public static function fromDatabase(): self
+    public static function fromDatabase(Terrain $terrain = Terrain::City): self
     {
         // orderBy('id'): sin orden, Postgres puede devolver las filas en otro orden cada vez,
         // y con la misma semilla saldría una partida distinta
-        return new self(GameEvent::with(['requiresItem', 'givesItem', 'arenaEvent'])->orderBy('id')->get());
+        return new self(GameEvent::with(['requiresItem', 'givesItem', 'arenaEvent'])->orderBy('id')->get(), $terrain);
     }
 
     public function hasArenas(): bool
@@ -108,6 +130,16 @@ class EventPool
 
             if ($own !== []) {
                 $candidates = $own;
+            }
+        }
+
+        // En el desierto, en las cumbres o en el pantano, a menudo sale uno de sus propios eventos:
+        // si no, entre tantos eventos generales apenas se notaría en qué arena estás
+        if ($this->terrain->favoursOwnEvents()) {
+            $ownTerrain = array_values(array_filter($candidates, fn (GameEvent $event) => $event->terrains !== null));
+
+            if ($ownTerrain !== [] && $random->getInt(1, 100) <= self::OWN_TERRAIN_CHANCE) {
+                $candidates = $ownTerrain;
             }
         }
 

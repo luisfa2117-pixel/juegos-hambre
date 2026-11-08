@@ -249,6 +249,7 @@
                             <form method="POST" action="{{ route('games.store') }}">
                                 @csrf
                                 <input type="hidden" name="seed" value="{{ $game->seed }}">
+                                <input type="hidden" name="terrain" value="{{ ($game->terrain ?? \App\Enums\Terrain::City)->value }}">
                                 @if ($game->quell)
                                     <input type="hidden" name="quell" value="1">
                                 @else
