@@ -1,58 +1,96 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Juegos del Hambre: simulador
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![Tests](https://github.com/luisfa2117-pixel/juegos-hambre/actions/workflows/tests.yml/badge.svg)
 
-## About Laravel
+Un simulador de los Juegos del Hambre ambientado en una Norteamérica futurista en ruinas, al estilo del simulador de Brantsteele, pero con reglas de verdad: si un tributo encuentra un botiquín, lo lleva en la mochila y lo usa cuando está herido; si se hace aliado de otro, ya no se atacan... hasta que uno de los dos le traiciona.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Empezó como un proyecto en Java que dejé a medias y lo he rehecho desde cero en Laravel para practicar el stack que uso en mis prácticas.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+![Una partida en curso](docs/capturas/partida.png)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Qué hace
 
-## Learning Laravel
+- **Partidas ronda a ronda.** El baño de sangre en la Cornucopia, y después días y noches alternos. Al final de cada noche se proyectan en el cielo los rostros de los caídos.
+- **488 eventos** con concordancia de género («Avery fue herida», «Dean y Noah, juntos»), filtrados por fase del día, por objetos que hacen falta y por la personalidad de quien los protagoniza.
+- **Objetos que funcionan**: 22 armas, defensas, curas y bebidas, con usos limitados. Las defensas absorben daño y los consumibles se usan solos cuando hacen falta.
+- **Alianzas** que se forman, atacan juntas y se rompen con traiciones. Los compañeros de distrito se alían con más facilidad.
+- **Personalidades** (agresivo, cobarde, leal, traicionero, ingenioso, sociable) que cambian las probabilidades y tienen sus propios eventos.
+- **8 catástrofes de los Vigilantes**: inundaciones, tormentas de ácido, sueltas de mutos... que afectan a todos los tributos a la vez.
+- **Patrocinadores**: envía hasta 3 regalos por partida a tus favoritos. La partida se vuelve a jugar desde ese momento, sin cambiar lo que ya has visto.
+- **Estadísticas**: quién mata a quién, victorias por personaje, distrito y personalidad, y las partidas más sangrientas.
+- **Editor de eventos** con vista previa en directo, y personajes con foto.
+- **Usuarios** con sus propios personajes y partidas.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+| | |
+|---|---|
+| ![Ficha de un personaje](docs/capturas/personaje.png) | ![Estadísticas](docs/capturas/estadisticas.png) |
+| ![Una catástrofe](docs/capturas/catastrofe.png) | ![Editor de eventos](docs/capturas/editor.png) |
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Stack
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+- **Laravel 13** y **PHP 8.4**
+- **PostgreSQL**, con columnas `jsonb` para el registro de cada ronda
+- **Blade** y **Tailwind CSS 4**, sin frameworks de JavaScript
+- **PHPUnit** para los tests, **Pint** para el formato y **Larastan** para el análisis estático, los tres en **GitHub Actions**
 
-## Agentic Development
+## Cómo funciona por dentro
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+El **motor** (`app/Simulation`) es PHP puro, sin base de datos, y por eso se puede probar en milisegundos:
+
+- `Tribute` guarda el estado de cada tributo durante la partida: vida, energía, mochila y alianzas.
+- `EventPool` elige qué evento puede ocurrir según la categoría, la fase, los objetos y la personalidad.
+- `EventResolver` aplica un evento: daño, defensas, objetos, alianzas, consumibles y quién mata a quién.
+- `Simulation` juega las rondas.
+
+El azar tiene **semilla**: la misma semilla y los mismos tributos dan siempre la misma partida. Cada ronda tiene su propio azar, calculado a partir de la semilla y del número de ronda. Así se puede guardar el estado al final de cualquier ronda y continuar desde ahí, que es lo que usan los patrocinadores.
+
+Alrededor del motor, Laravel se encarga del resto: `PlayGame` y `ResumeGame` (en `app/Actions`) juegan y guardan las partidas, las *policies* controlan quién puede ver qué, y los Form Requests validan los formularios.
+
+## Instalación
+
+Hace falta PHP 8.4, Composer, Node.js y PostgreSQL.
 
 ```bash
-composer require laravel/boost --dev
+git clone https://github.com/luisfa2117-pixel/juegos-hambre.git
+cd juegos-hambre
 
-php artisan boost:install
+composer install
+npm install && npm run build
+
+cp .env.example .env
+php artisan key:generate
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Crea una base de datos en PostgreSQL y pon sus datos en el `.env` (`DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`). Después:
 
-## Contributing
+```bash
+php artisan migrate --seed
+php artisan storage:link
+php artisan serve
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Abre http://127.0.0.1:8000 y entra con la cuenta de pruebas: **demo@juegos.test**, contraseña **password**. Tiene 12 personajes listos para jugar.
 
-## Code of Conduct
+También puedes ver una partida entera en la terminal:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+php artisan simulate --seed=42
+```
 
-## Security Vulnerabilities
+## Tests y calidad
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+php artisan test                                   # más de 180 tests
+vendor/bin/pint --test                             # formato
+vendor/bin/phpstan analyse --memory-limit=1G       # análisis estático
+```
 
-## License
+Los tests del motor comprueban, entre otras cosas, que la misma semilla da la misma partida, que una partida reconstruida desde una ronda guardada termina exactamente igual que la original, y que cada personalidad se comporta como debe a lo largo de cientos de partidas.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Los eventos
+
+Los eventos están en [`database/data/eventos.json`](database/data/eventos.json) y se cargan con los seeders. Se pueden editar desde la web y volcar de nuevo al JSON con:
+
+```bash
+php artisan events:export
+```
